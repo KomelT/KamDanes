@@ -4,7 +4,7 @@ Project for class TPO (Software Engineering), at FRI, University of Ljubljana.
 
 ## Project planning
 
-- [Original idea proposed](https://github.com/KomelT/KamDanes/blob/master/.idea/original_idea_porposed.md)
+- [Original idea proposed](https://github.com/KomelT/KamDanes/blob/main/.idea/original_idea_porposed.md)
 
 ## Disclaimer
 
