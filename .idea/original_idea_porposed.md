@@ -1,4 +1,4 @@
-Predlagatelj: Romina Mihalič
+Predlagatelj: Romina Mihalič\
 Datum: 19.10.
 
 # KAM DANES
@@ -43,7 +43,7 @@ Spletna stran bi tudi omogočala naslednje funkcionalnosti:
    prepoznavnost.
 6. **Integracija s koledarjem:** Možnost dodajanja dogodkov v osebni koledar.
 
-Predlagatelj: Romina Mihalič
+Predlagatelj: Romina Mihalič\
 Datum: 19.10.
 
 Motivacija za idejo je bila želja po eni platformi, za vse družbene dogodke, katerega koli tipa,
