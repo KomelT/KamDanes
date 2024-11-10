@@ -13,5 +13,6 @@ Project for class TPO (Software Engineering), at FRI, University of Ljubljana.
 ## Authors
 
 - Tit Sober
+- Romina Mihalič
 - Klemen Parkelj
 - Tilen Komel
