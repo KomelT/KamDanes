@@ -38,6 +38,9 @@ $urls = [
      "logout" => function () {
       UserController::logout();
      },
+     "API/events" => function () {
+        DataController::getEventJson();
+     }
      
      
 ];
