@@ -1,0 +1,7 @@
+services:
+  app:
+    build: ./app
+    ports:
+      - "3000:80"
+    volumes:
+      - ./app/src:/var/www/html
