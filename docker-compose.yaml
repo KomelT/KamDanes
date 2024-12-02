@@ -1,7 +1,28 @@
 services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kamdanes
+      MYSQL_USER: kamdanes
+      MYSQL_PASSWORD: nepovem
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
   app:
     build: ./app
     ports:
       - "3000:80"
     volumes:
       - ./app/src:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy

@@ -3,10 +3,10 @@
 class DBInit
 {
 
-    private static $host = "localhost";
-    private static $user = "root";
+    private static $host = "db";
+    private static $user = "kamdanes";
     private static $password = "nepovem";
-    private static $schema = "invoice";
+    private static $schema = "kamdanes";
     private static $instance = null;
 
     private function __construct()
