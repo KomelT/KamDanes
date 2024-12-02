@@ -16,42 +16,42 @@ $urls = [
    "/" => function () {
       HomeController::home();
    },
-    # routing
-    "index.php" => function () {
+   # routing
+   "index.php" => function () {
       HomeController::home();
    },
-    "" => function () {
-       HomeController::home();
-    },
-     "login" => function () {
-        HomeController::login();
-     },
-     "register" => function () {
-        HomeController::register();
-     },
-     "registerUser" => function () {
-      UserController::registerUser($_POST["username"],$_POST["password"]);
-     },
-     "loginUser" => function () {
-      UserController::loginUser($_POST["username"],$_POST["password"]);
-     },
-     "logout" => function () {
+   "" => function () {
+      HomeController::home();
+   },
+   "login" => function () {
+      HomeController::login();
+   },
+   "register" => function () {
+      HomeController::register();
+   },
+   "registerUser" => function () {
+      UserController::registerUser($_POST["username"], $_POST["password"]);
+   },
+   "loginUser" => function () {
+      UserController::loginUser($_POST["username"], $_POST["password"]);
+   },
+   "logout" => function () {
       UserController::logout();
-     },
-     "API/events" => function () {
-        DataController::getEventJson();
-     }
-     
-     
+   },
+   "API/events" => function () {
+      DataController::getEventJson();
+   }
+
+
 ];
 
 try {
-    if (isset($urls[$path])) {
-       $urls[$path]();
-    } else {
-        echo "No controller for '$path'";
-    }
+   if (isset($urls[$path])) {
+      $urls[$path]();
+   } else {
+      echo "No controller for '$path'";
+   }
 } catch (Exception $e) {
-    echo "An error occurred: <pre>$e</pre>";
-    // ViewHelper::error404();
-} 
+   echo "An error occurred: <pre>$e</pre>";
+   // ViewHelper::error404();
+}
