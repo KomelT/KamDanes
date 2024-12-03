@@ -43,8 +43,10 @@ class EventDetailsUL:
 
     def get_location(self):
         p = self.soup.find('p', class_='event-info-col-right font-size-xxs')
+        if not p:
+            return None
         location = p.find('span', class_=None)
-        return location.text if location else "Location not found"
+        return location.text if location else None
 
     def get_title(self):
         title_tag = self.soup.find('h1', class_='font-size-xl')
