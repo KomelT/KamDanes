@@ -2,10 +2,10 @@
 
 class DBInit {
 
-    private static $host = "localhost";
-    private static $user = "root";
+    private static $host = "localhost"; //temporary med development
+    private static $user = "root"; // isto
     private static $password = "nepovem";
-    private static $schema = "invoice";
+    private static $schema = "kd_db";
     private static $instance = null;
 
     private function __construct() {
