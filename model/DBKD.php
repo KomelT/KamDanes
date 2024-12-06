@@ -50,10 +50,29 @@ Class DBKD{
     }
     public static function getJSONEvents(){
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM events");
+        $statement = $db->prepare("SELECT * FROM event");
         $statement->execute();
         $events = $statement->fetchAll();
         return json_encode($events);
+    }
+    public static function pushEvent($data){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("INSERT INTO event VALUES(:name, :organisation, :artist, :from, :to, :x, :y, :time, :age, :desc, :price, :type, :online);");
+        $statement->bindParam(":organisation", $data["organisation"], PDO::PARAM_STR);
+        $statement->bindParam(":artist", $data["artist"], PDO::PARAM_STR);
+        $statement->bindParam(":from", $data["from"], PDO::PARAM_STR);
+        $statement->bindParam(":to", $data["to"], PDO::PARAM_STR);
+        $statement->bindParam(":x", $data["x"], PDO::PARAM_STR);
+        $statement->bindParam(":y", $data["y"], PDO::PARAM_STR);
+        $statement->bindParam(":time", $data["time"], PDO::PARAM_STR);
+        $statement->bindParam(":age", $data["age"], PDO::PARAM_INT);
+        $statement->bindParam(":desc", $data["description"], PDO::PARAM_STR);
+        $statement->bindParam(":price", $data["price"], PDO::PARAM_INT);
+        $statement->bindParam(":type", $data["type"], PDO::PARAM_INT);
+        $statement->bindParam(":online", $data["online"], PDO::PARAM_INT);
+        
+
+        $statement->execute();
     }
 
 

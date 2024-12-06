@@ -40,6 +40,9 @@ $urls = [
      },
      "API/events" => function () {
         DataController::getEventJson();
+     },
+     "API/pushEvent" => function () {
+        DataController::pushEvent();
      }
      
      

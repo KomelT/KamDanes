@@ -6,4 +6,14 @@ Class DataController{
         ViewHelper::returnJson(DBKD::getJSONEvents());
     }
 
+    public static function pushEvent(){
+        $data = json_decode(file_get_contents('php://input'), true); //reads the whole requesst body
+        DBKD::pushEvent($data);
+    
+    
+    }
+
+    
+
+
 }
