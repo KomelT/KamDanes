@@ -62,20 +62,25 @@ class DBKD
     }
     public static function pushEvent($data){
         $db = DBInit::getInstance();
-        $statement = $db->prepare("INSERT INTO event VALUES(:name, :organisation, :artist, :from, :to, :x, :y, :time, :age, :desc, :price, :type, :online);");
+        $statement = $db->prepare("INSERT INTO event 
+            (id_user, name, organisation, artist_name, date_from, date_to, loc_x, loc_y, time, age_lim, description, price, type, link, online) 
+            VALUES (:id_user, :name, :organisation, :artist_name, :date_from, :date_to, :loc_x, :loc_y, :time, :age_lim, :description, :price, :type, :link, :online);");
+
+        $statement->bindParam(":id_user", $data["id_user"], PDO::PARAM_INT);
+        $statement->bindParam(":name", $data["name"], PDO::PARAM_STR);
         $statement->bindParam(":organisation", $data["organisation"], PDO::PARAM_STR);
-        $statement->bindParam(":artist", $data["artist"], PDO::PARAM_STR);
-        $statement->bindParam(":from", $data["from"], PDO::PARAM_STR);
-        $statement->bindParam(":to", $data["to"], PDO::PARAM_STR);
-        $statement->bindParam(":x", $data["x"], PDO::PARAM_STR);
-        $statement->bindParam(":y", $data["y"], PDO::PARAM_STR);
+        $statement->bindParam(":artist_name", $data["artist_name"], PDO::PARAM_STR);
+        $statement->bindParam(":date_from", $data["date_from"], PDO::PARAM_STR);
+        $statement->bindParam(":date_to", $data["date_to"], PDO::PARAM_STR);
+        $statement->bindParam(":loc_x", $data["loc_x"], PDO::PARAM_STR);
+        $statement->bindParam(":loc_y", $data["loc_y"], PDO::PARAM_STR);
         $statement->bindParam(":time", $data["time"], PDO::PARAM_STR);
-        $statement->bindParam(":age", $data["age"], PDO::PARAM_INT);
-        $statement->bindParam(":desc", $data["description"], PDO::PARAM_STR);
+        $statement->bindParam(":age_lim", $data["age_lim"], PDO::PARAM_INT);
+        $statement->bindParam(":description", $data["description"], PDO::PARAM_STR);
         $statement->bindParam(":price", $data["price"], PDO::PARAM_INT);
         $statement->bindParam(":type", $data["type"], PDO::PARAM_INT);
+        $statement->bindParam(":link", $data["link"], PDO::PARAM_STR);
         $statement->bindParam(":online", $data["online"], PDO::PARAM_INT);
-        
 
         $statement->execute();
     }
