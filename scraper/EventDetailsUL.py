@@ -6,12 +6,19 @@ class EventDetailsUL:
         self.url = url
         self.soup = None
         self.title = None
+        self.organisation = "Univerza v Ljubljani"
         self.start_date = None
         self.start_time = None
         self.end_date = None
         self.end_time = None
         self.location = None
+        self.age_limit = None
+        self.price = 0
         self.description = None
+        self.online = False
+        self.type_of_event = 0 #Univerzitetni dogodek
+        self.longitude = None
+        self.latitude = None
 
     def fetch_data(self):
         response = requests.get(self.url)
@@ -26,7 +33,10 @@ class EventDetailsUL:
             self.location = self.get_location()
             self.title = self.get_title()
             self.description = self.get_description()
+            self.get_location_coordinates()
 
+    # Returns start date, start time, end date, end time in that order. If not returns None
+    
     def get_date_and_time(self):
         time_wrapper = self.soup.find('p', class_='event-info-col-right font-size-xxs event-date-wrapper')
         if not time_wrapper:
@@ -44,9 +54,17 @@ class EventDetailsUL:
     def get_location(self):
         p = self.soup.find('p', class_='event-info-col-right font-size-xxs')
         if not p:
-            return None
+            self.online = True
+            return "Spletni dogodek"
         location = p.find('span', class_=None)
-        return location.text if location else None
+        if not location:
+            self.online = True
+            return "Spletni dogodek"
+        if self.isOnlineEvent(location.text.strip()):
+            self.online = True
+            return "Spletni dogodek"
+        else:
+            return location.text.strip()
 
     def get_title(self):
         title_tag = self.soup.find('h1', class_='font-size-xl')
@@ -59,13 +77,82 @@ class EventDetailsUL:
     def print_event_details(self):
         print("Link:", self.url)
         print("Naslov:", self.title)
+        print("Organizacija:", self.organisation)
         print("Start date:", self.start_date)
         print("Start time:", self.start_time)
         print("End date:", self.end_date)
         print("End time:", self.end_time)
+        print("Price:", self.price)
+        print("Age limit:", self.age_limit)
         print("Location:", self.location)
         print("Opis:", self.description)
+        print("Online:", self.online)
+        print("Longitude:", self.longitude)
+        print("Latitude:", self.latitude)
 
     def getTypeOfEvent(self):
         description = self.get_description(self)
-        
+    
+    def isOnlineEvent(self, description):
+        keywords = ['hibridno', 'online', 'spletni', 'zoom', 'stream', 'webinar', 'virtual', 'MS', 'Teams', 'Splet', 'spletno', 'Internet', 'virtualen', 'virtualno', 'Microsoft']
+        for keyword in keywords:
+            if keyword.lower() in description.lower():
+                return True
+        return False
+
+    def get_location_coordinates(self):
+        import os
+        from dotenv import load_dotenv
+        load_dotenv()
+        clanice_kratice = ['AG', 'AGRFT', 'ALUO', 'BF', 'EF', 'FA', 'FDV', 'FE', 'FFA', 'FGG', 'FKKT', 'FMF', 'FPP', 'FRI', 'FSD', 'FS', 'FSP', 'FU', 'FF', 'MF', 'NTF', 'PEF', 'PF', 'TEOF', 'VF', 'ZF']
+        clanice = [
+        'Akademija za glasbo', 
+        'Akademija za gledališče, radio, film in televizijo', 
+        'Akademija za likovno umetnost in oblikovanje', 
+        'Biotehniška fakulteta',
+        'Ekonomska fakulteta',
+        'Fakulteta za arhitekturo',
+        'Fakulteta za družbene vede',
+        'Fakulteta za elektrotehniko',
+        'Fakulteta za farmacijo',
+        'Fakulteta za gradbeništvo in geodezijo',
+        'Fakulteta za kemijo in kemijsko tehnologijo',
+        'Fakulteta za matematiko in fiziko',
+        'Fakulteta za pomorstvo in promet',
+        'Fakulteta za računalništvo in informatiko',
+        'Fakulteta za socialno delo',
+        'Fakulteta za strojništvo',
+        'Fakulteta za šport',
+        'Fakulteta za upravo',
+        'Filozofska fakulteta',
+        'Medicinska fakulteta',
+        'Naravoslovnotehniška fakulteta',
+        'Pedagoška fakulteta',
+        'Pravna fakulteta',
+        'Teološka fakulteta',
+        'Veterinarska fakulteta',
+        'Zdravstvena fakulteta'
+        ]
+
+        if self.location == "Spletni dogodek":
+            return
+        addresses = self.location.split(',')
+
+        updated_address = ''
+
+        for chunk in addresses:
+            if chunk.strip().split(' ')[0] == 'UL' and chunk.strip().split(' ')[1] in clanice_kratice:
+                updated_address += clanice[clanice_kratice.index(chunk.strip().split(' ')[1])] + ', '
+            else:
+                updated_address += chunk + ', '
+
+        if updated_address:
+            api_key = os.getenv('GoogleMapsKey')
+            url = f'https://maps.googleapis.com/maps/api/geocode/json?address={updated_address}&key={api_key}'
+            
+            response = requests.get(url)
+            resp_json_payload = response.json()
+
+            # print(resp_json_payload['results'][0]['geometry']['location'])
+            self.longitude = resp_json_payload['results'][0]['geometry']['location']['lng']
+            self.latitude = resp_json_payload['results'][0]['geometry']['location']['lat']
