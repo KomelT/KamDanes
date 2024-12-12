@@ -30,6 +30,7 @@ class EventDetailsUL:
     def extract_details(self):
         if self.soup:
             self.start_date, self.start_time, self.end_date, self.end_time = self.get_date_and_time()
+            self.convert_time()
             self.location = self.get_location()
             self.title = self.get_title()
             self.description = self.get_description()
@@ -156,3 +157,49 @@ class EventDetailsUL:
             # print(resp_json_payload['results'][0]['geometry']['location'])
             self.longitude = resp_json_payload['results'][0]['geometry']['location']['lng']
             self.latitude = resp_json_payload['results'][0]['geometry']['location']['lat']
+    
+    def push_to_database(self):
+        import requests
+        import json
+        data = {
+            'id_user' : 100, #UL
+            'name' : self.title if self.title else "NULL",
+            'organisation' : self.organisation if self.organisation else "NULL",
+            'artist_name' : 'NULL',
+            'date_from' : self.start_date if self.start_date else "NULL",
+            'date_to' : self.end_date if self.end_date else "NULL",
+            'loc_x' : self.longitude if self.longitude else "NULL",
+            'loc_y' : self.latitude if self.latitude else "NULL",
+            'time' :self.start_time if self.start_time else "NULL",
+            'age_lim' : self.age_limit if self.age_limit else "NULL",
+            'description' : self.description if self.description else "NULL",
+            'price' : self.price if self.price else 0,
+            'type' : self.type_of_event if self.type_of_event else 0,
+            'link' : self.url if self.url else "NULL",
+            'online' : 1 if self.location == "Spletni dogodek" else 0
+        }
+
+        uri = 'http://localhost:3000/API/pushEvent'
+
+        response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=json.dumps(data))
+
+        print("Response code", response)
+
+    def convert_time(self):
+        from datetime import datetime
+        import pytz
+
+        local_tz = pytz.timezone('Europe/Berlin')  # Replace with your local timezone
+
+        if(self.start_time):
+            old_start_time = datetime.fromisoformat("2024-12-12T" + self.start_time)
+            start_time_dt = old_start_time.astimezone(local_tz)
+            new_start_time = start_time_dt.strftime("%Y-%m-%d %H:%M")
+            self.start_time = new_start_time.split(" ")[1]
+
+        if(self.end_time):
+            old_end_time = datetime.fromisoformat("2024-12-12T" + self.end_time)
+            end_time_dt = old_end_time.astimezone(local_tz)
+            new_end_time = end_time_dt.strftime("%Y-%m-%d %H:%M")
+            self.end_time = new_end_time.split(" ")[1]
+

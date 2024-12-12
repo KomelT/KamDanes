@@ -14,4 +14,5 @@ if __name__ == "__main__":
         event_details = EventDetailsUL.EventDetailsUL(BASE_URL + event_url)
         event_details.fetch_data()
         event_details.print_event_details()
+        event_details.push_to_database()
         print("-----------------------------------")
