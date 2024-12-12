@@ -46,12 +46,17 @@ $urls = [
 ];
 
 try {
+   DataController::getEventJson();
+   
    if (isset($urls[$path])) {
-      $urls[$path]();
+      //$urls[$path]();
+      
    } else {
       echo "No controller for '$path'";
    }
 } catch (Exception $e) {
    echo "An error occurred: <pre>$e</pre>";
-   // ViewHelper::error404();
+   ViewHelper::error404();
 }
+
+
