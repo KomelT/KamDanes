@@ -2,21 +2,20 @@
 
 session_start();
 
-require_once("controllers/HomeController.php");
-require_once("controllers/UserController.php");
-require_once("controllers/DataController.php");
+require_once "controllers/HomeController.php";
+require_once "controllers/UserController.php";
+require_once "controllers/DataController.php";
 
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
 define("ASSETS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "bootstrap/");
 
-$path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
+$path = isset($_SERVER["REQUEST_URI"]) ? trim($_SERVER["REQUEST_URI"], "/") : "/";
 
 $urls = [
    "/" => function () {
       HomeController::home();
    },
-   # routing
    "index.php" => function () {
       HomeController::home();
    },
@@ -41,8 +40,6 @@ $urls = [
    "API/events" => function () {
       DataController::getEventJson();
    }
-
-
 ];
 
 try {

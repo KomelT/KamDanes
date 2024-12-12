@@ -6,6 +6,12 @@ COPY ./src /var/www/html
 
 RUN docker-php-ext-install pdo pdo_mysql
 
-RUN echo "ServerName localhost:80" >> /etc/apache2/apache2.conf
+RUN a2enmod rewrite
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+COPY ./apache2.conf /etc/apache2/sites-available/000-default.conf
+
+RUN apachectl configtest
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
