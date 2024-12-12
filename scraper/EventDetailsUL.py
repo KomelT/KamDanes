@@ -179,7 +179,7 @@ class EventDetailsUL:
             'online' : 1 if self.location == "Spletni dogodek" else 0
         }
 
-        uri = 'http://localhost:3000/index.php/API/pushEvent'
+        uri = 'http://localhost:3000/API/pushEvent'
 
         response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=json.dumps(data))
 
