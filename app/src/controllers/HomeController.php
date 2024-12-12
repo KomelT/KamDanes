@@ -5,14 +5,14 @@ class HomeController
 {
     public static function home()
     {
-        ViewHelper::render("views/home.php");
+        ViewHelper::redirect("view/index/index.html");
     }
     public static function login()
     {
-        ViewHelper::render("views/login.php");
+        ViewHelper::redirect("view/login.php");
     }
     public static function register()
     {
-        ViewHelper::render("views/register.php");
+        ViewHelper::redirect("views/register.php");
     }
 }
