@@ -2,6 +2,20 @@
 
 Project for class TPO (Software Engineering), at FRI, University of Ljubljana.
 
+## Development
+
+```bash
+# start our stack
+docker compose up
+
+# stops our stack
+docker compose down
+
+# stops our stack and delete
+docker compose down -v
+
+```
+
 ## Project planning
 
 - [Original idea proposed](./.idea/original_idea_porposed.md)
