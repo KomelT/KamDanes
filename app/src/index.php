@@ -46,11 +46,10 @@ $urls = [
 ];
 
 try {
-   DataController::getEventJson();
+   
    
    if (isset($urls[$path])) {
-      //$urls[$path]();
-      
+      $urls[$path]();
    } else {
       echo "No controller for '$path'";
    }

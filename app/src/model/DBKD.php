@@ -8,8 +8,8 @@ class DBKD
         if (self::checkUsername($username)) {
             $db = DBInit::getInstance();
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $statement = $db->prepare("INSERT INTO users 
-                (username,password) VALUES (:username, :password)");
+            $statement = $db->prepare("INSERT INTO user
+                (username,password,email,name,phone,role,disabled) VALUES (:username, :password)");
 
             $statement->bindParam(":username", $username, PDO::PARAM_STR);
             $statement->bindParam(":password", $hashed_password, PDO::PARAM_STR);

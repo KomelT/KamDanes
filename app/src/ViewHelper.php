@@ -64,7 +64,7 @@ class ViewHelper
     {
         header('Content-Type: application/json');
         echo $data;
-    }
+    }   
     // Displays a simple 404 message
     public static function error404()
     {
