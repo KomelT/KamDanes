@@ -163,25 +163,27 @@ class EventDetailsUL:
         import json
         data = {
             'id_user' : 100, #UL
-            'name' : self.title if self.title else "NULL",
-            'organisation' : self.organisation if self.organisation else "NULL",
-            'artist_name' : 'NULL',
-            'date_from' : self.start_date if self.start_date else "NULL",
-            'date_to' : self.end_date if self.end_date else "NULL",
-            'loc_x' : self.longitude if self.longitude else "NULL",
-            'loc_y' : self.latitude if self.latitude else "NULL",
-            'time' :self.start_time if self.start_time else "NULL",
-            'age_lim' : self.age_limit if self.age_limit else "NULL",
-            'description' : self.description if self.description else "NULL",
-            'price' : self.price if self.price else 0,
+            'name' : self.title if self.title else None,
+            'organisation' : self.organisation if self.organisation else None,
+            'artist_name' : None,
+            'date_from' : self.start_date if self.start_date else None,
+            'date_to' : self.end_date if self.end_date else None,
+            'loc_x' : self.longitude if self.longitude else None,
+            'loc_y' : self.latitude if self.latitude else None,
+            'time' :self.start_time if self.start_time else None,
+            'age_lim' : self.age_limit if self.age_limit else None,
+            'description' : self.description if self.description else None,
+            'price' : self.price if self.price else None,
             'type' : self.type_of_event if self.type_of_event else 0,
-            'link' : self.url if self.url else "NULL",
+            'link' : self.url if self.url else None,
             'online' : 1 if self.location == "Spletni dogodek" else 0
         }
 
         uri = 'http://localhost:3000/API/pushEvent'
 
         response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=json.dumps(data))
+
+        print(json.dumps(data))
 
         print("Response code", response)
 
