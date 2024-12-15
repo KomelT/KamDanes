@@ -2,7 +2,7 @@
 
 Project for class TPO (Software Engineering), at FRI, University of Ljubljana.
 
-## Development
+## Developfolder and is accessed via the former php code.ment
 
 ```bash
 # start our stack
@@ -18,8 +18,8 @@ docker compose down -v
 ```php
 #adding assets
 <?php echo ASSETS_URL;?>nekaj.js
-All assets are stored in the assets folder and is accessed via the former php code.
 ```
+All assets are stored in the assets folder
 All calls to pages or APIs are made trough the router "index.php" in the root folder. Instead of ```html action="controllers/ControllerName.php"```, we use ```html action="funcionName"```.
 
 ## Project planning
