@@ -1,19 +1,22 @@
-<?php 
+<?php
 
-class DBInit {
+class DBInit
+{
 
-    private static $host = "localhost";
-    private static $user = "root";
+    private static $host = "db";
+    private static $user = "kamdanes";
     private static $password = "nepovem";
-    private static $schema = "invoice";
+    private static $schema = "kamdanes";
     private static $instance = null;
 
-    private function __construct() {
-        
+    private function __construct()
+    {
+
     }
 
-    private function __clone() {
-        
+    private function __clone()
+    {
+
     }
 
     /**
@@ -23,10 +26,11 @@ class DBInit {
      * 
      * @return PDO instance 
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!self::$instance) {
             $config = "mysql:host=" . self::$host
-                    . ";dbname=" . self::$schema;
+                . ";dbname=" . self::$schema;
             $options = array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

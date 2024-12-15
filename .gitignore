@@ -1,0 +1,9 @@
+bin 
+lib
+lib64
+pyvenv.cfg
+test.*
+Scrapers/__pycache__
+scraper/__pycache__
+.*
+.env
