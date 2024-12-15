@@ -8,7 +8,7 @@ require_once "controllers/DataController.php";
 
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
-define("ASSETS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "bootstrap/");
+define("ASSETS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "assets/");
 
 $path = isset($_SERVER["REQUEST_URI"]) ? trim($_SERVER["REQUEST_URI"], "/") : "/";
 

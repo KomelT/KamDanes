@@ -5,7 +5,7 @@ class HomeController
 {
     public static function home()
     {
-        ViewHelper::render("view/index/index.html");
+        ViewHelper::render("view/index/index.php");
     }
     public static function login()
     {
