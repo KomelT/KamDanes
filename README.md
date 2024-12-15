@@ -15,6 +15,12 @@ docker compose down
 docker compose down -v
 
 ```
+```php
+#adding assets
+<?php echo ASSETS_URL;?>nekaj.js
+All assets are stored in the assets folder and is accessed via the former php code.
+```
+All calls to pages or APIs are made trough the router "index.php" in the root folder. Instead of ```html action="controllers/ControllerName.php"```, we use ```html action="funcionName"```.
 
 ## Project planning
 
