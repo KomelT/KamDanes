@@ -17,7 +17,8 @@ $urls = [
       HomeController::home();
    },
    "index.php" => function () {
-      HomeController::home();
+      ViewHelper::redirect("/");
+      
    },
    "" => function () {
       HomeController::home();
@@ -29,7 +30,7 @@ $urls = [
       HomeController::register();
    },
    "registerUser" => function () {
-      UserController::registerUser($_POST["username"], $_POST["password"]);
+      UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"]);
    },
    "loginUser" => function () {
       UserController::loginUser($_POST["username"], $_POST["password"]);
@@ -43,6 +44,9 @@ $urls = [
 
    "API/pushEvent" => function () {
       DataController::pushEvent();
+   },
+   "reset" => function () {
+      HomeController::reset();
    }
 ];
 

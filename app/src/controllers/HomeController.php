@@ -9,10 +9,13 @@ class HomeController
     }
     public static function login()
     {
-        ViewHelper::redirect("view/login.php");
+        ViewHelper::render("view/login.php");
     }
     public static function register()
     {
-        ViewHelper::redirect("views/register.php");
+        ViewHelper::render("view/register.php");
+    }
+    public static function reset(){
+        ViewHelper::render("view/reset.php");
     }
 }

@@ -17,6 +17,7 @@ class ViewHelper
     public static function redirect($url)
     {
         header("Location: " . $url);
+        exit(0);
     }
     public static function registerResponse($status)
     {
