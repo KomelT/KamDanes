@@ -61,9 +61,11 @@ class DBKD
     public static function pushEvent($data) {
         $db = DBInit::getInstance();
         $statement = $db->prepare("INSERT INTO event 
-            (id_user, name, organisation, artist_name, date_from, date_to, loc_x, loc_y, time, age_lim, description, price, type, link, online) 
-            VALUES (:id_user, :name, :organisation, :artist_name, :date_from, :date_to, :loc_x, :loc_y, :time, :age_lim, :description, :price, :type, :link, :online);");
-    
+            (id_user, name, organisation, artist_name, date_from, date_to, loc_x, loc_y, time, age_lim, description, price, type, link, online, url_hash) 
+            VALUES (:id_user, :name, :organisation, :artist_name, :date_from, :date_to, :loc_x, :loc_y, :time, :age_lim, :description, :price, :type, :link, :online, :url_hash);");
+
+        $hashed_url = hash('sha512', $data["link"]);
+
         $statement->bindParam(":id_user", $data["id_user"], PDO::PARAM_INT);
         $statement->bindParam(":name", $data["name"], PDO::PARAM_STR);
         $statement->bindParam(":organisation", $data["organisation"], PDO::PARAM_STR);
@@ -79,7 +81,8 @@ class DBKD
         $statement->bindParam(":type", $data["type"], PDO::PARAM_INT);
         $statement->bindParam(":link", $data["link"], PDO::PARAM_STR);
         $statement->bindParam(":online", $data["online"], PDO::PARAM_INT);
-    
+        $statement->bindParam(":url_hash", $hashed_url, PDO::PARAM_STR);
+
         $statement->execute();
     }
     
