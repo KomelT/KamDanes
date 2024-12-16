@@ -185,7 +185,7 @@ class EventDetailsUL:
 
         print(json.dumps(data))
 
-        print("Response code", response)
+        # print("Response code", response)
 
     def convert_time(self):
         from datetime import datetime
