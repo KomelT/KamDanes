@@ -80,6 +80,7 @@
 <body>
     <div class="form-container">
         <h2>Login</h2>
+
         <form action="loginUser" method="POST">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
