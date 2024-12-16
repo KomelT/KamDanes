@@ -32,4 +32,6 @@ CREATE TABLE event (
 
 ALTER TABLE `event`
   ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+/*Tukaj se bodo dodajali scraperji. Vsakič ko se nov naredi mora dobiti svoj id*/
+INSERT INTO `user`(`id`, `username`, `password`, `email`, `name`, `phone`, `role`, `disabled`) VALUES (100,'UL-scraper','1234','polz@fri.uni-lj.si','UniverzaVLjubljaniScraper', 113, 69, 0);
 COMMIT;
