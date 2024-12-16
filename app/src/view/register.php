@@ -80,7 +80,7 @@
 <body>
     <div class="form-container">
         <h2>Register</h2>
-        <form action="#" method="POST">
+        <form action="registerUser" method="POST">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Choose a username" required>
             <label for="email">Email</label>
@@ -90,7 +90,7 @@
             <button type="submit">Sign Up</button>
         </form>
         <div class="footer">
-            Already have an account? <a href="/src/view/login.php">Login</a>
+            Already have an account? <a href="login">Login</a>
         </div>
     </div>
 </body>

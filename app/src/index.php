@@ -2,23 +2,23 @@
 
 session_start();
 
-require_once("controllers/HomeController.php");
-require_once("controllers/UserController.php");
-require_once("controllers/DataController.php");
+require_once "controllers/HomeController.php";
+require_once "controllers/UserController.php";
+require_once "controllers/DataController.php";
 
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
-define("ASSETS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "bootstrap/");
+define("ASSETS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "assets/");
 
-$path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
+$path = isset($_SERVER["REQUEST_URI"]) ? trim($_SERVER["REQUEST_URI"], "/") : "/";
 
 $urls = [
    "/" => function () {
       HomeController::home();
    },
-   # routing
    "index.php" => function () {
-      HomeController::home();
+      ViewHelper::redirect("/");
+      
    },
    "" => function () {
       HomeController::home();
@@ -30,7 +30,7 @@ $urls = [
       HomeController::register();
    },
    "registerUser" => function () {
-      UserController::registerUser($_POST["username"], $_POST["password"]);
+      UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"]);
    },
    "loginUser" => function () {
       UserController::loginUser($_POST["username"], $_POST["password"]);
@@ -40,12 +40,19 @@ $urls = [
    },
    "API/events" => function () {
       DataController::getEventJson();
+   }, 
+
+   "API/pushEvent" => function () {
+      DataController::pushEvent();
+   },
+   "reset" => function () {
+      HomeController::reset();
    }
-
-
 ];
 
 try {
+   
+   
    if (isset($urls[$path])) {
       $urls[$path]();
    } else {
@@ -53,5 +60,7 @@ try {
    }
 } catch (Exception $e) {
    echo "An error occurred: <pre>$e</pre>";
-   // ViewHelper::error404();
+   ViewHelper::error404();
 }
+
+

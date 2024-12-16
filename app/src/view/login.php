@@ -80,7 +80,8 @@
 <body>
     <div class="form-container">
         <h2>Login</h2>
-        <form action="#" method="POST">
+
+        <form action="loginUser" method="POST">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
             <label for="password">Password</label>
@@ -88,8 +89,8 @@
             <button type="submit">Login</button>
         </form>
         <div class="footer">
-            Don't have an account? <a href="/src/view/register.php">Sign up</a><br>
-            Forgoten password? <a href="/src/view/register.php">Reset password</a>
+            Don't have an account? <a href  ="register">Sign up</a><br>
+            Forgoten password? <a href="reset">Reset password</a>
         </div>
     </div>
 </body>

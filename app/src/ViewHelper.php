@@ -17,6 +17,7 @@ class ViewHelper
     public static function redirect($url)
     {
         header("Location: " . $url);
+        exit(0);
     }
     public static function registerResponse($status)
     {
@@ -64,7 +65,7 @@ class ViewHelper
     {
         header('Content-Type: application/json');
         echo $data;
-    }
+    }   
     // Displays a simple 404 message
     public static function error404()
     {

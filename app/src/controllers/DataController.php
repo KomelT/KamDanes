@@ -9,7 +9,7 @@ class DataController
     }
 
     public static function pushEvent(){
-        $data = json_decode(file_get_contents('php://input'), true); //reads the whole requesst body
+        $data = json_decode(file_get_contents('php://input'), true);
         foreach($data as $key => $value){
             $data[$key] = trim($value);
 
