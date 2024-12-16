@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gostitelj: db
--- Čas nastanka: 16. dec 2024 ob 21.35
+-- Čas nastanka: 16. dec 2024 ob 22.02
 -- Različica strežnika: 9.1.0
 -- Različica PHP: 8.2.26
 
@@ -37,7 +37,8 @@ CREATE TABLE `event` (
   `date_to` date DEFAULT NULL,
   `loc_x` double DEFAULT NULL,
   `loc_y` double DEFAULT NULL,
-  `time` time DEFAULT NULL,
+  `time_from` time DEFAULT NULL,
+  `time_to` time DEFAULT NULL,
   `age_lim` int DEFAULT NULL,
   `description` text,
   `price` decimal(10,0) DEFAULT NULL,
@@ -63,6 +64,16 @@ CREATE TABLE `user` (
   `role` int DEFAULT NULL,
   `disabled` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Odloži podatke za tabelo `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `email`, `name`, `phone`, `role`, `disabled`) VALUES
+(100, 'UL-scraper', '1234', 'polz@fri.uni-lj.si', 'UniverzaVLjubljaniScraper', '113', 69, 0),
+(101, 'Eventim-scraper', '1234', 'info@eventim.si', 'EventimScraper', '113', 69, 0),
+(102, 'Metelkova-scraper', '1234', 'info@metelkova.si', 'MetelkovaScraper', '113', 69, 0),
+(103, 'VisitLjubljana-scraper', '1234', 'info@visit-ljubljana.si', 'VisitLjubljanaScraper', '113', 69, 0);
 
 --
 -- Indeksi zavrženih tabel
@@ -96,7 +107,7 @@ ALTER TABLE `event`
 -- AUTO_INCREMENT tabele `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- Omejitve tabel za povzetek stanja
@@ -113,4 +124,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
+-- Events
 CREATE DEFINER=`kamdanes`@`%` EVENT `Deleting_past_events` ON SCHEDULE EVERY 1 DAY STARTS '2024-12-16 21:33:33' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM event WHERE (`date_to` < CURRENT_DATE()) OR (`date_from` < CURRENT_DATE() AND `date_to` IS NULL)
