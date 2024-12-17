@@ -125,4 +125,10 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- Events
-CREATE DEFINER=`kamdanes`@`%` EVENT `Deleting_past_events` ON SCHEDULE EVERY 1 DAY STARTS '2024-12-16 21:33:33' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM event WHERE (`date_to` < CURRENT_DATE()) OR (`date_from` < CURRENT_DATE() AND `date_to` IS NULL)
+CREATE DEFINER=`kamdanes`@`%` EVENT `Deleting_past_events` ON SCHEDULE EVERY 1 DAY STARTS '2024-12-16 21:33:33' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM event WHERE (`date_to` < CURRENT_DATE()) OR (`date_from` < CURRENT_DATE() AND `date_to` IS NULL);
+
+INSERT INTO `event` (`id`, `id_user`, `name`, `organisation`, `artist_name`, `date_from`, `date_to`, `loc_x`, `loc_y`, `time_from`, `time_to`, `age_lim`, `description`, `price`, `type`, `link`, `online`, `url_hash`) VALUES
+(1, 100, 'Test event', 'Test organisation', 'Test artist', '2024-12-16', '2024-12-16', 46.0519, 14.5058, '20:00:00', '22:00:00', 18, 'Test description', 10, 1, 'https://www.test.com', 0, 'test-hash'),
+(2, 100, 'Test event 2', 'Test organisation 2', 'Test artist 2', '2024-12-16', '2024-12-16', 46.0519, 14.5057, '20:00:00', '22:00:00', 18, 'Test description 2', 10, 1, 'https://www.test.com', 0, 'test-hash-2'),
+(3, 100, 'Test event 3', 'Test organisation 3', 'Test artist 3', '2024-12-16', '2024-12-16', 46.0519, 14.5059, '20:00:00', '22:00:00', 18, 'Test description 3', 10, 1, 'https://www.test.com', 0, 'test-hash-3'),
+(4, 100, 'Test event 4', 'Test organisation 4', 'Test artist 4', '2024-12-16', '2024-12-16', 46.0519, 14.5056, '20:00:00', '22:00:00', 18, 'Test description 4', 10, 1, 'https://www.test.com', 0, 'test-hash-4');
