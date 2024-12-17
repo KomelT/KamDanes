@@ -2,6 +2,69 @@ import requests
 from bs4 import BeautifulSoup
 
 class EventDetailsUL:
+    """
+    A class to represent and scrape event details from a given URL.
+    Attributes
+    ----------
+    url : str
+        The URL of the event page.
+    soup : BeautifulSoup object
+        The parsed HTML content of the event page.
+    title : str
+        The title of the event.
+    organisation : str
+        The organisation hosting the event, default is "Univerza v Ljubljani".
+    start_date : str
+        The start date of the event.
+    start_time : str
+        The start time of the event.
+    end_date : str
+        The end date of the event.
+    end_time : str
+        The end time of the event.
+    location : str
+        The location of the event.
+    age_limit : int
+        The age limit for the event.
+    price : int
+        The price of the event, default is 0.
+    description : str
+        The description of the event.
+    online : bool
+        Indicates if the event is online, default is False.
+    type_of_event : int
+        The type of event, default is 0 (Univerzitetni dogodek).
+    longitude : float
+        The longitude of the event location.
+    latitude : float
+        The latitude of the event location.
+    Methods
+    -------
+    fetch_data():
+        Fetches the HTML content from the URL and parses it.
+    extract_details():
+        Extracts event details from the parsed HTML content.
+    get_date_and_time():
+        Retrieves the start and end date and time of the event.
+    get_location():
+        Retrieves the location of the event.
+    get_title():
+        Retrieves the title of the event.
+    get_description():
+        Retrieves the description of the event.
+    print_event_details():
+        Prints the event details.
+    getTypeOfEvent():
+        Placeholder method for getting the type of event.
+    isOnlineEvent(description):
+        Determines if the event is online based on keywords in the description.
+    get_location_coordinates():
+        Retrieves the geographical coordinates of the event location.
+    push_to_database():
+        Pushes the event details to a database.
+    convert_time():
+        Converts the event time to the local timezone.
+    """
     def __init__(self, url):
         self.url = url
         self.soup = None
@@ -183,10 +246,7 @@ class EventDetailsUL:
         uri = 'http://localhost:3000/API/pushEvent'
 
         response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=json.dumps(data))
-
-        print(json.dumps(data))
-
-        # print("Response code", response)
+        
 
     def convert_time(self):
         from datetime import datetime
