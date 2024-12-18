@@ -2,6 +2,10 @@ import EventDetailsUL
 import requests
 from bs4 import BeautifulSoup
 
+"""
+Run to insert events from the UL website into the database.
+"""
+
 HOME_URL = "https://www.uni-lj.si/dogodki?dateStart=&title=&nrOfItems=100"
 BASE_URL = "https://www.uni-lj.si"
 
@@ -13,6 +17,6 @@ if __name__ == "__main__":
         event_url = event.find('a').get('href')
         event_details = EventDetailsUL.EventDetailsUL(BASE_URL + event_url)
         event_details.fetch_data()
-        # event_details.print_event_details()
+        event_details.print_event_details()
         event_details.push_to_database()
         print("-----------------------------------")

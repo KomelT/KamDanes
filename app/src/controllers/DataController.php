@@ -11,7 +11,9 @@ class DataController
     public static function pushEvent(){
         $data = json_decode(file_get_contents('php://input'), true);
         foreach($data as $key => $value){
-            $data[$key] = trim($value);
+            if(is_string($data[$key])){
+                $data[$key] = trim($value);
+            }
 
         }
         DBKD::pushEvent($data);
