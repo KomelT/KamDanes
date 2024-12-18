@@ -55,8 +55,8 @@ var dramaIcon = L.icon({
   popupAnchor:  [-3, -76]
 });
 
-L.marker([ 46.049767, 14.508955 ], {icon: zogaIcon}).addTo(map).bindPopup("INFO o VENTU");
-L.marker([ 46.054391, 14.498473 ], {icon: zogaIcon}).addTo(map).bindPopup("INFO o VENTU");
+L.marker([ 46.049767, 14.508955 ], {icon: zogaIcon}).addTo(map).bindPopup("INFO o EVENTU");
+L.marker([ 46.054391, 14.498473 ], {icon: zogaIcon}).addTo(map).bindPopup("INFO o EVENTU");
 L.marker([ 46.049670, 14.498998 ], {icon: dramaIcon}).addTo(map).bindPopup("INFO O EVENTU");
 L.marker([ 46.052205, 14.499940 ], {icon: dramaIcon}).addTo(map).bindPopup("INFO O EVENTU");
 L.marker([ 46.055585, 14.504166 ], {icon: muzikaIcon}).addTo(map).bindPopup("INFO O EVENTU");

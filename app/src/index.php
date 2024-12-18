@@ -18,7 +18,6 @@ $urls = [
    },
    "index.php" => function () {
       ViewHelper::redirect("/");
-      
    },
    "" => function () {
       HomeController::home();
