@@ -75,16 +75,22 @@ fetch("/API/events").then((res) => {
 
   res.json().then((events) => {
     for (const event of events) {
-      const marker = L.marker([event.loc_x, event.loc_y], {
+      //console.log(event);
+      if (event.loc_x == null || event.loc_y == null) {
+        event.loc_x = 46.056946;
+        event.loc_y = 14.505751;
+        
+      }
+      const marker = L.marker([event.loc_y, event.loc_x], {
         icon:
-          event.category === "Šport"
+          event.type === "0"
             ? zogaIcon
-            : event.category === "Kultura"
+            : event.category === "1"
             ? kulturnaIcon
-            : event.category === "Glasba"
+            : event.category === "2"
             ? muzikaIcon
             : dramaIcon,
-      }).addTo(map);
+      }).addTo(map); 
 
       marker.bindPopup(
         `<b>${event.title}</b><br>${event.description}<br>${event.date}`
