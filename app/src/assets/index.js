@@ -83,17 +83,17 @@ fetch("/API/events").then((res) => {
       }
       const marker = L.marker([event.loc_y, event.loc_x], {
         icon:
-          event.type === "0"
+          event.type == "0"
             ? zogaIcon
-            : event.category === "1"
+            : event.category == "1"
             ? kulturnaIcon
-            : event.category === "2"
+            : event.category == "2"
             ? muzikaIcon
             : dramaIcon,
       }).addTo(map); 
 
       marker.bindPopup(
-        `<b>${event.title}</b><br>${event.description}<br>${event.date}`
+        `<b>${event.name}</b><br>${event.description}<br><b>${event.date_from}</b>`
       );
     }
   });
