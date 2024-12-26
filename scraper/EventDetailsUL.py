@@ -208,7 +208,6 @@ class EventDetailsUL:
 
         if self.location == "Spletni dogodek":
             return
-        print(self.location)
         addresses = self.location.split(',')
 
         updated_address = ''
@@ -262,17 +261,17 @@ class EventDetailsUL:
         from datetime import datetime
         import pytz
 
-        local_tz = pytz.timezone('Europe/Berlin')  
+        local_time_zone = pytz.timezone('Europe/Berlin')  
 
         if(self.start_time):
             old_start_time = datetime.fromisoformat("2024-12-12T" + self.start_time)
-            start_time_dt = old_start_time.astimezone(local_tz)
+            start_time_dt = old_start_time.astimezone(local_time_zone)
             new_start_time = start_time_dt.strftime("%Y-%m-%d %H:%M")
             self.start_time = new_start_time.split(" ")[1]
 
         if(self.end_time):
             old_end_time = datetime.fromisoformat("2024-12-12T" + self.end_time)
-            end_time_dt = old_end_time.astimezone(local_tz)
+            end_time_dt = old_end_time.astimezone(local_time_zone)
             new_end_time = end_time_dt.strftime("%Y-%m-%d %H:%M")
             self.end_time = new_end_time.split(" ")[1]
 
