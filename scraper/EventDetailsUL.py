@@ -104,7 +104,7 @@ class EventDetailsUL:
     def get_date_and_time(self):
         time_wrapper = self.soup.find('p', class_='event-info-col-right font-size-xxs event-date-wrapper')
         if not time_wrapper:
-            return [], [], [], []
+            return None, None, None, None
 
         time_elements = time_wrapper.find_all('time')
         datetime_values = [el.get('datetime') for el in time_elements if el.has_attr('datetime')]
@@ -120,15 +120,23 @@ class EventDetailsUL:
         if not p:
             self.online = True
             return "Spletni dogodek"
-        location = p.find('span', class_=None)
+        
+        location = ''
+        locations = p.find_all('span', class_=None)
+        
+        for el in locations:
+            location += el.text + ", "
+
+        location = location[:-2]
+
         if not location:
             self.online = True
             return "Spletni dogodek"
-        if self.isOnlineEvent(location.text.strip()):
+        if self.isOnlineEvent(location.strip()):
             self.online = True
             return "Spletni dogodek"
         else:
-            return location.text.strip()
+            return location.strip()
 
     def get_title(self):
         title_tag = self.soup.find('h1', class_='font-size-xl')
@@ -200,6 +208,7 @@ class EventDetailsUL:
 
         if self.location == "Spletni dogodek":
             return
+        print(self.location)
         addresses = self.location.split(',')
 
         updated_address = ''
@@ -211,15 +220,16 @@ class EventDetailsUL:
                 updated_address += chunk + ', '
 
         if updated_address:
+            updated_address = updated_address[:-2]
             api_key = os.getenv('GoogleMapsKey')
             url = f'https://maps.googleapis.com/maps/api/geocode/json?address={updated_address}&key={api_key}'
             
             response = requests.get(url)
             resp_json_payload = response.json()
-
-            # print(resp_json_payload['results'][0]['geometry']['location'])
-            self.longitude = resp_json_payload['results'][0]['geometry']['location']['lng']
-            self.latitude = resp_json_payload['results'][0]['geometry']['location']['lat']
+            if resp_json_payload:
+                # print(resp_json_payload['results'][0]['geometry']['location'])
+                self.longitude = resp_json_payload['results'][0]['geometry']['location']['lng']
+                self.latitude = resp_json_payload['results'][0]['geometry']['location']['lat']
     
     def push_to_database(self):
         import requests
@@ -252,7 +262,7 @@ class EventDetailsUL:
         from datetime import datetime
         import pytz
 
-        local_tz = pytz.timezone('Europe/Berlin')  # Replace with your local timezone
+        local_tz = pytz.timezone('Europe/Berlin')  
 
         if(self.start_time):
             old_start_time = datetime.fromisoformat("2024-12-12T" + self.start_time)
