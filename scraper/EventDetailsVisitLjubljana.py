@@ -3,11 +3,11 @@ from dotenv import load_dotenv
 import requests
 from bs4 import BeautifulSoup
 
-class EventDetailsKulturnik:
-    def __init__(self, event):
-        self.id_user = 101
-        self.url = None
-        self.soup = BeautifulSoup(event, 'html.parser')
+class EventDetailsVisitLjubljana:
+    def __init__(self, url):
+        self.id_user = 103 #Visit Ljubljana
+        self.url = url
+        self.soup = BeautifulSoup(requests.get(url).text, 'html.parser')
         self.title = None
         self.organisation = None
         self.start_date = None
@@ -22,60 +22,64 @@ class EventDetailsKulturnik:
         self.type_of_event = 1 #Kulturni dogodek
         self.longitude = None
         self.latitude = None
-
+    
     def extract_data(self):
-        self.url = self.get_url()
         self.title = self.get_title()
-        self.start_date, self.start_time, self.end_date, self.end_time = self.get_date_and_time()
-        self.convert_time()
+        self.start_date, self.end_date, self.start_time, self.end_time = self.get_date_and_time()
         self.location = self.get_location()
         self.get_location_coordinates()
-
-    def get_title(self):
-        h2 = self.soup.find('h2')
-        if h2.find('a'):
-            return h2.find('a').text.strip()
-        else:
-            return h2.text.strip()
     
+    def get_title(self):
+        h1 = self.soup.find('h1', class_="h2 color-red text-uppercase")
+        return h1.text.strip()
+
     def get_date_and_time(self):
-        time_elements = self.soup.find_all('time')
-        if not time_elements:
-            return None, None, None, None
-        if len(time_elements) == 1:
-            return time_elements[0].text.split('T')[0].strip(), time_elements[0].text.split('T')[1].strip(), None, None
-        elif len(time_elements) == 2:
-            return time_elements[0].text.split('T')[0].strip(), time_elements[0].text.split('T')[1].strip(), time_elements[1].text.split('T')[0].strip(), time_elements[1].text.split('T')[1].strip()
-        
-    def convert_time(self):
-        from datetime import datetime
-        import pytz
+        section = self.soup.find('section', class_="event-dates-iterations")
+        time_elements = section.find('p', class_="color-red").text
 
-        local_tz = pytz.timezone('Europe/Berlin')  
+        delimiter = ","
 
-        if(self.start_time):
-            old_start_time = datetime.fromisoformat("2024-12-12T" + self.start_time.strip())
-            start_time_dt = old_start_time.astimezone(local_tz)
-            new_start_time = start_time_dt.strftime("%Y-%m-%d %H:%M")
-            self.start_time = new_start_time.split(" ")[1]
+        if "ob" in time_elements:
+            date, time = time_elements.split(" ob ")
+            date = '-'.join(date.strip().split('. ')[::-1]).strip()
+            return date, None, time, None
 
-        if(self.end_time):
-            old_end_time = datetime.fromisoformat("2024-12-12T" + self.end_time.strip())
-            end_time_dt = old_end_time.astimezone(local_tz)
-            new_end_time = end_time_dt.strftime("%Y-%m-%d %H:%M")
-            self.end_time = new_end_time.split(" ")[1]
+        temp = time_elements.split(delimiter)
+        if len(temp) == 2:
+            dates = temp[0]
+            times = temp[1]
+        else:
+            dates = time_elements
+            times = None
+
+        start_date, end_date, start_time, end_time = None, None, None, None
+
+        if dates:
+            # Split the date range into start and end parts
+            date_parts = dates.split(' - ')
+            start_date_part = date_parts[0].strip()
+            end_date_part = date_parts[1].strip() if len(date_parts) > 1 else None
+
+            # Extract the year from the end date if available
+            if end_date_part and len(start_date_part.split('. ')) == 2:
+                end_date_year = end_date_part.split('. ')[-1]
+                start_date_part += f'{end_date_year}'
+
+            # Format start and end dates to YYYY-MM-DD
+            start_date = '-'.join(start_date_part.split('. ')[::-1]).strip()
+            if end_date_part:
+                end_date = '-'.join(end_date_part.split('. ')[::-1]).strip()
+
+        if times:
+            start_time = times.split('-')[0].strip()
+            end_time = times.split('-')[1].strip()
+
+        return start_date, end_date, start_time, end_time
     
     def get_location(self):
-        div_location = self.soup.find('div', class_='info location')
-        locations = div_location.find_all('a')
+        section = self.soup.find('section', class_="event-dates-iterations")
+        return section.find('p', class_=None).text.strip()
 
-        location = ''
-
-        for element in locations:
-            location += element.text.strip() + ", "
-        
-        return location[:-2].strip()
-    
     def get_location_coordinates(self):
         load_dotenv()
         api_key = os.getenv('GoogleMapsKey')
@@ -83,17 +87,11 @@ class EventDetailsKulturnik:
         
         response = requests.get(url)
         resp_json_payload = response.json()
-        if len(resp_json_payload['results']) > 0:
+        try:
             self.longitude = resp_json_payload['results'][0]['geometry']['location']['lng']
             self.latitude = resp_json_payload['results'][0]['geometry']['location']['lat']
-    
-    def get_url(self):
-        h2 = self.soup.find('h2', class_=['item-title', 'summary'])
-        if h2:
-            a = h2.find('a')
-            if a:
-                return a.get('href').strip()
-        return None
+        except:
+            pass
 
     def print_event_details(self):
         print("Link:", self.url)
@@ -110,7 +108,7 @@ class EventDetailsKulturnik:
         print("Online:", self.online)
         print("Longitude:", self.longitude)
         print("Latitude:", self.latitude)
-    
+
     def push_to_database(self):
         import requests
         import json
@@ -122,7 +120,7 @@ class EventDetailsKulturnik:
     def get_json(self):
         import json
         data = {
-            'id_user' : 101, #Kulturnik
+            'id_user' : 103, #VisitLjubljana
             'name' : self.title if self.title else None,
             'organisation' : self.organisation if self.organisation else None,
             'artist_name' : None,
