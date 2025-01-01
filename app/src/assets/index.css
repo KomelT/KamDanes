@@ -72,3 +72,8 @@ body {
   width: 130px;
   font-size: 14px;
 }
+
+.type-picker {
+  display: flex;
+  flex-direction: column;
+}

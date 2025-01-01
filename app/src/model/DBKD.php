@@ -57,6 +57,7 @@ class DBKD
         $search = "";
         $dateFrom = date('Y-m-d', strtotime('today'));
         $dateTo = date('Y-m-d', (new DateTime('now'))->add(new DateInterval('P7D'))->getTimestamp());
+        $type = "";
 
         foreach ($query as $key => $value) {
             $query[$key] = explode("=", $value)[0];
@@ -66,11 +67,25 @@ class DBKD
                 $dateTo = explode("=", $value)[1];
             if ($query[$key] == "q")
                 $search = explode("=", $value)[1];
+            if ($query[$key] == "type")
+                $type = urldecode(explode("=", $value)[1]);
         }
 
-        $statement = $db->prepare("SELECT * FROM event WHERE (name LIKE :search OR description LIKE :search) AND date_from >= :dateFrom AND date_from <= :dateTo");
+        $statement = $db->prepare("
+            SELECT * 
+            FROM event 
+            WHERE (name LIKE :search OR description LIKE :search) 
+            AND date_from >= :dateFrom 
+            AND date_from <= :dateTo 
+            AND FIND_IN_SET(type, :type) > 0
+        ");
         $search = "%" . $search . "%";
-        $statement->execute([":search" => $search, ":dateFrom" => $dateFrom, ":dateTo" => $dateTo]);
+        $statement->execute([
+            ":search" => $search,
+            ":dateFrom" => $dateFrom,
+            ":dateTo" => $dateTo,
+            ":type" => $type
+        ]);
         $events = $statement->fetchAll();
         return json_encode($events);
     }

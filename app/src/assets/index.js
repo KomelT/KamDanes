@@ -111,8 +111,18 @@ function toggleSidebar() {
   }
 }
 
+function getSelectedEventType() {
+  const selectedTypes = [];
+  const checkboxes = document.querySelectorAll(".type-picker input[type=checkbox]:checked");
+  for (const checkbox of checkboxes) {
+    selectedTypes.push(checkbox.value);
+  }
+
+  return selectedTypes.join(",");
+}
+
 function fetchEvents() {
-  fetch(`/API/events?q=${encodeURIComponent(searchFilter.value)}&df=${encodeURIComponent(filterDateFrom.value)}&dt=${encodeURIComponent(filterDateTo.value)}`).then((res) => {
+  fetch(`/API/events?q=${encodeURIComponent(searchFilter.value)}&df=${encodeURIComponent(filterDateFrom.value)}&dt=${encodeURIComponent(filterDateTo.value)}&type=${encodeURIComponent(getSelectedEventType())}`).then((res) => {
     if (!res.ok) {
       throw new Error("Failed to fetch events");
     }

@@ -60,14 +60,32 @@
         <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
       </div>
       <div class="sidebar-content">
-        <h4>Filtri</h4>
+        <h4>Filtri:</h4>
         <input type="text" id="search" placeholder="Išči po imenu">
 
-        <h5>Datum</h5>
+        <h5>Datum:</h5>
         <div class="date-picker">
           <input type="date" id="date-from">
           <p> - </p>
           <input type="date" id="date-to">
+        </div>
+
+        <h5>Vrsta:</h5>
+        <div class="type-picker">
+          <label for="sport">Šport
+            <input type="checkbox" id="checkbox-type-sport" name="sport" value="0" checked></label>
+          <label for="kultura">Kultura
+            <input type="checkbox" id="checkbox-type-kultura" name="kultura" value="1" checked></label>
+          <label for="zabava">Zabava
+            <input type="checkbox" id="checkbox-type-zabava" name="zabava" value="2" checked></label>
+          <label for="izobrazevanje">Izobraževanje
+            <input type="checkbox" id="checkbox-type-izobrazevanje" name="izobrazevanje" value="3" checked></label>
+          <label for="dobrodelnost">Dobrodelnost
+            <input type="checkbox" id="checkbox-type-dobrodelnost" name="dobrodelnost" value="4" checked></label>
+          <label for="ul">UL
+            <input type="checkbox" id="checkbox-type-ul" name="ul" value="5" checked></label>
+          <label for="ostalo">Ostalo
+            <input type="checkbox" id="checkbox-type-ostalo" name="ostalo" value="6" checked></label>
         </div>
 
         <button id="filter-button" class="btn btn-primary mt-3" onclick="fetchEvents()">Filtriraj</button>
