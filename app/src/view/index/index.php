@@ -51,19 +51,31 @@
 <body>
   <div id="map" style="height: 100%; width: 100%;"></div>
   <div class="leaflet-top leaflet-left">
-    <button id="menuBtn" class="mbutton">
+    <button id="menu-button" class="menu-button">
       ≣ Menu
     </button>
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h1>Kam danes</h1>
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+      </div>
+      <div class="sidebar-content">
+        <h4>Filtri</h4>
+        <input type="text" id="search" placeholder="Išči po imenu">
+
+        <h5>Datum</h5>
+        <div class="date-picker">
+          <input type="date" id="date-from">
+          <p> - </p>
+          <input type="date" id="date-to">
+        </div>
+
+        <button id="filter-button" class="btn btn-primary mt-3" onclick="fetchEvents()">Filtriraj</button>
+      </div>
+    </div>
   </div>
-  <div id="sidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-  </div>
-  <!-- Custom JS -->
-  <script src="<?php echo ASSETS_URL ?>index.js"></script>
 </body>
+<!-- Custom JS -->
+<script src="<?php echo ASSETS_URL ?>index.js"></script>
 
 </html>

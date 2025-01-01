@@ -19,6 +19,7 @@ class ViewHelper
         header("Location: " . $url);
         exit(0);
     }
+
     public static function registerResponse($status)
     {
         header('Content-Type: application/json');
@@ -29,6 +30,7 @@ class ViewHelper
         ];
         echo json_encode($responseData);
     }
+
     public static function loginResponse($usernameExists, $password)
     {
         if (!$usernameExists) {
@@ -58,15 +60,12 @@ class ViewHelper
         echo json_encode($responseData);
     }
 
-
-
-
     public static function returnJson($data)
     {
         header('Content-Type: application/json');
         echo $data;
     }   
-    // Displays a simple 404 message
+
     public static function error404()
     {
         header('This is not the page you are looking for', true, 404);
@@ -77,6 +76,4 @@ class ViewHelper
 
         echo $html404;
     }
-
-
 }

@@ -5,10 +5,14 @@ class DataController
 {
     public static function getEventJson()
     {
-        ViewHelper::returnJson(DBKD::getJSONEvents());
+
+        $data = $_SERVER["QUERY_STRING"] ?? "";
+        $query = explode('&', $data);
+        ViewHelper::returnJson(DBKD::getJSONEvents($query));
     }
 
-    public static function pushEvent(){
+    public static function pushEvent()
+    {
         $data = json_decode(file_get_contents('php://input'), true);
         // foreach($data as $key => $value){
         //     if(is_string($data[$key])){
@@ -17,11 +21,5 @@ class DataController
 
         // }
         DBKD::pushEvent($data);
-    
-    
     }
-
-    
-
-
 }

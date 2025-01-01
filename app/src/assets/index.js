@@ -21,6 +21,7 @@ L.control.zoom({ position: "topright" }).addTo(map);
 const searchControl = new L.esri.Controls.Geosearch({
   position: "topright",
 }).addTo(map);
+
 const results = new L.LayerGroup().addTo(map);
 searchControl.on("results", (data) => {
   results.clearLayers();
@@ -28,10 +29,6 @@ searchControl.on("results", (data) => {
     results.addLayer(L.marker(data.results[i].latlng));
   }
 });
-
-// Add sidebar
-const button = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
 
 const sportPin = L.icon({
   iconUrl: "assets/ikone/sport-pin.png",
@@ -82,60 +79,91 @@ const ostaloPin = L.icon({
   popupAnchor: [-3, -76],
 });
 
-button.addEventListener("click", openNav);
-function openNav() {
-  sidebar.style.width = "250px";
-  button.style.width = "0";
-  sidebar.className = "leaflet-top leaflet-left";
+// add sidebar
+const menuButton = document.getElementById("menu-button");
+const sidebar = document.getElementById("sidebar");
+
+menuButton.addEventListener("click", () => {
+  toggleSidebar();
+});
+
+const searchFilter = document.getElementById("search")
+
+// set default data
+const filterDateFrom = document.getElementById("date-from");
+const filterDateTo = document.getElementById("date-to");
+
+const from = new Date().toISOString().split("T")[0];
+filterDateFrom.value = from;
+
+const to = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0];
+filterDateTo.value = to;
+
+
+function toggleSidebar() {
+  console.log(sidebar.style.display);
+  if (sidebar.style.display === "block" || sidebar.style.display === "") {
+    sidebar.style.display = "none";
+    menuButton.style.display = "block";
+  } else {
+    sidebar.style.display = "block";
+    menuButton.style.display = "none";
+  }
 }
 
-fetch("/API/events").then((res) => {
-  if (!res.ok) {
-    throw new Error("Failed to fetch events");
-  }
-
-  res.json().then((events) => {
-    for (const event of events) {
-      //console.log(event);
-      if (event.loc_x == null || event.loc_y == null) {
-        event.loc_x = 46.056946;
-        event.loc_y = 14.505751;
-        
-      }
-
-      let iconMarker = null;
-
-      console.log(event.type);
-
-      switch (event.type) {
-        case 0:
-          iconMarker = sportPin;
-          break;
-        case 1:
-          iconMarker = kulturaPin;
-          break;
-        case 2:
-          iconMarker = zabavaPin;
-          break;
-        case 3:
-          iconMarker = izobrazevanjePin;
-          break;
-        case 4:
-          iconMarker = dobrodelnostPin;
-          break;
-        case 5:
-          iconMarker = ulPin;
-          break;
-      }
-
-
-      const marker = L.marker([event.loc_y, event.loc_x], {
-        icon: iconMarker
-      }).addTo(map); 
-
-      marker.bindPopup(
-        `<b>${event.name}</b><br>${event.description}<br><b>${event.date_from}</b>`
-      );
+function fetchEvents() {
+  fetch(`/API/events?q=${encodeURIComponent(searchFilter.value)}&df=${encodeURIComponent(filterDateFrom.value)}&dt=${encodeURIComponent(filterDateTo.value)}`).then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to fetch events");
     }
+
+    res.json().then((events) => {
+
+      map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      for (const event of events) {
+        if (event.loc_x == null || event.loc_y == null) {
+          event.loc_x = 46.056946;
+          event.loc_y = 14.505751;
+        }
+
+        let iconMarker = null;
+
+        switch (event.type) {
+          case 0:
+            iconMarker = sportPin;
+            break;
+          case 1:
+            iconMarker = kulturaPin;
+            break;
+          case 2:
+            iconMarker = zabavaPin;
+            break;
+          case 3:
+            iconMarker = izobrazevanjePin;
+            break;
+          case 4:
+            iconMarker = dobrodelnostPin;
+            break;
+          case 5:
+            iconMarker = ulPin;
+            break;
+        }
+
+        const marker = L.marker([event.loc_y, event.loc_x], {
+          icon: iconMarker,
+        }).addTo(map);
+
+        marker.bindPopup(
+          `<b>${event.name}</b><br>${event.description}<br><b>${event.date_from}</b>`
+        );
+      }
+    });
   });
-});
+}
+
+fetchEvents();

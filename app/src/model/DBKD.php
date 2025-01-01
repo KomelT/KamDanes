@@ -2,7 +2,7 @@
 require_once("DBInnit.php");
 class DBKD
 {
-    public static function registerUser($username, $password,$email)
+    public static function registerUser($username, $password, $email)
     {
 
         if (self::checkUsername($username)) {
@@ -46,19 +46,36 @@ class DBKD
         if ($user) {
             return password_verify($password, $user["password"]);
         } else {
-            
+
             return false;
         }
     }
-    public static function getJSONEvents()
+    public static function getJSONEvents($query)
     {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM event");
-        $statement->execute();
+
+        $search = "";
+        $dateFrom = date('Y-m-d', strtotime('today'));
+        $dateTo = date('Y-m-d', (new DateTime('now'))->add(new DateInterval('P7D'))->getTimestamp());
+
+        foreach ($query as $key => $value) {
+            $query[$key] = explode("=", $value)[0];
+            if ($query[$key] == "df")
+                $dateFrom = explode("=", $value)[1];
+            if ($query[$key] == "dt")
+                $dateTo = explode("=", $value)[1];
+            if ($query[$key] == "q")
+                $search = explode("=", $value)[1];
+        }
+
+        $statement = $db->prepare("SELECT * FROM event WHERE (name LIKE :search OR description LIKE :search) AND date_from >= :dateFrom AND date_from <= :dateTo");
+        $search = "%" . $search . "%";
+        $statement->execute([":search" => $search, ":dateFrom" => $dateFrom, ":dateTo" => $dateTo]);
         $events = $statement->fetchAll();
         return json_encode($events);
     }
-    public static function pushEvent($data) {
+    public static function pushEvent($data)
+    {
         $db = DBInit::getInstance();
         $statement = $db->prepare("INSERT INTO event 
             (id_user, name, organisation, artist_name, date_from, date_to, loc_x, loc_y, time_from, time_to, age_lim, description, price, type, link, online, url_hash) 
@@ -86,6 +103,6 @@ class DBKD
 
         $statement->execute();
     }
-    
+
 
 }

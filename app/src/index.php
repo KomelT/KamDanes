@@ -11,6 +11,7 @@ define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
 define("ASSETS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "assets/");
 
 $path = isset($_SERVER["REQUEST_URI"]) ? trim($_SERVER["REQUEST_URI"], "/") : "/";
+$path = explode("?", $path)[0];
 
 $urls = [
    "/" => function () {
@@ -39,7 +40,7 @@ $urls = [
    },
    "API/events" => function () {
       DataController::getEventJson();
-   }, 
+   },
 
    "API/pushEvent" => function () {
       DataController::pushEvent();
@@ -50,8 +51,6 @@ $urls = [
 ];
 
 try {
-   
-   
    if (isset($urls[$path])) {
       $urls[$path]();
    } else {
