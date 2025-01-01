@@ -102,7 +102,7 @@ filterDateTo.value = to;
 
 function toggleSidebar() {
   console.log(sidebar.style.display);
-  if (sidebar.style.display === "block" || sidebar.style.display === "") {
+  if (sidebar.style.display === "block") {
     sidebar.style.display = "none";
     menuButton.style.display = "block";
   } else {
