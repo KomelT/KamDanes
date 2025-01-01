@@ -33,29 +33,50 @@ searchControl.on("results", (data) => {
 const button = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
 
-const zogaIcon = L.icon({
-  iconUrl: "assets/ikone/žoga.png",
+const sportPin = L.icon({
+  iconUrl: "assets/ikone/sport-pin.png",
   iconSize: [70, 70],
   iconAnchor: [35, 70],
   popupAnchor: [-3, -76],
 });
 
-const muzikaIcon = L.icon({
-  iconUrl: "assets/ikone/muzika.png",
+const kulturaPin = L.icon({
+  iconUrl: "assets/ikone/kultura-pin.png",
   iconSize: [70, 70],
   iconAnchor: [35, 70],
   popupAnchor: [-3, -76],
 });
 
-const kulturnaIcon = L.icon({
-  iconUrl: "assets/ikone/kulturni.png",
+const zabavaPin = L.icon({
+  iconUrl: "assets/ikone/zabava-pin.png",
   iconSize: [70, 70],
   iconAnchor: [35, 70],
   popupAnchor: [-3, -76],
 });
 
-const dramaIcon = L.icon({
-  iconUrl: "assets/ikone/drama.png",
+const izobrazevanjePin = L.icon({
+  iconUrl: "assets/ikone/izobrazevanje-pin.png",
+  iconSize: [70, 70],
+  iconAnchor: [35, 70],
+  popupAnchor: [-3, -76],
+});
+
+const dobrodelnostPin = L.icon({
+  iconUrl: "assets/ikone/dobrodelnost-pin.png",
+  iconSize: [70, 70],
+  iconAnchor: [35, 70],
+  popupAnchor: [-3, -76],
+});
+
+const ulPin = L.icon({
+  iconUrl: "assets/ikone/ul-pin.png",
+  iconSize: [70, 70],
+  iconAnchor: [35, 70],
+  popupAnchor: [-3, -76],
+});
+
+const ostaloPin = L.icon({
+  iconUrl: "assets/ikone/ostalo-pin.png",
   iconSize: [70, 70],
   iconAnchor: [35, 70],
   popupAnchor: [-3, -76],
@@ -81,15 +102,35 @@ fetch("/API/events").then((res) => {
         event.loc_y = 14.505751;
         
       }
+
+      let iconMarker = null;
+
+      console.log(event.type);
+
+      switch (event.type) {
+        case 0:
+          iconMarker = sportPin;
+          break;
+        case 1:
+          iconMarker = kulturaPin;
+          break;
+        case 2:
+          iconMarker = zabavaPin;
+          break;
+        case 3:
+          iconMarker = izobrazevanjePin;
+          break;
+        case 4:
+          iconMarker = dobrodelnostPin;
+          break;
+        case 5:
+          iconMarker = ulPin;
+          break;
+      }
+
+
       const marker = L.marker([event.loc_y, event.loc_x], {
-        icon:
-          event.type == "0"
-            ? zogaIcon
-            : event.category == "1"
-            ? kulturnaIcon
-            : event.category == "2"
-            ? muzikaIcon
-            : dramaIcon,
+        icon: iconMarker
       }).addTo(map); 
 
       marker.bindPopup(
