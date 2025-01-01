@@ -43,6 +43,13 @@ CREATE TABLE `event` (
   `description` text,
   `price` decimal(10,0) DEFAULT NULL,
   `type` int DEFAULT NULL,
+    -- 0 - šport
+    -- 1 - kultura
+    -- 2 - zabava
+    -- 3 - izobraževanje
+    -- 4 - dobrodelnost
+    -- 5 - UL dogodek
+    -- 6 - ostalo
   `link` text,
   `online` tinyint(1) DEFAULT NULL,
   `url_hash` varchar(128) NOT NULL
