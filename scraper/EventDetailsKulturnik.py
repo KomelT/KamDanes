@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 class EventDetailsKulturnik:
-    def __init__(self, event):
+    def __init__(self, event,type):
         self.id_user = 101
         self.url = None
         self.soup = BeautifulSoup(event, 'html.parser')
@@ -19,7 +19,7 @@ class EventDetailsKulturnik:
         self.price = None
         self.description = None
         self.online = False
-        self.type_of_event = 1 #Kulturni dogodek
+        self.type_of_event = type #type je odvisen na kater url scrapa
         self.longitude = None
         self.latitude = None
 
