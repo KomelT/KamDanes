@@ -233,6 +233,8 @@ class EventDetailsUL:
     def push_to_database(self):
         import requests
         import json
+        import os
+        
         data = {
             'id_user' : 100, #UL
             'name' : self.title if self.title else None,
@@ -251,8 +253,10 @@ class EventDetailsUL:
             'link' : self.url if self.url else None,
             'online' : 1 if self.location == "Spletni dogodek" else 0
         }
+        
+        app_url = os.getenv('APP_URL', 'http://localhost:3000')
 
-        uri = 'http://localhost:3000/API/pushEvent'
+        uri = f'{app_url}/API/pushEvent'
 
         response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=json.dumps(data))
         

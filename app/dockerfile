@@ -12,6 +12,8 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 COPY ./apache2.conf /etc/apache2/sites-available/000-default.conf
 
+RUN apt-get update && apt-get install -y curl
+
 RUN apachectl configtest
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

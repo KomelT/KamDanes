@@ -2,6 +2,7 @@ services:
   db:
     image: mysql:latest
     restart: always
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kamdanes
@@ -20,6 +21,8 @@ services:
 
   app:
     build: ./app
+    restart: always
+    container_name: app
     ports:
       - "3000:80"
     volumes:
@@ -27,10 +30,25 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  scraper:
+    build: ./scraper
+    container_name: scraper
+    environment:
+      APP_URL: http://app
+    depends_on:
+      app:
+        condition: service_healthy
 
   phpmyadmin:
     image: phpmyadmin:latest
     restart: always
+    container_name: phpmyadmin
     ports:
       - "8080:80"
     environment:

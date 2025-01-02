@@ -111,9 +111,12 @@ class EventDetailsVisitLjubljana:
 
     def push_to_database(self):
         import requests
-        import json
+        import os
+        
+        app_url = os.getenv('APP_URL', 'http://localhost:3000')
+        
         data = self.get_json()
-        uri = 'http://localhost:3000/API/pushEvent'
+        uri = f'{app_url}/API/pushEvent'
 
         response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=data)
     
