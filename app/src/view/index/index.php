@@ -73,7 +73,7 @@
         <h5>Vrsta:</h5>
         <div class="type-picker">
           <label for="sport">Šport
-            <input type="checkbox" id="checkbox-type-sport" name="sport" value="0" checked></label>
+            <input type="checkbox" id="checkbox-type-sport" name="sport" value="5" checked></label>
           <label for="kultura">Kultura
             <input type="checkbox" id="checkbox-type-kultura" name="kultura" value="1" checked></label>
           <label for="zabava">Zabava
@@ -83,12 +83,13 @@
           <label for="dobrodelnost">Dobrodelnost
             <input type="checkbox" id="checkbox-type-dobrodelnost" name="dobrodelnost" value="4" checked></label>
           <label for="ul">UL
-            <input type="checkbox" id="checkbox-type-ul" name="ul" value="5" checked></label>
+            <input type="checkbox" id="checkbox-type-ul" name="ul" value="0" checked></label>
           <label for="ostalo">Ostalo
             <input type="checkbox" id="checkbox-type-ostalo" name="ostalo" value="6" checked></label>
         </div>
 
         <button id="filter-button" class="btn btn-primary mt-3" onclick="fetchEvents()">Filtriraj</button>
+        <button id="filter-button" class="btn btn-primary mt-3" onclick="fetchAllEvents()">Vsi dogodki</button>
       </div>
     </div>
   </div>

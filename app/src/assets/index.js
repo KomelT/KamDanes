@@ -145,7 +145,7 @@ function fetchEvents() {
 
         switch (event.type) {
           case 0:
-            iconMarker = sportPin;
+            iconMarker = ulPin;
             break;
           case 1:
             iconMarker = kulturaPin;
@@ -160,7 +160,10 @@ function fetchEvents() {
             iconMarker = dobrodelnostPin;
             break;
           case 5:
-            iconMarker = ulPin;
+            iconMarker = sportPin;
+            break;
+          default:
+            iconMarker = ostaloPin;
             break;
         }
 
@@ -175,5 +178,65 @@ function fetchEvents() {
     });
   });
 }
+
+
+function fetchAllEvents() {
+  fetch(`/API/getAllEvents`).then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to fetch events");
+    }
+
+    res.json().then((events) => {
+
+      map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      for (const event of events) {
+        if (event.loc_x == null || event.loc_y == null) {
+          event.loc_x = 46.056946;
+          event.loc_y = 14.505751;
+        }
+
+        let iconMarker = null;
+
+        switch (event.type) {
+          case 0:
+            iconMarker = ulPin;
+            break;
+          case 1:
+            iconMarker = kulturaPin;
+            break;
+          case 2:
+            iconMarker = zabavaPin;
+            break;
+          case 3:
+            iconMarker = izobrazevanjePin;
+            break;
+          case 4:
+            iconMarker = dobrodelnostPin;
+            break;
+          case 5:
+            iconMarker = sportPin;
+            break;
+          default:
+            iconMarker = ostaloPin;
+            break;
+        }
+
+        const marker = L.marker([event.loc_y, event.loc_x], {
+          icon: iconMarker,
+        }).addTo(map);
+
+        marker.bindPopup(
+          `<b>${event.name}</b><br>${event.description}<br><b>${event.date_from}</b>`
+        );
+      }
+    });
+  });
+}
+
 
 fetchEvents();
