@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="si">
 
 <head>
   <meta charset="UTF-8">
@@ -46,55 +45,99 @@
   <link rel="stylesheet" href="<?php echo ASSETS_URL ?>index.css">
 </head>
 <style>
+  
+ 
 </style>
-
 <body>
-  <div id="map" style="height: 100%; width: 100%;"></div>
-  <div class="leaflet-top leaflet-left">
-    <button id="menu-button" class="menu-button">
-      ≣ Menu
-    </button>
-    <div id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-        <h1>Kam danes</h1>
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+    <div class="container-fluid">
+      <a class="navbar-brand" onclick="toggleSidebar()" href="#">KamDanes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Add event</a>
+          </li>
+        </ul>
       </div>
+      
+    </div>
+  </nav>
+
+  <div class="d-flex h-100">
+    <div id="sidebar" class="collapse navbar-collapse bg-light p-3 h-100 w-34">
+      <h1>Kam danes</h1>
       <div class="sidebar-content">
         <h4>Filtri:</h4>
-        <input type="text" id="search" placeholder="Išči po imenu">
-
+        <input type="text" id="search" class="form-control mb-2" placeholder="Išči po imenu">
         <h5>Datum:</h5>
-        <div class="date-picker">
-          <input type="date" id="date-from">
-          <p> - </p>
-          <input type="date" id="date-to">
+        <div class="date-picker d-flex mb-2">
+          <input type="date" id="date-from" class="form-control me-2">
+          <p class="m-0"> - </p>
+          <input type="date" id="date-to" class="form-control ms-2">
         </div>
 
         <h5>Vrsta:</h5>
-        <div class="type-picker">
-          <label for="sport">Šport
-            <input type="checkbox" id="checkbox-type-sport" name="sport" value="5" checked></label>
-          <label for="kultura">Kultura
-            <input type="checkbox" id="checkbox-type-kultura" name="kultura" value="1" checked></label>
-          <label for="zabava">Zabava
-            <input type="checkbox" id="checkbox-type-zabava" name="zabava" value="2" checked></label>
-          <label for="izobrazevanje">Izobraževanje
-            <input type="checkbox" id="checkbox-type-izobrazevanje" name="izobrazevanje" value="3" checked></label>
-          <label for="dobrodelnost">Dobrodelnost
-            <input type="checkbox" id="checkbox-type-dobrodelnost" name="dobrodelnost" value="4" checked></label>
-          <label for="ul">UL
-            <input type="checkbox" id="checkbox-type-ul" name="ul" value="0" checked></label>
-          <label for="ostalo">Ostalo
-            <input type="checkbox" id="checkbox-type-ostalo" name="ostalo" value="6" checked></label>
+        <div class="type-picker mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-type-sport" name="sport" value="5" checked>
+            <label class="form-check-label" for="checkbox-type-sport">Šport</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-type-kultura" name="kultura" value="1" checked>
+            <label class="form-check-label" for="checkbox-type-kultura">Kultura</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-type-zabava" name="zabava" value="2" checked>
+            <label class="form-check-label" for="checkbox-type-zabava">Zabava</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-type-izobrazevanje" name="izobrazevanje" value="3" checked>
+            <label class="form-check-label" for="checkbox-type-izobrazevanje">Izobraževanje</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-type-dobrodelnost" name="dobrodelnost" value="4" checked>
+            <label class="form-check-label" for="checkbox-type-dobrodelnost">Dobrodelnost</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-type-ul" name="ul" value="0" checked>
+            <label class="form-check-label" for="checkbox-type-ul">UL</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox-type-ostalo" name="ostalo" value="6" checked>
+            <label class="form-check-label" for="checkbox-type-ostalo">Ostalo</label>
+          </div>
         </div>
 
         <button id="filter-button" class="btn btn-primary mt-3" onclick="fetchEvents()">Filtriraj</button>
-        <button id="filter-button" class="btn btn-primary mt-3" onclick="fetchAllEvents()">Vsi dogodki</button>
+        <button id="all-events-button" class="btn btn-secondary mt-3" onclick="fetchAllEvents()">Vsi dogodki</button>
       </div>
     </div>
+    <div id="map" class="w-66"style="width: 100%; height: auto%;"></div>
   </div>
+
 </body>
 <!-- Custom JS -->
 <script src="<?php echo ASSETS_URL ?>index.js"></script>
+<script>
+  function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("show");
+  }
+  toggleSidebar();
+</script>
 
 </html>
+

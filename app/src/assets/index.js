@@ -103,10 +103,14 @@ filterDateTo.value = to;
 function toggleSidebar() {
   console.log(sidebar.style.display);
   if (sidebar.style.display === "block") {
-    sidebar.style.display = "none";
+    sidebar.style.transform = "translateX(-100%)";
     menuButton.style.display = "block";
+    setTimeout(() => {
+      sidebar.style.display = "none";
+    }, 300);
   } else {
     sidebar.style.display = "block";
+    sidebar.style.transform = "translateX(0)";
     menuButton.style.display = "none";
   }
 }
@@ -172,7 +176,7 @@ function fetchEvents() {
         }).addTo(map);
 
         marker.bindPopup(
-          `<b>${event.name}</b><br>${event.description}<br><b>${event.date_from}</b>`
+          `<a href="${event.link}" target="_blank"}<b>${event.name}</b></a><br>${event.description}<br><b>${event.date_from}</b>`
         );
       }
     });
@@ -229,9 +233,11 @@ function fetchAllEvents() {
         const marker = L.marker([event.loc_y, event.loc_x], {
           icon: iconMarker,
         }).addTo(map);
-
+        if(event.description == null) {
+          event.description = "Ni opisa";
+        }
         marker.bindPopup(
-          `<b>${event.name}</b><br>${event.description}<br><b>${event.date_from}</b>`
+          `<a href="${event.link}" target="_blank"><b>${event.name}</a></b><br>${event.description}<br><b>${event.date_from}</b>`
         );
       }
     });
