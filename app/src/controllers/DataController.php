@@ -22,4 +22,8 @@ class DataController
         // }
         DBKD::pushEvent($data);
     }
+    public static function getAllEvents()
+    {
+        ViewHelper::returnJson(DBKD::getAllEvents());
+    }
 }

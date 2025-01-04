@@ -43,12 +43,12 @@ CREATE TABLE `event` (
   `description` text,
   `price` decimal(10,0) DEFAULT NULL,
   `type` int DEFAULT NULL,
-    -- 0 - šport
+    -- 0 - UL dogodek
     -- 1 - kultura
     -- 2 - zabava
     -- 3 - izobraževanje
     -- 4 - dobrodelnost
-    -- 5 - UL dogodek
+    -- 5 - šport
     -- 6 - ostalo
   `link` text,
   `online` tinyint(1) DEFAULT NULL,
