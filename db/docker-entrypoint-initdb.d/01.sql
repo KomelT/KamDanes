@@ -58,6 +58,22 @@ CREATE TABLE `event` (
 --
 -- Odloži podatke za tabelo `event`
 --
+  DELIMITER $$
+CREATE TRIGGER check_date
+    BEFORE INSERT
+    ON event FOR EACH ROW
+BEGIN
+	IF (NEW.date_from < NOW() AND (NEW.date_to < NOW() OR NEW.date_to IS NULL )) OR (NEW.date_from > NEW.date_to AND NEW.date_to IS NOT NULL) THEN
+    	SET NEW.date_from = NULL;
+	END IF;
+END$$    
+
+DELIMITER ;
+
+
+
+
+
 
 INSERT INTO `event` (`id`, `id_user`, `name`, `organisation`, `artist_name`, `date_from`, `date_to`, `loc_x`, `loc_y`, `time_from`, `time_to`, `age_lim`, `description`, `price`, `type`, `link`, `online`, `url_hash`) VALUES
 (1, 100, 'Uvod v podrocje zdravil za napredno zdravljenje', 'Univerza v Ljubljani', NULL, '2025-04-15', '2025-12-21', NULL, NULL, '06:00:00', '17:00:00', NULL, 'Krajse usposabljanje je namenjeno pridobitvi osnovnega znanja s podrocja zdravil za napredno zdravljenje. Tovrstna zdravila imajo izreden potencial za doseganje dolgorocnega izboljsanja ali celo ozdravitve bolezni, ki jih v tem trenutku s sinteznimi in bioloskimi zdravili se ne moremo pozdraviti.', NULL, 0, 'https://www.uni-lj.si/dogodki/2025-04-15-uvod-v-podrocje-zdravil-za-napredno-zdravljenje', 1, '898555f6ae58638aba71a5966ea7797da6232fbed41f710694815d04485f03d303b6a44ccf351d8e3ab7e26abbe5385537ddf87611f4806d600cc47701f72063'),

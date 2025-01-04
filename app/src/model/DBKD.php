@@ -74,7 +74,8 @@ class DBKD
         $statement = $db->prepare("
             SELECT * 
             FROM event 
-            WHERE (name LIKE :search OR description LIKE :search) 
+            WHERE (name LIKE :search OR description LIKE :search)
+            AND date_from IS NOT NULL
             AND date_from >= :dateFrom 
             AND date_from <= :dateTo 
             AND FIND_IN_SET(type, :type) > 0
@@ -91,7 +92,7 @@ class DBKD
     }
     public static function getAllEvents(){
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM event WHERE date_from >= NOW()");
+        $statement = $db->prepare("SELECT * FROM event WHERE date_from >= NOW() AND date_from IS NOT NULL;");
         $statement->execute();
         $events = $statement->fetchAll();
         return json_encode($events);
