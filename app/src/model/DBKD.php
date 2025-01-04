@@ -89,6 +89,14 @@ class DBKD
         $events = $statement->fetchAll();
         return json_encode($events);
     }
+    public static function getAllEvents(){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE date_from >= NOW()");
+        $statement->execute();
+        $events = $statement->fetchAll();
+        return json_encode($events);
+    }
+
     public static function pushEvent($data)
     {
         $db = DBInit::getInstance();
