@@ -13,6 +13,5 @@ def scrape_events():
         for element in events:
             event = EventDetailsKulturnik.EventDetailsKulturnik(element.prettify(),type)
             event.extract_data()
-            print(event.get_json())
+            print("Event added: ", event.get_json())
             event.push_to_database()
-            print("-----------------------------------")

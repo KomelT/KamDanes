@@ -13,7 +13,6 @@ def scrape_events():
         event_url = element.find('a').get('href')
         event = EventDetailsVisitLjubljana.EventDetailsVisitLjubljana(BASE_URL + event_url)
         event.extract_data()
-        print(event.get_json())
+        print("Event added: ", event.get_json())
         event.push_to_database()
-        print(",")
     

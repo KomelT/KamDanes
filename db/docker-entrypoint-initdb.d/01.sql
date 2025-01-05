@@ -74,7 +74,7 @@ DELIMITER ;
 
 
 
-
+/*
 INSERT INTO `event` (`id`, `id_user`, `name`, `organisation`, `artist_name`, `date_from`, `date_to`, `loc_x`, `loc_y`, `time_from`, `time_to`, `age_lim`, `description`, `price`, `type`, `link`, `online`, `url_hash`) VALUES
 (1, 100, 'Uvod v podrocje zdravil za napredno zdravljenje', 'Univerza v Ljubljani', NULL, '2025-04-15', '2025-12-21', NULL, NULL, '06:00:00', '17:00:00', NULL, 'Krajse usposabljanje je namenjeno pridobitvi osnovnega znanja s podrocja zdravil za napredno zdravljenje. Tovrstna zdravila imajo izreden potencial za doseganje dolgorocnega izboljsanja ali celo ozdravitve bolezni, ki jih v tem trenutku s sinteznimi in bioloskimi zdravili se ne moremo pozdraviti.', NULL, 0, 'https://www.uni-lj.si/dogodki/2025-04-15-uvod-v-podrocje-zdravil-za-napredno-zdravljenje', 1, '898555f6ae58638aba71a5966ea7797da6232fbed41f710694815d04485f03d303b6a44ccf351d8e3ab7e26abbe5385537ddf87611f4806d600cc47701f72063'),
 (2, 100, 'Kdo se boji zajcka? | Razstava UL ALUO in UL FF v Arboretumu Volcji Potok', 'Univerza v Ljubljani', NULL, '2025-07-05', '2025-12-31', 14.6066931, 46.1853004, '17:00:00', '20:00:00', NULL, 'Studentke in studenti Akademije za likovno umetnost in oblikovanje Univerze v Ljubljani  (UL ALUO) so v sodelovanju s Filozofsko fakulteto Univerze v Ljubljani  (UL FF) in Arboretumom Volcji potok pripravili razstavo s slikopisi - krajsimi literarnimi deli, namenjenimi opismenjevanju, v katerem so izbrane besede nadomescene s slicicami. \r\nOdprtje razstave bo v petek, 5. julija 2025, ob 18.00, pred Galerijo Janeza Boljke v Arboretumu Volcji potok.', NULL, 0, 'https://www.uni-lj.si/dogodki/2025-07-05-kdo-se-boji-zajcka-razstava-ul-aluo-in-ul-ff-v-arboretumu-volcji-potok', 0, 'fda55ea30b54e70f6b5e6fa4d3e118b79c62c535609f30da4a6ca8c23b136e0b9c694ead6b6dc294ef7a52708b9c393081974b2f264cfa6bc71f27186f57a695'),
@@ -392,6 +392,8 @@ INSERT INTO `event` (`id`, `id_user`, `name`, `organisation`, `artist_name`, `da
 (497, 101, 'Jaša Zlobec: Čarovni čaj iz črnih saj', NULL, NULL, '2025-12-22', NULL, NULL, NULL, '08:05:00', '08:05:00', NULL, NULL, NULL, 1, 'http://www.veza.sigledal.org/dogodek/jasa-zlobec-carovni-caj-iz-crnih-saj-e', 0, 'a3ad98c1602f32e819068b1a2a7ce7ae4143db1043bb346793e88f197036ed44b833b4750c811e3fcdb481271c6f20da5519b84fb3e07e4e5b64b9599f78bd27');
 
 -- --------------------------------------------------------
+
+*/
 
 --
 -- Struktura tabele `user`
