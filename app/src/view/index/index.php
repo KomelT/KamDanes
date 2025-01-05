@@ -45,14 +45,15 @@
   <link rel="stylesheet" href="<?php echo ASSETS_URL ?>index.css">
 </head>
 <style>
-  
- 
+
+
 </style>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
     <div class="container-fluid">
-      <a class="navbar-brand" onclick="toggleSidebar()" href="#">KamDanes</a>
+      <a class="navbar-brand" href="/">KamDanes</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -60,26 +61,22 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="login">Prijava</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">Login</a>
+            <a class="nav-link" href="register">Registarcija</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="register">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Add event</a>
+            <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Dodaj doodek</a>
           </li>
         </ul>
       </div>
-      
+
     </div>
   </nav>
 
   <div class="d-flex h-100">
-    <div id="sidebar" class="collapse navbar-collapse bg-light p-3 h-100 w-34">
-      <h1>Kam danes</h1>
+    <div id="sidebar" class="bg-light p-3 h-100">
       <div class="sidebar-content">
         <h4>Filtri:</h4>
         <input type="text" id="search" class="form-control mb-2" placeholder="Išči po imenu">
@@ -105,11 +102,13 @@
             <label class="form-check-label" for="checkbox-type-zabava">Zabava</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkbox-type-izobrazevanje" name="izobrazevanje" value="3" checked>
+            <input class="form-check-input" type="checkbox" id="checkbox-type-izobrazevanje" name="izobrazevanje"
+              value="3" checked>
             <label class="form-check-label" for="checkbox-type-izobrazevanje">Izobraževanje</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkbox-type-dobrodelnost" name="dobrodelnost" value="4" checked>
+            <input class="form-check-input" type="checkbox" id="checkbox-type-dobrodelnost" name="dobrodelnost"
+              value="4" checked>
             <label class="form-check-label" for="checkbox-type-dobrodelnost">Dobrodelnost</label>
           </div>
           <div class="form-check">
@@ -126,7 +125,7 @@
         <button id="all-events-button" class="btn btn-secondary mt-3" onclick="fetchAllEvents()">Vsi dogodki</button>
       </div>
     </div>
-    <div id="map" class="w-66"style="width: 100%; height: auto%;"></div>
+    <div id="map" class="w-66" style="width: 100%; height: auto%;"></div>
   </div>
 
 </body>
@@ -140,4 +139,3 @@
 </script>
 
 </html>
-

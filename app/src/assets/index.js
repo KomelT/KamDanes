@@ -185,7 +185,7 @@ function fetchEvents() {
 
 
 function fetchAllEvents() {
-  fetch(`/API/getAllEvents`).then((res) => {
+  fetch("/API/getAllEvents").then((res) => {
     if (!res.ok) {
       throw new Error("Failed to fetch events");
     }
@@ -236,9 +236,23 @@ function fetchAllEvents() {
         if(event.description == null) {
           event.description = "Ni opisa";
         }
-        marker.bindPopup(
-          `<a href="${event.link}" target="_blank"><b>${event.name}</a></b><br>${event.description}<br><b>${event.date_from}</b>`
-        );
+
+        let popupHtml = '<div class="event-map-popup">';
+        if (event.name)
+          popupHtml += `<a style="font-size: 1rem;" href="${event.link}" target="_blank"><b>${event.name}</b></a>`;
+        if (event.date_from)
+          popupHtml += `<br><p>${new Date(event.date_from).toDateString()}${
+            event.date_to ? ` - ${event.date_to}` : ""
+          }</p>`;
+        if (event.time_from)
+          popupHtml += `<p>${event.time_from}${
+            event.time_to && event.time_to !== event.time_from
+              ? ` - ${event.time_to}`
+              : ""
+          }</p>`;
+        if (event.description) popupHtml += `<br><p">${event.description}</p>`
+
+        marker.bindPopup(popupHtml);
       }
     });
   });
