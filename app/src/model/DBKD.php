@@ -127,6 +127,21 @@ class DBKD
 
         $statement->execute();
     }
-
+    /**
+     * @return string A JSON string containing all online events
+     */
+    public static function getOnlineEvents(){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE (loc_x IS NULL) AND (loc_y IS NULL);");
+        $statement->execute();
+        $events = $statement->fetchAll();
+        return json_encode($events);
+    }
+    public static function deleteEvent($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("DELETE FROM event WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+    }
 
 }

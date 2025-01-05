@@ -26,4 +26,8 @@ class DataController
     {
         ViewHelper::returnJson(DBKD::getAllEvents());
     }
+    public static function getOnlineEvents(){
+        ViewHelper::returnJson(DBKD::getOnlineEvents());
+        
+    }
 }

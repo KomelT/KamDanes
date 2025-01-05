@@ -64,10 +64,16 @@
             <a class="nav-link" href="login">Prijava</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="register">Registarcija</a>
+            <a class="nav-link" href="register">Registracija</a>
           </li>
+          <?php
+            if(isset($_SESSION['username'])) {
+               echo '<li class="nav-item">
+            <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Dodaj dogodek</a>
+          </li>';} ?>
+          
           <li class="nav-item">
-            <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Dodaj doodek</a>
+            <a class="nav-link " href="#" tabindex="-1" onclick="toggleSidebar()">Filtri</a>
           </li>
         </ul>
       </div>
@@ -122,7 +128,8 @@
         </div>
 
         <button id="filter-button" class="btn btn-primary mt-3" onclick="fetchEvents()">Filtriraj</button>
-        <button id="all-events-button" class="btn btn-secondary mt-3" onclick="fetchAllEvents()">Vsi dogodki</button>
+        <button id="all-events-button" class="btn btn-secondary mt-3" onclick="fetchEventsAPI('API/events/all')">Vsi dogodki</button>
+        <button id="all-events-button" class="btn btn-secondary mt-3" onclick="fetchEventsAPI('API/events/online')">Online dogodki</button>
       </div>
     </div>
     <div id="map" class="w-66" style="width: 100%; height: auto%;"></div>

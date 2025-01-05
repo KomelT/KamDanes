@@ -3,6 +3,9 @@ body {
   height: 100%;
   margin: 0;
 }
+a {
+  text-decoration: none;
+}
 
 /* Fix enets propagation - START */
 .leaflet-top {
@@ -93,3 +96,4 @@ body {
     transition: transform 0.3s ease-in-out;
   }
 }
+

@@ -78,14 +78,20 @@ const ostaloPin = L.icon({
   iconAnchor: [35, 70],
   popupAnchor: [-3, -76],
 });
+const onlinePin = L.icon({
+  iconUrl: "assets/ikone/online-pin.png",
+  iconSize: [70, 70],
+  iconAnchor: [35, 70],
+  popupAnchor: [-3, -76],
+});
 
 // add sidebar
 const menuButton = document.getElementById("menu-button");
-const sidebar = document.getElementById("sidebar");
+//const sidebar = document.getElementById("sidebar");
 
-menuButton.addEventListener("click", () => {
+/*menuButton.addEventListener("click", () => {
   toggleSidebar();
-});
+});*/
 
 const searchFilter = document.getElementById("search")
 
@@ -143,6 +149,7 @@ function fetchEvents() {
         if (event.loc_x == null || event.loc_y == null) {
           event.loc_x = 46.056946;
           event.loc_y = 14.505751;
+          event.type = 6;
         }
 
         let iconMarker = null;
@@ -165,6 +172,9 @@ function fetchEvents() {
             break;
           case 5:
             iconMarker = sportPin;
+            break;
+          case 6:
+            iconMarker = onlinePin;
             break;
           default:
             iconMarker = ostaloPin;
@@ -184,8 +194,8 @@ function fetchEvents() {
 }
 
 
-function fetchAllEvents() {
-  fetch("/API/getAllEvents").then((res) => {
+function fetchEventsAPI(url) {
+  fetch(url).then((res) => {
     if (!res.ok) {
       throw new Error("Failed to fetch events");
     }
@@ -200,8 +210,15 @@ function fetchAllEvents() {
 
       for (const event of events) {
         if (event.loc_x == null || event.loc_y == null) {
-          event.loc_x = 46.056946;
-          event.loc_y = 14.505751;
+          let random_offset_y = Math.random() / 100; // 100 random števil
+          let random_offset_x = Math.random() / 100; // 100 random števil
+          let random_operator = Math.random() < 0.5 ? 0 : 1;
+          event.loc_y = (random_operator) && 46.056946 + random_offset_y || 46.056946 - random_offset_y;
+          event.loc_x = (random_operator) && 14.505751 + random_offset_x || 14.505751 - random_offset_x;
+          /*event.loc_y = 46.056946 + random_offset_y;
+          event.loc_x = 14.505751 + random_offset_x;*/
+          console.log(event.loc_y, event.loc_x);
+          event.type = 6;
         }
 
         let iconMarker = null;
@@ -225,6 +242,9 @@ function fetchAllEvents() {
           case 5:
             iconMarker = sportPin;
             break;
+          case 6:
+            iconMarker = onlinePin;
+            break;  
           default:
             iconMarker = ostaloPin;
             break;

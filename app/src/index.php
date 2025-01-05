@@ -46,11 +46,15 @@ $urls = [
       DataController::pushEvent();
    },
 
-   "API/getAllEvents" => function () {
+   "API/events/all" => function () {
       DataController::getAllEvents();
    },
+  
    "reset" => function () {
       HomeController::reset();
+   },
+   "API/events/online" => function () {
+      DataController::getOnlineEvents();
    }
 ];
 
