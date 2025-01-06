@@ -87,6 +87,12 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
             <button type="submit">Login</button>
+            <?php 
+            if(!empty($error)) {
+                echo '<p style="color: red;">' . $error . '</p>';
+            }
+            
+            ?>
         </form>
         <div class="footer">
             Don't have an account? <a href  ="register">Sign up</a><br>

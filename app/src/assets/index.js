@@ -147,8 +147,14 @@ function fetchEvents() {
 
       for (const event of events) {
         if (event.loc_x == null || event.loc_y == null) {
-          event.loc_x = 46.056946;
-          event.loc_y = 14.505751;
+          let random_offset_y = Math.random() / 90; // 100 random števil
+          let random_offset_x = Math.random() / 90; // 100 random števil
+          let random_operator = Math.random() < 0.5 ? 0 : 1;
+          event.loc_y = (random_operator) && 46.056946 + random_offset_y || 46.056946 - random_offset_y;
+          event.loc_x = (random_operator) && 14.505751 + random_offset_x || 14.505751 - random_offset_x;
+          /*event.loc_y = 46.056946 + random_offset_y;
+          event.loc_x = 14.505751 + random_offset_x;*/
+          console.log(event.loc_y, event.loc_x);
           event.type = 6;
         }
 
@@ -184,10 +190,26 @@ function fetchEvents() {
         const marker = L.marker([event.loc_y, event.loc_x], {
           icon: iconMarker,
         }).addTo(map);
+        if(event.description == null) {
+          event.description = "Ni opisa";
+        }
 
-        marker.bindPopup(
-          `<a href="${event.link}" target="_blank"}<b>${event.name}</b></a><br>${event.description}<br><b>${event.date_from}</b>`
-        );
+        let popupHtml = '<div class="event-map-popup">';
+        if (event.name)
+          popupHtml += `<a style="font-size: 1rem;" href="${event.link}" target="_blank"><b>${event.name}</b></a>`;
+        if (event.date_from)
+          popupHtml += `<br><p>${new Date(event.date_from).toDateString()}${
+            event.date_to ? ` - ${event.date_to}` : ""
+          }</p>`;
+        if (event.time_from)
+          popupHtml += `<p>${event.time_from}${
+            event.time_to && event.time_to !== event.time_from
+              ? ` - ${event.time_to}`
+              : ""
+          }</p>`;
+        if (event.description) popupHtml += `<br><p">${event.description}</p>`
+
+        marker.bindPopup(popupHtml);
       }
     });
   });
@@ -210,8 +232,8 @@ function fetchEventsAPI(url) {
 
       for (const event of events) {
         if (event.loc_x == null || event.loc_y == null) {
-          let random_offset_y = Math.random() / 100; // 100 random števil
-          let random_offset_x = Math.random() / 100; // 100 random števil
+          let random_offset_y = Math.random() / 90; // 100 random števil
+          let random_offset_x = Math.random() / 90; // 100 random števil
           let random_operator = Math.random() < 0.5 ? 0 : 1;
           event.loc_y = (random_operator) && 46.056946 + random_offset_y || 46.056946 - random_offset_y;
           event.loc_x = (random_operator) && 14.505751 + random_offset_x || 14.505751 - random_offset_x;

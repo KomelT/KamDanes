@@ -60,17 +60,30 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="login">Prijava</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="register">Registracija</a>
-          </li>
+          
+          
           <?php
             if(isset($_SESSION['username'])) {
                echo '<li class="nav-item">
-            <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Dodaj dogodek</a>
-          </li>';} ?>
+                    <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Dodaj dogodek</a>
+                    </li>';
+                echo '<li class="nav-item">
+                <a class="nav-link" href="logout">Odjava</a>
+              </li>';
+        }else{
+            echo '<li class="nav-item">
+            <a class="nav-link" href="login">Prijava</a>
+          </li>';
+            echo '<li class="nav-item">
+            <a class="nav-link" href="register">Registracija</a>
+          </li>';
+          
+
+          } 
+          
+          
+          
+          ?>
           
           <li class="nav-item">
             <a class="nav-link " href="#" tabindex="-1" onclick="toggleSidebar()">Filtri</a>

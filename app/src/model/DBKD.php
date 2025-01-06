@@ -26,20 +26,20 @@ class DBKD
     public static function checkUsername($username)
     {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM user WHERE username = :username");
+        $statement = $db->prepare("SELECT * FROM user WHERE username = :username OR email = :username");
         $statement->bindParam(":username", $username, PDO::PARAM_STR);
         $statement->execute();
         $user = $statement->fetch();
         if ($user) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
     public static function checkLogin($username, $password)
     {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM user WHERE username = :username");
+        $statement = $db->prepare("SELECT * FROM user WHERE username = :username OR email = :username");
         $statement->bindParam(":username", $username, PDO::PARAM_STR);
         $statement->execute();
         $user = $statement->fetch();

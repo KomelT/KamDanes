@@ -18,4 +18,5 @@ class HomeController
     public static function reset(){
         ViewHelper::render("view/reset.php");
     }
+    
 }

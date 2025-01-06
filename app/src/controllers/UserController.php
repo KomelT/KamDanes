@@ -6,12 +6,17 @@ class UserController
     public static function registerUser($username, $password,$email)
     {
         DBKD::registerUser($username, $password,$email);
-        ViewHelper::redirect("index.php");
+        ViewHelper::redirect("index.php?register=true");
 
 
     }
     public static function loginUser($username, $password)
     {
+        if(!(DBKD::checkUsername($username))){
+            
+            ViewHelper::render("view/login.php",["error"=>"Uporabnik ne obstaja"]);
+            exit(0);
+        }
         $result = DBKD::checkLogin($username, $password);
         
         if ($result) {
@@ -19,7 +24,8 @@ class UserController
             ViewHelper::redirect("index.php");
             
         }
-        ViewHelper::redirect("login");
+        ViewHelper::render("view/login.php",["error"=>"Napačno geslo"]);
+        exit(0);
     }
     public static function logout()
     {
