@@ -149,10 +149,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="urlHash" class="form-label">URL Hash</label>
-                        <input type="text" class="form-control" id="urlHash" name="urlHash" required>
-                    </div>
+                    
 
                 </div>
                 <div class="modal-footer">

@@ -5,8 +5,10 @@ class UserController
 {
     public static function registerUser($username, $password,$email)
     {
-        DBKD::registerUser($username, $password,$email);
-        ViewHelper::redirect("index.php?register=true");
+        if(DBKD::registerUser($username, $password,$email)){
+            ViewHelper::redirect("login");
+        }
+        ViewHelper::render("view/register.php",["error"=>"Napaka pri registraciji"]);
 
 
     }

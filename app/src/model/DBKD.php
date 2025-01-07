@@ -5,7 +5,7 @@ class DBKD
     public static function registerUser($username, $password, $email)
     {
 
-        if (self::checkUsername($username)) {
+        if (!self::checkUsername($username)) {
             $db = DBInit::getInstance();
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $statement = $db->prepare("INSERT INTO user
