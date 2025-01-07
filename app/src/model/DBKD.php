@@ -9,7 +9,7 @@ class DBKD
             $db = DBInit::getInstance();
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $statement = $db->prepare("INSERT INTO user
-                (username,password,email,name,phone,role) VALUES (:username, :password,:email,:username,'123','1')");
+                (username,password,email,name,phone,role, disabled) VALUES (:username, :password,:email,:username,'123','1','0')");
 
             $statement->bindParam(":username", $username, PDO::PARAM_STR);
             $statement->bindParam(":password", $hashed_password, PDO::PARAM_STR);

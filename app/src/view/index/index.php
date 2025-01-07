@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -44,10 +45,6 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?php echo ASSETS_URL ?>index.css">
 </head>
-<style>
-
-
-</style>
 
 <body>
   <!-- Navbar -->
@@ -60,13 +57,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          
-          
           <?php
             if(isset($_SESSION['username'])) {
                echo '<li class="nav-item">
-                    <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Dodaj dogodek</a>
-                    </li>';
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          Dodaj dogodek
+                        </button>                  
+                      </li>';
                 echo '<li class="nav-item">
                 <a class="nav-link" href="logout">Odjava</a>
               </li>';
@@ -77,27 +74,82 @@
                 echo '<li class="nav-item">
                 <a class="nav-link" href="register">Registracija</a>
               </li>';
-              
-
             } 
             if(isset($_SESSION['role'])) {
               echo '<li class="nav-item">
                 <a class="nav-link" href="admin">Admin panel</a>
               </li>';
             }
-          
-          
-          
           ?>
-          
           <li class="nav-item">
             <a class="nav-link " href="#" tabindex="-1" onclick="toggleSidebar()">Filtri</a>
           </li>
         </ul>
       </div>
-
     </div>
   </nav>
+  
+  <!-- Add event modal shit idk Tit je gej. -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Dodaj dogodek</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form action="addEventForm">
+            <label for="name">Ime dogodka</label><br>
+            <input type="text" name="name" id="name" required><br>
+
+            <label for="organisation">Organizacija</label> <br>
+            <input type="text" name="organisation" id="organisation"><br>
+
+            <label for="artist_name">Ime umetnika</label> <br>
+            <input type="text" name="artist_name" id="artist_name"><br>
+            
+            <label for="date_from">Datum od</label> <br>
+            <input type="date" name="date_from" id="date_from"><br>
+
+            <label for="date_to">Datum do</label> <br>
+            <input type="date" name="date_to" id="date_to"><br>
+
+            <label for="online">Online dogodek</label>
+            <input type="checkbox" name="online" id="online-input"><br>
+
+            <label for="address">Lokacija</label> <br>
+            <input type="text" name="location" id="location"><br>
+
+            <label for="time_from">Ura začetka</label><br>
+            <input type="time" name="time_from" id="time_from"><br>
+
+            <label for="time_to">Ura konca</label><br>
+            <input type="time" name="time_to" id="time_to"><br>
+
+            <label for="age_lim">Minimalna starost v letih</label><br>
+            <input type="number" name="age_lim" id="age_lim"><br>
+
+            <label for="description">Opis</label><br>
+            <textarea name="description" id=""description></textarea><br>
+
+            <label for="price">Cena</label><br>
+            <input type="number" name="price" id="price"><br>
+
+            <label for="type">Tip dogodka</label><br>
+            <select name="type" id="type"></select><br>
+            
+            <label for="link">Link do dogodka</label><br>
+            <input type="text" name="link" id="link"><br>
+
+            <div class="modal-footer">
+              <input type="submit" value="Dodaj dogodek" class="btn btn-primary">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="d-flex h-100">
     <div id="sidebar" class="bg-light p-3 h-100">
@@ -168,9 +220,14 @@
   if(isset($error)){
     echo "alertError('$error');";
   }
-  
-  
   ?>
+  document.getElementById("online-input").addEventListener("change", function() {
+    if (this.checked) {
+      document.getElementById("location").disabled = true;
+    } else {
+      document.getElementById("location").disabled = false;
+    }
+  });
 </script>
 
 </html>
