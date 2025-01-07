@@ -38,8 +38,8 @@
 <body>
     <div id="admin-sidebar">
         <h3 class="text-center py-3">Admin Panel</h3>
-        <a href="#" data-redirect="users.php">Manage Users</a>
-        <a href="#" data-redirect="events.php">Manage Events</a>
+        <a href="#" data-redirect="adminusers">Manage Users</a>
+        <a href="#" data-redirect="adminevents">Manage Events</a>
     </div>
 
     <div id="main-content">

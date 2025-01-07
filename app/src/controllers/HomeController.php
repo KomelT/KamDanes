@@ -18,5 +18,13 @@ class HomeController
     public static function reset(){
         ViewHelper::render("view/reset.php");
     }
-    
+    public static function admin(){
+        ViewHelper::render("view/adminpage/index.php");
+    }
+    public static function adminEvents(){
+        ViewHelper::render("view/adminpage/events.php");
+    }
+    public static function adminUsers(){
+        ViewHelper::render("view/adminpage/users.php");
+    }
 }

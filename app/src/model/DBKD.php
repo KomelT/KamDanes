@@ -143,5 +143,13 @@ class DBKD
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
     }
+    public static function getRole($username){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT role FROM user WHERE username = :username OR email = :username");
+        $statement->bindParam(":username", $username, PDO::PARAM_STR);
+        $statement->execute();
+        $user = $statement->fetch();
+        return $user["role"];
+    }
 
 }

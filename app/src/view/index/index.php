@@ -70,16 +70,21 @@
                 echo '<li class="nav-item">
                 <a class="nav-link" href="logout">Odjava</a>
               </li>';
-        }else{
-            echo '<li class="nav-item">
-            <a class="nav-link" href="login">Prijava</a>
-          </li>';
-            echo '<li class="nav-item">
-            <a class="nav-link" href="register">Registracija</a>
-          </li>';
-          
+            }else{
+                echo '<li class="nav-item">
+                <a class="nav-link" href="login">Prijava</a>
+              </li>';
+                echo '<li class="nav-item">
+                <a class="nav-link" href="register">Registracija</a>
+              </li>';
+              
 
-          } 
+            } 
+            if(isset($_SESSION['role'])) {
+              echo '<li class="nav-item">
+                <a class="nav-link" href="admin">Admin panel</a>
+              </li>';
+            }
           
           
           

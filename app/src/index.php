@@ -55,6 +55,15 @@ $urls = [
    },
    "API/events/online" => function () {
       DataController::getOnlineEvents();
+   },
+   'admin' => function () {
+      HomeController::admin();
+   },
+   'adminevents' => function () {
+      HomeController::adminEvents();
+   },
+   'adminusers' => function () {
+      HomeController::adminUsers();
    }
 ];
 

@@ -21,6 +21,7 @@ class UserController
         
         if ($result) {
             $_SESSION["username"] = $username;
+            $_SESSION["role"] = DBKD::getRole($username);
             ViewHelper::redirect("index.php");
             
         }
@@ -30,6 +31,7 @@ class UserController
     public static function logout()
     {
         unset($_SESSION["username"]);
+        unset($_SESSION["role"]);
         ViewHelper::redirect("index.php");
     }
 }
