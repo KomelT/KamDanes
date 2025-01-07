@@ -98,48 +98,68 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <form action="addEventForm">
+        <form action="">
             <label for="name">Ime dogodka</label><br>
-            <input type="text" name="name" id="name" required><br>
+            <input class="form-control form-control-sm" type="text" name="name" id="name" required><br>
 
             <label for="organisation">Organizacija</label> <br>
-            <input type="text" name="organisation" id="organisation"><br>
+            <input class="form-control form-control-sm" type="text" name="organisation" id="organisation"><br>
 
             <label for="artist_name">Ime umetnika</label> <br>
-            <input type="text" name="artist_name" id="artist_name"><br>
+            <input class="form-control form-control-sm" type="text" name="artist_name" id="artist_name"><br>
             
             <label for="date_from">Datum od</label> <br>
-            <input type="date" name="date_from" id="date_from"><br>
+            <input class="form-control form-control-sm" type="date" name="date_from" id="date_from"><br>
 
             <label for="date_to">Datum do</label> <br>
-            <input type="date" name="date_to" id="date_to"><br>
+            <input class="form-control form-control-sm" type="date" name="date_to" id="date_to"><br>
 
-            <label for="online">Online dogodek</label>
-            <input type="checkbox" name="online" id="online-input"><br>
+            <input class="form-check-input" type="checkbox" name="online" id="online-input">
+            <label class="form-check-label" for="online">Online dogodek</label> <br><br>
 
-            <label for="address">Lokacija</label> <br>
-            <input type="text" name="location" id="location"><br>
+            <label for="address">Ulica</label> <br>
+            <input class="form-control form-control-sm" type="text" name="street" id="street-input"><br>
+
+            <label for="city">Mesto</label> <br>
+            <input class="form-control form-control-sm" type="text" name="city" id="city-input"><br>
+
+            <label for="zip">Poštna številka</label> <br>
+            <input class="form-control form-control-sm" type="text" name="zip" id="zip-input"><br>
 
             <label for="time_from">Ura začetka</label><br>
-            <input type="time" name="time_from" id="time_from"><br>
+            <input class="form-control form-control-sm" type="time" name="time_from" id="time_from"><br>
 
             <label for="time_to">Ura konca</label><br>
-            <input type="time" name="time_to" id="time_to"><br>
+            <input class="form-control form-control-sm" type="time" name="time_to" id="time_to"><br>
+
+            <input class="form-check-input" type="checkbox" name="age_lim_bool" id="age_lim_bool-input">
+            <label class="form-check-label" for="age_lim_bool">Starostna omejitev</label> <br><br>
 
             <label for="age_lim">Minimalna starost v letih</label><br>
-            <input type="number" name="age_lim" id="age_lim"><br>
+            <input class="form-control form-control-sm" type="number" name="age_lim" id="age_lim" disabled><br>
 
             <label for="description">Opis</label><br>
-            <textarea name="description" id=""description></textarea><br>
+            <textarea class="form-control" name="description" id=""description></textarea><br>
+
+            <input class="form-check-input" type="checkbox" name="cena_bool" id="cena_bool-input" checked>
+            <label class="form-check-label" for="cena_bool">Brezplačen dogodek</label> <br><br>
 
             <label for="price">Cena</label><br>
-            <input type="number" name="price" id="price"><br>
+            <input class="form-control form-control-sm" type="number" name="price" id="price" disabled><br>
 
             <label for="type">Tip dogodka</label><br>
-            <select name="type" id="type"></select><br>
+            <select class="form-select" name="type" id="type">
+              <option value="0">UL Dogodek</option>
+              <option value="1">Kulturni dogodek</option>
+              <option value="2">Zabava</option>
+              <option value="3">Izobraževanje</option>
+              <option value="4">Dobrodelnost</option>
+              <option value="5">Šport</option>
+              <option value="6" selected>Ostalo</option>
+            </select><br>
             
             <label for="link">Link do dogodka</label><br>
-            <input type="text" name="link" id="link"><br>
+            <input class="form-control form-control-sm" type="text" name="link" id="link"><br>
 
             <div class="modal-footer">
               <input type="submit" value="Dodaj dogodek" class="btn btn-primary">
@@ -202,7 +222,7 @@
         <button id="all-events-button" class="btn btn-secondary mt-3" onclick="fetchEventsAPI('API/events/online')">Online dogodki</button>
       </div>
     </div>
-    <div id="map" class="w-66" style="width: 100%; height: auto%;"></div>
+    <div id="map" class="w-66" style="width: 100%; height: auto;"></div>
   </div>
 
 </body>
@@ -212,20 +232,47 @@
   function alertError(msg) {
     alert(`Napaka: ${msg}`);
   }
+
   function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("show");
   }
+
   toggleSidebar();
+  
   <?php
   if(isset($error)){
     echo "alertError('$error');";
   }
   ?>
+
   document.getElementById("online-input").addEventListener("change", function() {
     if (this.checked) {
-      document.getElementById("location").disabled = true;
+      document.getElementById("street-input").value = "";
+      document.getElementById("city-input").value = "";
+      document.getElementById("zip-input").value = "";
+      document.getElementById("street-input").disabled = true;
+      document.getElementById("city-input").disabled = true;
+      document.getElementById("zip-input").disabled = true;
     } else {
-      document.getElementById("location").disabled = false;
+      document.getElementById("street-input").disabled = false;
+      document.getElementById("city-input").disabled = false;
+      document.getElementById("zip-input").disabled = false;
+    }
+  });
+
+  document.getElementById("age_lim_bool-input").addEventListener("change", function() {
+    if (this.checked) {
+      document.getElementById("age_lim").disabled = false;
+    } else {
+      document.getElementById("age_lim").disabled = true;
+    }
+  });
+
+  document.getElementById("cena_bool-input").addEventListener("change", function() {
+    if (this.checked) {
+      document.getElementById("price").disabled = true;
+    } else {
+      document.getElementById("price").disabled = false;
     }
   });
 </script>

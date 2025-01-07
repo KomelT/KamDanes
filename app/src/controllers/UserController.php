@@ -24,6 +24,7 @@ class UserController
         if ($result) {
             $_SESSION["username"] = $username;
             $_SESSION["role"] = DBKD::getRole($username);
+            $_SESSIOn["id"] = DBKD::getId($username);
             ViewHelper::redirect("index.php");
             
         }

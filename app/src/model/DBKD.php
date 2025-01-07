@@ -151,5 +151,13 @@ class DBKD
         $user = $statement->fetch();
         return $user["role"];
     }
+    public static function getId($username){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT id FROM user WHERE username = :username;");
+        $statement->bindParam(":username", $username, PDO::PARAM_STR);
+        $statement->execute();
+        $user = $statement->fetch();
+        return $user["id"];
+    }
 
 }
