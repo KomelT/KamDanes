@@ -157,10 +157,20 @@
 <!-- Custom JS -->
 <script src="<?php echo ASSETS_URL ?>index.js"></script>
 <script>
+  function alertError(msg) {
+    alert(`Napaka: ${msg}`);
+  }
   function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("show");
   }
   toggleSidebar();
+  <?php
+  if(isset($error)){
+    echo "alertError('$error');";
+  }
+  
+  
+  ?>
 </script>
 
 </html>
