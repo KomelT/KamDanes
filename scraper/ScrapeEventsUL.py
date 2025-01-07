@@ -17,6 +17,5 @@ def scrape_events():
         event_url = event.find('a').get('href')
         event_details = EventDetailsUL.EventDetailsUL(BASE_URL + event_url)
         event_details.fetch_data()
-        event_details.print_event_details()
+        print("Event added: ", event_details.get_json())
         event_details.push_to_database()
-        print("-----------------------------------")

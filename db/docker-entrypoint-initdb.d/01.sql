@@ -349,8 +349,8 @@ INSERT INTO `user` (`id`, `username`, `password`, `email`, `name`, `phone`, `rol
 (100, 'UL-scraper', '1234', 'polz@fri.uni-lj.si', 'UniverzaVLjubljaniScraper', '113', 69, 0),
 (101, 'Kulturnik-scraper', '1234', 'info@kulturnik.si', 'KulturnikScraper', '113', 69, 0),
 (102, 'Metelkova-scraper', '1234', 'info@metelkova.si', 'MetelkovaScraper', '113', 69, 0),
-(103, 'VisitLjubljana-scraper', '1234', 'info@visit-ljubljana.si', 'VisitLjubljanaScraper', '113', 69, 0);
-
+(103, 'VisitLjubljana-scraper', '1234', 'info@visit-ljubljana.si', 'VisitLjubljanaScraper', '113', 69, 0),
+(104, 'admin', '$2y$10$fcJW9LAPEbtovOHx4Ztxo.0nMTvc.Q15uZ/pWTRad0RfudKABrI/i', 'admin@kamdanes.si', 'admin', '123', 0, 0);
 --
 -- Indexes for dumped tables
 --
