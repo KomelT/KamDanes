@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KamDanes</title>
-
+  <link rel="icon" href="<?php echo ASSETS_URL ;?>favicon.png" type="image/x-icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -68,8 +68,9 @@
                     <a class="nav-link disabled" href="samcejeprijavljen" tabindex="-1" aria-disabled="true">Dodaj dogodek</a>
                     </li>';
                 echo '<li class="nav-item">
-                <a class="nav-link" href="logout">Odjava</a>
-              </li>';
+                      <a class="nav-link" href="logout">Odjava</a>
+                      </li>';
+                
             }else{
                 echo '<li class="nav-item">
                 <a class="nav-link" href="login">Prijava</a>
@@ -90,9 +91,13 @@
           
           ?>
           
+          
           <li class="nav-item">
             <a class="nav-link " href="#" tabindex="-1" onclick="toggleSidebar()">Filtri</a>
           </li>
+          
+
+
         </ul>
       </div>
 
@@ -168,9 +173,8 @@
   if(isset($error)){
     echo "alertError('$error');";
   }
-  
-  
   ?>
+
 </script>
 
 </html>
