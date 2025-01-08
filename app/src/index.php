@@ -64,7 +64,9 @@ $urls = [
    },
    'adminusers' => function () {
       HomeController::adminUsers();
-   }
+   }, 'addEventForm' => function () {
+      HomeController::addEventForm();
+   },
 ];
 
 try {

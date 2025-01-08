@@ -24,4 +24,8 @@ class DataController
         ViewHelper::returnJson(DBKD::getOnlineEvents());
         
     }
+
+    public static function pushEventForm($data){
+        DBKD::pushEvent($data);
+    }
 }

@@ -98,7 +98,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <form action="">
+        <form action="addEventForm" id="addEventForm" method="post">
             <label for="name">Ime dogodka</label><br>
             <input class="form-control form-control-sm" type="text" name="name" id="name" required><br>
 
@@ -109,22 +109,22 @@
             <input class="form-control form-control-sm" type="text" name="artist_name" id="artist_name"><br>
             
             <label for="date_from">Datum od</label> <br>
-            <input class="form-control form-control-sm" type="date" name="date_from" id="date_from"><br>
+            <input class="form-control form-control-sm" type="date" name="date_from" id="date_from" required><br>
 
             <label for="date_to">Datum do</label> <br>
-            <input class="form-control form-control-sm" type="date" name="date_to" id="date_to"><br>
+            <input class="form-control form-control-sm" type="date" name="date_to" id="date_to" required><br>
 
             <input class="form-check-input" type="checkbox" name="online" id="online-input">
             <label class="form-check-label" for="online">Online dogodek</label> <br><br>
 
             <label for="address">Ulica</label> <br>
-            <input class="form-control form-control-sm" type="text" name="street" id="street-input"><br>
+            <input class="form-control form-control-sm" type="text" name="street" id="street-input" required><br>
 
             <label for="city">Mesto</label> <br>
-            <input class="form-control form-control-sm" type="text" name="city" id="city-input"><br>
+            <input class="form-control form-control-sm" type="text" name="city" id="city-input" required><br>
 
             <label for="zip">Poštna številka</label> <br>
-            <input class="form-control form-control-sm" type="text" name="zip" id="zip-input"><br>
+            <input class="form-control form-control-sm" type="text" name="zip" id="zip-input" required><br>
 
             <label for="time_from">Ura začetka</label><br>
             <input class="form-control form-control-sm" type="time" name="time_from" id="time_from"><br>
@@ -159,11 +159,11 @@
             </select><br>
             
             <label for="link">Link do dogodka</label><br>
-            <input class="form-control form-control-sm" type="text" name="link" id="link"><br>
+            <input class="form-control form-control-sm" type="text" name="link" id="link" required><br>
 
             <div class="modal-footer">
               <input type="submit" value="Dodaj dogodek" class="btn btn-primary">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" id="clearButton" >Počisti</button>
             </div>
         </form>
         </div>
@@ -275,6 +275,74 @@
       document.getElementById("price").disabled = false;
     }
   });
+
+  document.getElementById("clearButton").addEventListener("click", function(){
+    document.getElementById("addEventForm").reset()
+    document.getElementById("street-input").disabled = false;
+    document.getElementById("city-input").disabled = false;
+    document.getElementById("zip-input").disabled = false;
+    document.getElementById("age_lim").disabled = true;
+    document.getElementById("price").disabled = true;
+  })
+  
+  // function getData(){
+  //   const coordinates = getCoordinates();
+  //   return {
+      // id_user: <?php echo $_SESSION['id'] ?>,
+  //     name: document.getElementById("name").value,
+  //     organisation: document.getElementById("organisation").value,
+  //     artist_name: document.getElementById("artist_name").value,
+  //     date_from: document.getElementById("date_from").value,
+  //     date_to: document.getElementById("date_to").value,
+  //     loc_x: coordinates["lat"] ? coordinates["lat"] : null,
+  //     loc_y: coordinates["lng"] ? coordinates["lng"] : null,
+  //     time_from: document.getElementById("time_from").value,
+  //     time_to: document.getElementById("time_to").value,
+  //     age_lim: document.getElementById("age_lim").value,
+  //     description: document.getElementById("description").value,
+  //     price: document.getElementById("price").value,
+  //     type: document.getElementById("type").value,
+  //     link: document.getElementById("link").value,
+  //     online: document.getElementById("online-input").value
+  //   }
+  // }
+
+  // async function getCoordinates(){
+  //   let street = document.getElementById("street-input").value;
+  //   let city = document.getElementById("city-input").value;
+  //   let zip = document.getElementById("zip-input").value;
+  //   let address = `${street}, ${city}, ${zip}`;
+  //   try {
+  //     let coordinates = await Geocoder.getCoordinates(address);
+  //     return coordinates;
+  //   } catch (error) {
+  //     console.error("Error fetching coordinates:", error);
+  //     alert("Unable to fetch coordinates. Please try again.");
+  //   }
+  // }
+
+  // function sendDataToAPI(){
+  //   const data = getData();
+  //   fetch('API/pushEvent', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(data),
+  //   })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('Success:', data);
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error:', error);
+  //   });
+  // }
+
+  // document.getElementById("addEventForm").addEventListener("submit", function(event) {
+  //   event.preventDefault();
+  //   sendDataToAPI();
+  // });
 </script>
 
 </html>

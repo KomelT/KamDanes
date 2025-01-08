@@ -317,7 +317,7 @@ INSERT INTO `event` (`id`, `id_user`, `name`, `organisation`, `artist_name`, `da
 --
 DELIMITER $$
 CREATE TRIGGER `check_date` BEFORE INSERT ON `event` FOR EACH ROW BEGIN
-	IF (NEW.date_from < NOW() AND (NEW.date_to < NOW() OR NEW.date_to IS NULL )) OR (NEW.date_from > NEW.date_to AND NEW.date_to IS NOT NULL) THEN
+	IF (NEW.date_from < CURDATE() OR (NEW.date_to < CURDATE() OR NEW.date_to IS NULL )) OR (NEW.date_from > NEW.date_to AND NEW.date_to IS NOT NULL) THEN
     	SET NEW.date_from = NULL;
 	END IF;
 END
@@ -399,7 +399,8 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`kamdanes`@`%` EVENT `Deleting_past_events` ON SCHEDULE EVERY 1 DAY STARTS '2025-12-16 21:33:33' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM event WHERE (`date_to` < CURRENT_DATE()) OR (`date_from` < CURRENT_DATE() AND `date_to` IS NULL)$$
+CREATE DEFINER=`kamdanes`@`%` EVENT `Deleting_past_events` ON SCHEDULE EVERY 1 DAY STARTS '2022-12-16 21:33:33' 
+ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM event WHERE (`date_to` < CURRENT_DATE()) OR ((`date_from` < CURRENT_DATE() OR `date_from` IS NULL) AND `date_to` IS NULL)$$
 
 DELIMITER ;
 COMMIT;

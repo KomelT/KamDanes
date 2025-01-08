@@ -92,7 +92,7 @@ class DBKD
     }
     public static function getAllEvents(){
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM event WHERE date_from >= NOW() AND date_from IS NOT NULL;");
+        $statement = $db->prepare("SELECT * FROM event WHERE  (date_to >= CURDATE() AND date_from >= CURDATE()) OR (date_to >= CURDATE() AND (date_from < CURDATE() OR date_from IS NULL)) OR (date_from >= CURDATE() AND date_to IS NULL)");
         $statement->execute();
         $events = $statement->fetchAll();
         return json_encode($events);
