@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Manage Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <?php include_once("jquery.php");?>
     <style>
         #admin-sidebar {
             height: 100vh;
@@ -144,48 +145,36 @@
             
         }
 
-        /*document.getElementById('addUserForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const newUser = {
-                
-                username: this.username.value,
-                email: this.email.value,
-                name: this.name.value,
-                phone: this.phone.value,
-                role: this.role.options[this.role.selectedIndex].text
-            };
-            users.push(newUser);
-            fetch('registerUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `username=${newUser.username}&email=${newUser.email}&name=${newUser.name}&role=${newUser.role}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-            this.reset();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
-            modal.hide();
-            loadUsers();
-        });*/
-
         function editUser(userId) {
-            const user = users.find(u => u.id === userId);
-            if (user) {
-                alert(`Edit User: ${user.name} - Implement edit functionality`);
-            }
+            return 0;
         }
 
         function deleteUser(userId) {
-            users = users.filter(u => u.id !== userId);
-            loadUsers();
-        }
+            $.ajax({
+                url: 'deleteUser',
+                type: 'post',
+                data: { id: userId , role: 0},
+                success:function(){
+                    loadUsers();
+                }
+            });}
+        
+
+
+
+        $('#registerUserAdmin').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: 'registerUserAdmin',
+                type: 'post',
+                data:$('#registerUserAdmin').serialize(),
+                success:function(){
+                    loadUsers();
+                    $('#addUserModal').modal('hide');
+                }
+        });
+        });
+
 
         loadUsers();
 

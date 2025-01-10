@@ -2,18 +2,19 @@
 require_once("DBInnit.php");
 class DBKD
 {
-    public static function registerUser($username, $password, $email)
+    public static function registerUser($username, $password, $email,$role)
     {
 
         if (!self::checkUsername($username)) {
             $db = DBInit::getInstance();
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $statement = $db->prepare("INSERT INTO user
-                (username,password,email,name,phone,role, disabled) VALUES (:username, :password,:email,:username,'123','1','0')");
+                (username,password,email,name,phone,role, disabled) VALUES (:username, :password,:email,:username,'123',:role,'0')");
 
             $statement->bindParam(":username", $username, PDO::PARAM_STR);
             $statement->bindParam(":password", $hashed_password, PDO::PARAM_STR);
             $statement->bindParam(":email", $email, PDO::PARAM_STR);
+            $statement->bindParam(":role", $role, PDO::PARAM_INT);
             return $statement->execute();
 
 
@@ -173,6 +174,16 @@ class DBKD
         $statement->execute();
         $event = $statement->fetch();
         return json_encode($event);
+    }
+    public static function deleteUser($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("DELETE FROM event WHERE id_user = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $statement = $db->prepare("DELETE FROM user WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement;
     }
 
 }

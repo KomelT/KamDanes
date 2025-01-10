@@ -30,7 +30,7 @@ $urls = [
       HomeController::register();
    },
    "registerUser" => function () {
-      UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"]);
+      UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"],0);
    },
    "registerUserAdmin" => function () {
       UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"], $_POST["role"]);
@@ -38,7 +38,10 @@ $urls = [
    "loginUser" => function () {
       UserController::loginUser($_POST["username"], $_POST["password"]);
    },
-   "logout" => function () {
+   "deleteUser" => function () {
+      UserController::deleteUser($_POST["id"], $_POST["role"]);
+   }
+   ,"logout" => function () {
       UserController::logout();
    },
    "API/events" => function () {

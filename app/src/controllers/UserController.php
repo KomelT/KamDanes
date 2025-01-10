@@ -3,9 +3,9 @@ require_once("model/DBKD.php");
 require_once("ViewHelper.php");
 class UserController
 {
-    public static function registerUser($username, $password,$email)
+    public static function registerUser($username, $password,$email,$role)
     {
-        if(DBKD::registerUser($username, $password,$email)){
+        if(DBKD::registerUser($username, $password,$email,$role)){
             ViewHelper::redirect("login");
         }
         ViewHelper::render("view/register.php",["error"=>"Napaka pri registraciji"]);
@@ -40,4 +40,11 @@ class UserController
     public static function getUsers(){
         ViewHelper::returnJson(DBKD::getUsers());
     }
+    public static function deleteUser($id,$role){
+        if($role == 0){
+            DBKD::deleteUser($id);
+            ViewHelper::returnJson(DBKD::getUsers());
+        }
+    }
+    
 }
