@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registracija</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Registracija</h2>
+        <form id="registerForm">
+            <div id="error-message" style="color: red;"></div>
+            <div class="form-group">
+                <label for="username">Uporabniško ime:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-pošta:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Geslo:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Potrdi geslo:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit">Registracija</button>
+            <p>Že imate račun? <a href="login.html">Prijava</a></p>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById('registerForm');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(event) {
+            errorMessage.textContent = "";
+            let errors = [];
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (username.trim() === "") {
+                errors.push("Vnesite uporabniško ime.");
+            }
+
+            if (email.trim() === "") {
+                errors.push("Vnesite e-poštni naslov.");
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errors.push("Vnesite veljaven e-poštni naslov.");
+            }
+
+            if (password.trim() === "") {
+                errors.push("Vnesite geslo.");
+            } else if (password.length < 6) {
+                errors.push("Geslo mora vsebovati vsaj 6 znakov.");
+            }
+
+            if (confirmPassword.trim() === "") {
+                errors.push("Potrdite geslo.");
+            } else if (password !== confirmPassword) {
+                errors.push("Gesli se ne ujemata.");
+            }
+
+            if (errors.length > 0) {
+                event.preventDefault();
+                errorMessage.textContent = errors.join("\n");
+            } else {
+                alert("Registracija bi morala biti sedaj uspešna. (Trenutno ni implementirano)");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Prijava</h2>
+        <form id="loginForm">
+            <div id="error-message" style="color: red;"></div>
+            <div class="form-group">
+                <label for="username">Uporabniško ime:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Geslo:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Prijava</button>
+            <p>Še nimate računa? <a href="register.html">Registracija</a></p>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(event) {
+            errorMessage.textContent = "";
+            let errors = [];
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username.trim() === "") {
+                errors.push("Vnesite uporabniško ime.");
+            }
+
+            if (password.trim() === "") {
+                errors.push("Vnesite geslo.");
+            }
+
+            if (errors.length > 0) {
+                event.preventDefault();
+                errorMessage.textContent = errors.join("\n");
+            }
+            else{
+                alert("Prijava bi morala biti sedaj uspešna. (Trenutno ni implementirano)")
+            }
+        });
+    </script>
+</body>
+</html>

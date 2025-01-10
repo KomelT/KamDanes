@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj dogodek</title>
+    <link rel="stylesheet" href="AddEvent.css"> </head>
+<body>
+    <h1>Dodaj dogodek</h1>
+    <form id="addEventForm">
+        <label for="name">Ime dogodka:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="organisation">Organizacija:</label><br>
+        <input type="text" id="organisation" name="organisation"><br><br>
+
+        <label for="artist_name">Ime izvajalca:</label><br>
+        <input type="text" id="artist_name" name="artist_name"><br><br>
+
+        <label for="date_from">Datum od:</label><br>
+        <input type="date" id="date_from" name="date_from" required><br><br>
+
+        <label for="date_to">Datum do:</label><br>
+        <input type="date" id="date_to" name="date_to"><br><br>
+
+        <label for="time_from">Čas od:</label><br>
+        <input type="time" id="time_from" name="time_from"><br><br>
+
+        <label for="time_to">Čas do:</label><br>
+        <input type="time" id="time_to" name="time_to"><br><br>
+
+        <label for="loc_x">Lokacija X (zemljepisna širina):</label><br>
+        <input type="number" step="any" id="loc_x" name="loc_x" required><br><br>
+
+        <label for="loc_y">Lokacija Y (zemljepisna dolžina):</label><br>
+        <input type="number" step="any" id="loc_y" name="loc_y" required><br><br>
+
+        <label for="age_lim">Omejitev starosti:</label><br>
+        <input type="number" id="age_lim" name="age_lim" min="0"><br><br>
+
+        <label for="description">Opis:</label><br>
+        <textarea id="description" name="description"></textarea><br><br>
+
+        <label for="price">Cena:</label><br>
+        <input type="number" id="price" name="price" min="0"><br><br>
+
+        <label for="type">Vrsta dogodka:</label><br>
+        <select id="type" name="type">
+            <option value="0">UL</option>
+            <option value="1">Kultura</option>
+            <option value="2">Zabava</option>
+            <option value="3">Izobraževanje</option>
+            <option value="4">Dobrodelnost</option>
+            <option value="5">Šport</option>
+            <option value="6">Ostalo</option>
+        </select><br><br>
+
+        <label for="link">Povezava:</label><br>
+        <input type="url" id="link" name="link"><br><br>
+
+        <label for="online">Spletni dogodek:</label><br>
+        <input type="checkbox" id="online" name="online" value="1"><br><br>
+
+        <button type="submit">Dodaj dogodek</button>
+    </form>
+
+    <script>
+        document.getElementById('addEventForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            alert("Dogodek bi moral biti dodan");
+        });
+    </script>
+</body>
+</html>
