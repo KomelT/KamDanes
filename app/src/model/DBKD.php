@@ -2,18 +2,19 @@
 require_once("DBInnit.php");
 class DBKD
 {
-    public static function registerUser($username, $password, $email)
+    public static function registerUser($username, $password, $email,$role)
     {
 
-        if (self::checkUsername($username)) {
+        if (!self::checkUsername($username)) {
             $db = DBInit::getInstance();
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $statement = $db->prepare("INSERT INTO user
-                (username,password,email,name,phone,role) VALUES (:username, :password,:email,:username,'123','1')");
+                (username,password,email,name,phone,role, disabled) VALUES (:username, :password,:email,:username,'123',:role,'0')");
 
             $statement->bindParam(":username", $username, PDO::PARAM_STR);
             $statement->bindParam(":password", $hashed_password, PDO::PARAM_STR);
             $statement->bindParam(":email", $email, PDO::PARAM_STR);
+            $statement->bindParam(":role", $role, PDO::PARAM_INT);
             return $statement->execute();
 
 
@@ -26,20 +27,20 @@ class DBKD
     public static function checkUsername($username)
     {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM user WHERE username = :username");
+        $statement = $db->prepare("SELECT * FROM user WHERE username = :username OR email = :username");
         $statement->bindParam(":username", $username, PDO::PARAM_STR);
         $statement->execute();
         $user = $statement->fetch();
         if ($user) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
     public static function checkLogin($username, $password)
     {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM user WHERE username = :username");
+        $statement = $db->prepare("SELECT * FROM user WHERE username = :username OR email = :username");
         $statement->bindParam(":username", $username, PDO::PARAM_STR);
         $statement->execute();
         $user = $statement->fetch();
@@ -92,7 +93,7 @@ class DBKD
     }
     public static function getAllEvents(){
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM event WHERE date_from >= NOW() AND date_from IS NOT NULL;");
+        $statement = $db->prepare("SELECT * FROM event WHERE  (date_to >= CURDATE() AND date_from >= CURDATE()) OR (date_to >= CURDATE() AND (date_from < CURDATE() OR date_from IS NULL)) OR (date_from >= CURDATE() AND date_to IS NULL)");
         $statement->execute();
         $events = $statement->fetchAll();
         return json_encode($events);
@@ -127,6 +128,86 @@ class DBKD
 
         $statement->execute();
     }
-
+    /**
+     * @return string A JSON string containing all online events
+     */
+    public static function getOnlineEvents(){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE (loc_x IS NULL) AND (loc_y IS NULL);");
+        $statement->execute();
+        $events = $statement->fetchAll();
+        return json_encode($events);
+    }
+    public static function deleteEvent($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("DELETE FROM event WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+    }
+    public static function getRole($username){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT role FROM user WHERE username = :username OR email = :username");
+        $statement->bindParam(":username", $username, PDO::PARAM_STR);
+        $statement->execute();
+        $user = $statement->fetch();
+        return $user["role"];
+    }
+    public static function getId($username){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT id FROM user WHERE username = :username;");
+        $statement->bindParam(":username", $username, PDO::PARAM_STR);
+        $statement->execute();
+        $user = $statement->fetch();
+        return $user["id"];
+    }
+    public static function getUsers(){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT id, username, email, name,role FROM user");
+        $statement->execute();
+        $users = $statement->fetchAll();
+        return json_encode($users);
+    }
+    public static function getEventDetail($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $event = $statement->fetch();
+        return json_encode($event);
+    }
+    public static function deleteUser($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("DELETE FROM event WHERE id_user = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $statement = $db->prepare("DELETE FROM user WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement;
+    }
+    private static function checkID($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM user WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $user = $statement->fetch();
+        if ($user) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static function getEventsUser($id){
+        if(!self::checkID($id)){
+            header("HTTP/1.1 412 Precondition Failed");
+            exit(0);
+        }
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE id_user = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $events = $statement->fetchAll();
+        return json_encode($events);
+    }
 
 }

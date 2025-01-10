@@ -3,6 +3,9 @@ body {
   height: 100%;
   margin: 0;
 }
+a {
+  text-decoration: none;
+}
 
 /* Fix enets propagation - START */
 .leaflet-top {
@@ -13,6 +16,10 @@ body {
   pointer-events: auto;
 }
 /* Fix enets propagation - END */
+
+.event-map-popup p {
+  margin: 0;
+}
 
 .menu-button {
   display: none; /* Hide the menu button by default */
@@ -28,7 +35,7 @@ body {
 
 .sidebar {
   height: 100%;
-  width: 300px;
+  width: 100px !important;
   display: block;
   position: fixed;
   z-index: 1;
@@ -36,7 +43,6 @@ body {
   left: 0;
   background-color: #f0f0f0;
   padding: 15px;
-  
 }
 
 .sidebar-header {
@@ -72,6 +78,7 @@ body {
 .date-picker input {
   width: 130px;
   font-size: 14px;
+  box-sizing: content-box;
 }
 
 .type-picker {
@@ -87,6 +94,6 @@ body {
   .sidebar {
     display: none;
     transition: transform 0.3s ease-in-out;
-    
   }
 }
+

@@ -21,6 +21,8 @@ services:
 
   app:
     build: ./app
+    env_file:
+      - .env
     restart: always
     container_name: app
     ports:
@@ -44,6 +46,8 @@ services:
     depends_on:
       app:
         condition: service_healthy
+    env_file:
+      - .env
 
   phpmyadmin:
     image: phpmyadmin:latest

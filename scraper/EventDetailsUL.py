@@ -226,7 +226,6 @@ class EventDetailsUL:
             response = requests.get(url)
             resp_json_payload = response.json()
             if resp_json_payload:
-                # print(resp_json_payload['results'][0]['geometry']['location'])
                 self.longitude = resp_json_payload['results'][0]['geometry']['location']['lng']
                 self.latitude = resp_json_payload['results'][0]['geometry']['location']['lat']
     
@@ -235,30 +234,12 @@ class EventDetailsUL:
         import json
         import os
         
-        data = {
-            'id_user' : 100, #UL
-            'name' : self.title if self.title else None,
-            'organisation' : self.organisation if self.organisation else None,
-            'artist_name' : None,
-            'date_from' : self.start_date if self.start_date else None,
-            'date_to' : self.end_date if self.end_date else None,
-            'loc_x' : self.longitude if self.longitude else None,
-            'loc_y' : self.latitude if self.latitude else None,
-            'time_from' :self.start_time if self.start_time else None,
-            'time_to' : self.end_time if self.end_time else self.start_time,
-            'age_lim' : self.age_limit if self.age_limit else None,
-            'description' : self.description if self.description else None,
-            'price' : self.price if self.price else None,
-            'type' : self.type_of_event if self.type_of_event else 0,
-            'link' : self.url if self.url else None,
-            'online' : 1 if self.location == "Spletni dogodek" else 0
-        }
-        
+        data = self.get_json()
         app_url = os.getenv('APP_URL', 'http://localhost:3000')
 
         uri = f'{app_url}/API/pushEvent'
 
-        response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=json.dumps(data))
+        response = requests.post(uri, headers={'Content-Type': 'application/json'}, data=data)
         
 
     def convert_time(self):
@@ -279,3 +260,25 @@ class EventDetailsUL:
             new_end_time = end_time_dt.strftime("%Y-%m-%d %H:%M")
             self.end_time = new_end_time.split(" ")[1]
 
+    def get_json(self):
+        import json
+        data = {
+            'id_user' : 100, #UL
+            'name' : self.title if self.title else None,
+            'organisation' : self.organisation if self.organisation else None,
+            'artist_name' : None,
+            'date_from' : self.start_date if self.start_date else None,
+            'date_to' : self.end_date if self.end_date else None,
+            'loc_x' : self.longitude if self.longitude else None,
+            'loc_y' : self.latitude if self.latitude else None,
+            'time_from' :self.start_time if self.start_time else None,
+            'time_to' : self.end_time if self.end_time else self.start_time,
+            'age_lim' : self.age_limit if self.age_limit else None,
+            'description' : self.description if self.description else None,
+            'price' : self.price if self.price else None,
+            'type' : self.type_of_event if self.type_of_event else 0,
+            'link' : self.url if self.url else None,
+            'online' : 1 if self.location == "Spletni dogodek" else 0
+        }
+
+        return json.dumps(data)
