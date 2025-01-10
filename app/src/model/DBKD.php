@@ -9,7 +9,7 @@ class DBKD
             $db = DBInit::getInstance();
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $statement = $db->prepare("INSERT INTO user
-                (username,password,email,name,phone,role) VALUES (:username, :password,:email,:username,'123','1')");
+                (username,password,email,name,phone,role, disabled) VALUES (:username, :password,:email,:username,'123','1','0')");
 
             $statement->bindParam(":username", $username, PDO::PARAM_STR);
             $statement->bindParam(":password", $hashed_password, PDO::PARAM_STR);
@@ -92,7 +92,7 @@ class DBKD
     }
     public static function getAllEvents(){
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM event WHERE date_from >= NOW() AND date_from IS NOT NULL;");
+        $statement = $db->prepare("SELECT * FROM event WHERE  (date_to >= CURDATE() AND date_from >= CURDATE()) OR (date_to >= CURDATE() AND (date_from < CURDATE() OR date_from IS NULL)) OR (date_from >= CURDATE() AND date_to IS NULL)");
         $statement->execute();
         $events = $statement->fetchAll();
         return json_encode($events);
@@ -150,6 +150,29 @@ class DBKD
         $statement->execute();
         $user = $statement->fetch();
         return $user["role"];
+    }
+    public static function getId($username){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT id FROM user WHERE username = :username;");
+        $statement->bindParam(":username", $username, PDO::PARAM_STR);
+        $statement->execute();
+        $user = $statement->fetch();
+        return $user["id"];
+    }
+    public static function getUsers(){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT id, username, email, name,role FROM user");
+        $statement->execute();
+        $users = $statement->fetchAll();
+        return json_encode($users);
+    }
+    public static function getEventDetail($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $event = $statement->fetch();
+        return json_encode($event);
     }
 
 }

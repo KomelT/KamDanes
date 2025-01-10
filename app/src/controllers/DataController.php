@@ -14,12 +14,6 @@ class DataController
     public static function pushEvent()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        // foreach($data as $key => $value){
-        //     if(is_string($data[$key])){
-        //         $data[$key] = trim($value);
-        //     }
-
-        // }
         DBKD::pushEvent($data);
     }
     public static function getAllEvents()
@@ -29,5 +23,12 @@ class DataController
     public static function getOnlineEvents(){
         ViewHelper::returnJson(DBKD::getOnlineEvents());
         
+    }
+
+    public static function pushEventForm($data){
+        DBKD::pushEvent($data);
+    }
+    public static function getEventDetail($id){
+        ViewHelper::returnJson(DBKD::getEventDetail($id));
     }
 }

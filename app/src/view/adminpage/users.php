@@ -67,7 +67,7 @@
     <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="addUserForm">
+                <form  id="registerUserAdmin" >
                     <div class="modal-header">
                         <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -82,24 +82,20 @@
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
-                            <select class="form-select" id="role" name="role" required>
-                                <option value="1">Admin</option>
-                                <option value="2">Editor</option>
-                                <option value="3">Viewer</option>
-                            </select>
+                            <input type="number" class="form-control" id="role" name="role" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save User</button>
+                        <button id="saveUserButton" type="submit" class="btn btn-primary">Save User</button>
                     </div>
                 </form>
             </div>
@@ -116,9 +112,17 @@
             { id: 2, username: 'editor', email: 'editor@example.com', name: 'Editor User', phone: '0987654321', role: 'Editor' }
         ];
 
-        function loadUsers() {
+        async function loadUsers() {
             userTable.innerHTML = '';
-            users.forEach(user => {
+            try {
+                const response = await fetch("API/users/getUsers");
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                console.log(json);
+                json.forEach(user => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${user.id}</td>
@@ -134,12 +138,16 @@
                 `;
                 userTable.appendChild(row);
             });
+            } catch (error) {
+                console.error(error.message);
+            }
+            
         }
 
-        document.getElementById('addUserForm').addEventListener('submit', function (event) {
+        /*document.getElementById('addUserForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const newUser = {
-                id: users.length + 1,
+                
                 username: this.username.value,
                 email: this.email.value,
                 name: this.name.value,
@@ -147,11 +155,25 @@
                 role: this.role.options[this.role.selectedIndex].text
             };
             users.push(newUser);
+            fetch('registerUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `username=${newUser.username}&email=${newUser.email}&name=${newUser.name}&role=${newUser.role}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
             this.reset();
             const modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
             modal.hide();
             loadUsers();
-        });
+        });*/
 
         function editUser(userId) {
             const user = users.find(u => u.id === userId);
@@ -176,6 +198,7 @@
                 }
             });
         });
+        
     </script>
 </body>
 </html>

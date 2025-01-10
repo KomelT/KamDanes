@@ -21,6 +21,8 @@ services:
 
   app:
     build: ./app
+    env_file:
+      - .env
     restart: always
     container_name: app
     ports:

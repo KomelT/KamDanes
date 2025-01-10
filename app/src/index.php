@@ -32,6 +32,9 @@ $urls = [
    "registerUser" => function () {
       UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"]);
    },
+   "registerUserAdmin" => function () {
+      UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"], $_POST["role"]);
+   },
    "loginUser" => function () {
       UserController::loginUser($_POST["username"], $_POST["password"]);
    },
@@ -64,7 +67,16 @@ $urls = [
    },
    'adminusers' => function () {
       HomeController::adminUsers();
-   }
+
+   }, 'addEventForm' => function () {
+      HomeController::addEventForm();
+   },
+    'API/users/getUsers' => function () {
+      UserController::getUsers();
+   },
+    'API/events/eventDetail' => function () {
+      DataController::getEventDetail($_POST["id"]);
+   },
 ];
 
 try {

@@ -59,14 +59,16 @@
         <ul class="navbar-nav">
           <?php
             if(isset($_SESSION['username'])) {
-               echo '<li class="nav-item">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                          Dodaj dogodek
-                        </button>                  
-                      </li>';
+               
+                
                 echo '<li class="nav-item">
-                      <a class="nav-link" href="logout">Odjava</a>
-                      </li>';
+                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Dodaj dogodek
+                      </button>                  
+                    </li>';
+                echo '<li class="nav-item">
+                    <a class="nav-link" href="logout">Odjava</a>
+                </li>';
                 
             }else{
                 echo '<li class="nav-item">
@@ -76,15 +78,13 @@
                 <a class="nav-link" href="register">Registracija</a>
               </li>';
             } 
-            if(isset($_SESSION['role'])) {
+            if(isset($_SESSION['role']) && $_SESSION['role'] == 0) {
               echo '<li class="nav-item">
                 <a class="nav-link" href="admin">Admin panel</a>
               </li>';
             }
           ?>
-          <li class="nav-item">
-            <a class="nav-link " href="#" tabindex="-1" onclick="toggleSidebar()">Filtri</a>
-          </li>
+          
           
 
 
@@ -249,7 +249,7 @@
   }
   ?>
 
-  document.getElementById("online-input").addEventListener("change", function() {
+  /*document.getElementById("online-input").addEventListener("change", function() {
     if (this.checked) {
       document.getElementById("street-input").value = "";
       document.getElementById("city-input").value = "";
@@ -262,7 +262,8 @@
       document.getElementById("city-input").disabled = false;
       document.getElementById("zip-input").disabled = false;
     }
-  });
+  });*/
+  //Deleted event handler because online events have a location to be displayed on the map
 
   document.getElementById("age_lim_bool-input").addEventListener("change", function() {
     if (this.checked) {
@@ -287,12 +288,12 @@
     document.getElementById("zip-input").disabled = false;
     document.getElementById("age_lim").disabled = true;
     document.getElementById("price").disabled = true;
-  })
+  });
   
   // function getData(){
   //   const coordinates = getCoordinates();
   //   return {
-      // id_user: <?php echo $_SESSION['id'] ?>,
+      // id_user: NO USER ID
   //     name: document.getElementById("name").value,
   //     organisation: document.getElementById("organisation").value,
   //     artist_name: document.getElementById("artist_name").value,

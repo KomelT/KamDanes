@@ -226,7 +226,6 @@ class EventDetailsUL:
             response = requests.get(url)
             resp_json_payload = response.json()
             if resp_json_payload:
-                # print(resp_json_payload['results'][0]['geometry']['location'])
                 self.longitude = resp_json_payload['results'][0]['geometry']['location']['lng']
                 self.latitude = resp_json_payload['results'][0]['geometry']['location']['lat']
     
