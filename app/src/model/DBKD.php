@@ -185,5 +185,29 @@ class DBKD
         $statement->execute();
         return $statement;
     }
+    private static function checkID($id){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM user WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $user = $statement->fetch();
+        if ($user) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static function getEventsUser($id){
+        if(!self::checkID($id)){
+            header("HTTP/1.1 412 Precondition Failed");
+            exit(0);
+        }
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE id_user = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $events = $statement->fetchAll();
+        return json_encode($events);
+    }
 
 }

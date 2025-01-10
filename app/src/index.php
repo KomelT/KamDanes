@@ -55,6 +55,9 @@ $urls = [
    "API/events/all" => function () {
       DataController::getAllEvents();
    },
+   "API/events/user" => function () {
+      DataController::getEventsUser($_POST["id"]);
+   },
   
    "reset" => function () {
       HomeController::reset();
