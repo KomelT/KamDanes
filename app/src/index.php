@@ -30,7 +30,7 @@ $urls = [
       HomeController::register();
    },
    "registerUser" => function () {
-      UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"],0);
+      UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"],1);
    },
    "registerUserAdmin" => function () {
       UserController::registerUser($_POST["username"], $_POST["password"], $_POST["email"], $_POST["role"]);
