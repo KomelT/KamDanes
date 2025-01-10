@@ -199,6 +199,7 @@ class DBKD
     }
     public static function getEventsUser($id){
         if(!self::checkID($id)){
+             
             header("HTTP/1.1 412 Precondition Failed");
             exit(0);
         }

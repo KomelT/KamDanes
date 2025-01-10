@@ -31,4 +31,8 @@ class DataController
     public static function getEventDetail($id){
         ViewHelper::returnJson(DBKD::getEventDetail($id));
     }
+    public static function getEventsUser($id){
+
+        ViewHelper::returnJson(DBKD::getEventsUser($id));
+    }
 }

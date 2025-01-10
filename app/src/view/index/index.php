@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KamDanes</title>
-  <link rel="icon" href="<?php echo ASSETS_URL ;?>favicon.png" type="image/x-icon">
+  <link rel="icon" href="<?php echo ASSETS_URL ;?>favicon.ico" type="image/x-icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
