@@ -23,6 +23,6 @@ def scrape_all_events():
 
 def schedule_scraping():
   scrape_all_events()
-  threading.Timer(1800, schedule_scraping).start()
+  threading.Timer(86400, schedule_scraping).start()
 
 schedule_scraping()
