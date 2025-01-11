@@ -44,6 +44,7 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?php echo ASSETS_URL ?>index.css">
+
 </head>
 
 
@@ -229,29 +230,28 @@
   </div>
   <!-- Moji eventi  TODO!=Tit je gej. -->
   <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel" onclick="mojiDogodki()">Moji dogodki</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+  <div class="modal-dialog modal-xl"> 
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Moji dogodki</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
         <form action="viewEventForm" id="viewEventForm" method="post">
-          <table class="table table-striped">
-              <thead>
-                  <tr>
-                      <th>ID</th>
-                      <th>User ID</th>
-                      <th>Event Name</th>
-                      <th>Link</th>
-                      <th>Actions</th>
-                  </tr>
-              </thead>
-              <tbody id="eventsTable">
-              </tbody>
+          <table class="table table-striped table-responsive">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Event Name</th>
+                <th>Link</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="eventsTable">
+            </tbody>
           </table>
         </form>
-        </div>
       </div>
     </div>
   </div>

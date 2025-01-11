@@ -41,6 +41,7 @@
         <h3 class="text-center py-3">Admin Panel</h3>
         <a href="#" data-redirect="adminusers">Manage Users</a>
         <a href="#" data-redirect="adminevents">Manage Events</a>
+        <a href="#" data-redirect="/">Return to site</a>
     </div>
 
     <div id="main-content">
