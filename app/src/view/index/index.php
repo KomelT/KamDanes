@@ -46,6 +46,7 @@
   <link rel="stylesheet" href="<?php echo ASSETS_URL ?>index.css">
 </head>
 
+
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
@@ -57,37 +58,35 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <?php
-            if(isset($_SESSION['username'])) {
-               
-                
-                echo '<li class="nav-item">
-                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Dodaj dogodek
-                      </button>                  
-                    </li>';
-                echo '<li class="nav-item">
-                    <a class="nav-link" href="logout">Odjava</a>
-                </li>';
-                
-            }else{
-                echo '<li class="nav-item">
-                <a class="nav-link" href="login">Prijava</a>
+        <?php
+          if(isset($_SESSION['username'])) {
+              echo '<li class="nav-item me-2"">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Dodaj dogodek
+                    </button>                  
+                  </li>';
+              echo '<li class="nav-item me-2"">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                      Moji dogodki
+                    </button>  
+                  </li>';
+              echo '<li class="nav-item me-2"">
+                  <a class="nav-link" href="logout">Odjava</a>
               </li>';
-                echo '<li class="nav-item">
-                <a class="nav-link" href="register">Registracija</a>
-              </li>';
-            } 
-            if(isset($_SESSION['role']) && $_SESSION['role'] == 0) {
-              echo '<li class="nav-item">
-                <a class="nav-link" href="admin">Admin panel</a>
-              </li>';
-            }
-          ?>
-          
-          
-
-
+          } else {
+              echo '<li class="nav-item me-2"">
+              <a class="nav-link" href="login">Prijava</a>
+            </li>';
+              echo '<li class="nav-item me-2"">
+              <a class="nav-link" href="register">Registracija</a>
+            </li>';
+          } 
+          if(isset($_SESSION['role']) && $_SESSION['role'] == 0) {
+            echo '<li class="nav-item">
+              <a class="nav-link" href="admin">Admin panel</a>
+            </li>';
+          }
+        ?>
         </ul>
       </div>
     </div>
@@ -228,11 +227,104 @@
     </div>
     <div id="map" class="w-66" style="width: 100%; height: auto;"></div>
   </div>
-
+  <!-- Moji eventi  TODO!=Tit je gej. -->
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" onclick="mojiDogodki()">Moji dogodki</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form action="viewEventForm" id="viewEventForm" method="post">
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>User ID</th>
+                      <th>Event Name</th>
+                      <th>Link</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody id="eventsTable">
+              </tbody>
+          </table>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
+<?php
+$userId = $_SESSION['id'] ?? null;
+?>
+
 <!-- Custom JS -->
 <script src="<?php echo ASSETS_URL ?>index.js"></script>
 <script>
+  
+  const userId = <?php echo json_encode($userId); ?>;
+  console.log("User ID:", userId);
+  const eventsTable = document.getElementById('eventsTable');
+
+  let events = [
+    
+  ];
+
+  async function loadEvents() {
+      eventsTable.innerHTML = '';
+      try {
+        const response = await fetch('API/events/user', {
+            method: 'POST', // Correct method name
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded', // Proper header for form data
+            },
+            body: `id=${userId}`, // Pass userId in the body
+        });
+
+        console.log("Response received:", response);
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        console.log("JSON data:", json);
+
+        json.forEach(event => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${event.id}</td>
+                <td>${event.id_user}</td>
+                <td>${event.name}</td>
+                <td><a href="${event.link}" target="_blank">${event.link}</a></td>
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="editEvent(${event.id})">Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteEvent(${event.id})">Delete</button>
+                </td>
+            `;
+            eventsTable.appendChild(row);
+        });
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
+      
+  }
+
+  function editEvent(eventId) {
+    window.location.href = `fullevent.php?id=${eventId}`;
+  }
+
+
+  function deleteEvent(eventId) {
+    events = events.filter(e => e.id !== eventId);
+    loadEvents();
+  }
+  loadEvents();
+  
+
   function alertError(msg) {
     alert(`Napaka: ${msg}`);
   }
