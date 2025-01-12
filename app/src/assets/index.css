@@ -6,8 +6,8 @@ body {
 a {
   text-decoration: none;
 }
-
-/* Fix enets propagation - START */
+/*
+// Fix enets propagation - START 
 .leaflet-top {
   pointer-events: none;
 }
@@ -15,14 +15,14 @@ a {
 .leaflet-top > * {
   pointer-events: auto;
 }
-/* Fix enets propagation - END */
+/* Fix enets propagation - END 
 
 .event-map-popup p {
   margin: 0;
 }
 
 .menu-button {
-  display: none; /* Hide the menu button by default */
+  display: none; /* Hide the menu button by default 
   border: none;
   color: black;
   padding: 15px 32px;
@@ -97,3 +97,4 @@ a {
   }
 }
 
+*/
