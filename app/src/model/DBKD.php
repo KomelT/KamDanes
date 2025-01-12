@@ -143,6 +143,7 @@ class DBKD
         $statement = $db->prepare("DELETE FROM event WHERE id = :id");
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
+        return $statement;
     }
     public static function getRole($username){
         $db = DBInit::getInstance();
@@ -209,6 +210,19 @@ class DBKD
         $statement->execute();
         $events = $statement->fetchAll();
         return json_encode($events);
+    }
+    public static function isEventUser($id,$uid){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM event WHERE id = :id AND id_user = :uid");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->bindParam(":uid", $uid, PDO::PARAM_INT);
+        $statement->execute();
+        $event = $statement->fetch();
+        if ($event) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

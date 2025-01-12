@@ -35,4 +35,21 @@ class DataController
 
         ViewHelper::returnJson(DBKD::getEventsUser($id));
     }
+    public static function deleteEvent($id,$uid){
+        if(!DBKD::isEventUser($id,$uid)){
+            header("HTTP/1.1 404 Not Found");
+            exit();
+        }
+        
+        
+        if(DBKD::deleteEvent($id)){
+            header("HTTP/1.1 200 OK");
+            exit();
+        }
+        header("HTTP/1.1 500 Internal Server Error");
+        exit();
+
+
+    }
+
 }

@@ -18,6 +18,7 @@
 
   <!-- Geocoder JS -->
   <script src="<?php echo ASSETS_URL ?>Geocoder.js"></script>
+  <?php include_once("jquery.php");?>
   <!-- Geocoder CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@2.1.1/dist/Control.Geocoder.css" />
 
@@ -159,7 +160,8 @@
               <option value="3">Izobraževanje</option>
               <option value="4">Dobrodelnost</option>
               <option value="5">Šport</option>
-              <option value="6" selected>Ostalo</option>
+              <!-- <option value="6">Ostalo</option> !-->
+              <option value="7" selected>Ostalo</option>
             </select><br>
             
             <label for="link">Link do dogodka</label><br>
@@ -216,7 +218,7 @@
             <label class="form-check-label" for="checkbox-type-ul">UL</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkbox-type-ostalo" name="ostalo" value="6" checked>
+            <input class="form-check-input" type="checkbox" id="checkbox-type-ostalo" name="ostalo" value="7" checked>
             <label class="form-check-label" for="checkbox-type-ostalo">Ostalo</label>
           </div>
         </div>
@@ -237,7 +239,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="viewEventForm" id="viewEventForm" method="post">
+        <form action="" id="viewEventForm" >
           <table class="table table-striped table-responsive">
             <thead>
               <tr>
@@ -316,11 +318,31 @@ $userId = $_SESSION['id'] ?? null;
   function editEvent(eventId) {
     window.location.href = `fullevent.php?id=${eventId}`;
   }
+  $("#viewEventForm").submit(function(event) {
+    event.preventDefault();
+    loadEvents();
+    fetchEvents();
+  });
 
 
   function deleteEvent(eventId) {
-    events = events.filter(e => e.id !== eventId);
-    loadEvents();
+    $.ajax({
+      url: 'API/events/delete',
+      method: 'POST',
+      data: {
+        id: eventId,
+      },
+      success: function(response) {
+        console.log('Event deleted successfully');
+        loadEvents();
+        refreshMap();
+      },
+      error: function(xhr, status, error) {
+        console.error('Error deleting event:', error);
+        refreshMap();
+      }
+    })
+    
   }
   loadEvents();
   
@@ -382,64 +404,6 @@ $userId = $_SESSION['id'] ?? null;
     document.getElementById("price").disabled = true;
   });
   
-  // function getData(){
-  //   const coordinates = getCoordinates();
-  //   return {
-      // id_user: NO USER ID
-  //     name: document.getElementById("name").value,
-  //     organisation: document.getElementById("organisation").value,
-  //     artist_name: document.getElementById("artist_name").value,
-  //     date_from: document.getElementById("date_from").value,
-  //     date_to: document.getElementById("date_to").value,
-  //     loc_x: coordinates["lat"] ? coordinates["lat"] : null,
-  //     loc_y: coordinates["lng"] ? coordinates["lng"] : null,
-  //     time_from: document.getElementById("time_from").value,
-  //     time_to: document.getElementById("time_to").value,
-  //     age_lim: document.getElementById("age_lim").value,
-  //     description: document.getElementById("description").value,
-  //     price: document.getElementById("price").value,
-  //     type: document.getElementById("type").value,
-  //     link: document.getElementById("link").value,
-  //     online: document.getElementById("online-input").value
-  //   }
-  // }
-
-  // async function getCoordinates(){
-  //   let street = document.getElementById("street-input").value;
-  //   let city = document.getElementById("city-input").value;
-  //   let zip = document.getElementById("zip-input").value;
-  //   let address = `${street}, ${city}, ${zip}`;
-  //   try {
-  //     let coordinates = await Geocoder.getCoordinates(address);
-  //     return coordinates;
-  //   } catch (error) {
-  //     console.error("Error fetching coordinates:", error);
-  //     alert("Unable to fetch coordinates. Please try again.");
-  //   }
-  // }
-
-  // function sendDataToAPI(){
-  //   const data = getData();
-  //   fetch('API/pushEvent', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(data),
-  //   })
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log('Success:', data);
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error:', error);
-  //   });
-  // }
-
-  // document.getElementById("addEventForm").addEventListener("submit", function(event) {
-  //   event.preventDefault();
-  //   sendDataToAPI();
-  // });
 </script>
 
 </html>

@@ -214,7 +214,9 @@ function fetchEvents() {
     });
   });
 }
-
+function refreshMap(){
+  fetchEvents();
+}
 
 function fetchEventsAPI(url) {
   fetch(url).then((res) => {
