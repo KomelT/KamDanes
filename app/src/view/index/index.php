@@ -60,6 +60,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+          <li class="nav-item me-2"">
+            <button type="button" class="btn btn-success" onclick="toggleSidebar()">
+                      Filtri
+            </button>                  
+          </li>
         <?php
           if(isset($_SESSION['username'])) {
               echo '<li class="nav-item me-2"">
@@ -177,8 +182,9 @@
     </div>
   </div>
 
-  <div class="d-flex h-100">
-    <div id="sidebar" class="bg-light p-3 h-100">
+   <div class="d-flex h-100">
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-light p-3 h-100" style="display: none;">
       <div class="sidebar-content">
         <h4>Filtri:</h4>
         <input type="text" id="search" class="form-control mb-2" placeholder="Išči po imenu">
@@ -228,8 +234,9 @@
         <button id="all-events-button" class="btn btn-secondary mt-3" onclick="fetchEventsAPI('API/events/online')">Online dogodki</button>
       </div>
     </div>
-    <div id="map" class="w-66" style="width: 100%; height: auto;"></div>
+    <div id="map" style="width: 100%; height: auto;"></div>
   </div>
+
   <!-- Moji eventi  TODO!=Tit je gej. -->
   <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl"> 
@@ -351,6 +358,14 @@ $userId = $_SESSION['id'] ?? null;
     alert(`Napaka: ${msg}`);
   }
 
+
+  function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("show");
+  }
+
+  toggleSidebar();
+  
+  
   function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("show");
   }
@@ -403,6 +418,24 @@ $userId = $_SESSION['id'] ?? null;
     document.getElementById("age_lim").disabled = true;
     document.getElementById("price").disabled = true;
   });
+
+  function toggleSidebar() {
+    $("#sidebar").toggle();
+  }
+
+  function autoHideSidebarOnMobile() {
+    const sidebar = document.getElementById("sidebar");
+    if (window.innerWidth < 786) {
+        sidebar.style.display = "none";
+    } else {
+        sidebar.style.display = "block";
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", autoHideSidebarOnMobile);
+
+  window.addEventListener("resize", autoHideSidebarOnMobile);
+
   
 </script>
 
