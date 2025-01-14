@@ -86,7 +86,7 @@ const onlinePin = L.icon({
 });
 
 // add sidebar
-const menuButton = document.getElementById("menu-button");
+//const menuButton = document.getElementById("menu-button");
 //const sidebar = document.getElementById("sidebar");
 
 /*menuButton.addEventListener("click", () => {

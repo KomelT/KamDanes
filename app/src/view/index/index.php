@@ -365,6 +365,7 @@ function toggleSidebar() {
       error: function(xhr, status, error) {
         console.error('Error deleting event:', error);
         refreshMap();
+      }
     })
     
   }
