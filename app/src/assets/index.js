@@ -106,7 +106,7 @@ const to = new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().
 filterDateTo.value = to;
 
 
-function toggleSidebar() {
+/*function toggleSidebar() {
   console.log(sidebar.style.display);
   if (sidebar.style.display === "block") {
     sidebar.style.transform = "translateX(-100%)";
@@ -119,7 +119,7 @@ function toggleSidebar() {
     sidebar.style.transform = "translateX(0)";
     menuButton.style.display = "none";
   }
-}
+}*/
 
 function getSelectedEventType() {
   const selectedTypes = [];

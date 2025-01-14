@@ -273,6 +273,26 @@ $userId = $_SESSION['id'] ?? null;
 <!-- Custom JS -->
 <script src="<?php echo ASSETS_URL ?>index.js"></script>
 <script>
+
+
+
+function toggleSidebar() {
+    $("#sidebar").toggle();
+  }
+
+  function autoHideSidebarOnMobile() {
+    const sidebar = document.getElementById("sidebar");
+    if (window.innerWidth < 786) {
+        sidebar.style.display = "none";
+    } else {
+        sidebar.style.display = "block";
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", autoHideSidebarOnMobile);
+
+  window.addEventListener("resize", autoHideSidebarOnMobile);
+
   
   const userId = <?php echo json_encode($userId); ?>;
   console.log("User ID:", userId);
@@ -355,18 +375,9 @@ $userId = $_SESSION['id'] ?? null;
   }
 
 
-  function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("show");
-  }
 
-  toggleSidebar();
-  
-  
-  function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("show");
-  }
 
-  toggleSidebar();
+  
   
   <?php
   if(isset($error)){
@@ -397,22 +408,6 @@ $userId = $_SESSION['id'] ?? null;
     document.getElementById("price").disabled = true;
   });
 
-  function toggleSidebar() {
-    $("#sidebar").toggle();
-  }
-
-  function autoHideSidebarOnMobile() {
-    const sidebar = document.getElementById("sidebar");
-    if (window.innerWidth < 786) {
-        sidebar.style.display = "none";
-    } else {
-        sidebar.style.display = "block";
-    }
-  }
-
-  window.addEventListener("DOMContentLoaded", autoHideSidebarOnMobile);
-
-  window.addEventListener("resize", autoHideSidebarOnMobile);
 
   
 </script>
