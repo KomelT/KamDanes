@@ -367,8 +367,8 @@ function toggleSidebar() {
         refreshMap();
       }
     })
-    
   }
+
   loadEvents();
   
   function alertError(msg) {
@@ -391,6 +391,7 @@ function toggleSidebar() {
       document.getElementById("age_lim").disabled = false;
     } else {
       document.getElementById("age_lim").disabled = true;
+    }
   });
 
   document.getElementById("cena_bool-input").addEventListener("change", function() {
@@ -398,6 +399,7 @@ function toggleSidebar() {
       document.getElementById("price").disabled = true;
     } else {
       document.getElementById("price").disabled = false;
+    }
   });
 
   document.getElementById("clearButton").addEventListener("click", function(){
