@@ -154,7 +154,7 @@
 
             <label for="type">Tip dogodka</label><br>
             <select class="form-select" name="type" id="type">
-              <option value="0">UL Dogodek</option>
+              <option value="0">Univerza v Ljubljani Dogodek</option>
               <option value="1">Kulturni dogodek</option>
               <option value="2">Zabava</option>
               <option value="3">Izobraževanje</option>
@@ -215,7 +215,7 @@
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="checkbox-type-ul" name="ul" value="0" checked>
-            <label class="form-check-label" for="checkbox-type-ul">UL</label>
+            <label class="form-check-label" for="checkbox-type-ul">Univerza v Ljubljani</label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="checkbox-type-ostalo" name="ostalo" value="7" checked>
@@ -323,8 +323,6 @@ $userId = $_SESSION['id'] ?? null;
     loadEvents();
     fetchEvents();
   });
-
-
   function deleteEvent(eventId) {
     $.ajax({
       url: 'API/events/delete',
@@ -340,13 +338,11 @@ $userId = $_SESSION['id'] ?? null;
       error: function(xhr, status, error) {
         console.error('Error deleting event:', error);
         refreshMap();
-      }
     })
     
   }
   loadEvents();
   
-
   function alertError(msg) {
     alert(`Napaka: ${msg}`);
   }
@@ -363,28 +359,11 @@ $userId = $_SESSION['id'] ?? null;
   }
   ?>
 
-  /*document.getElementById("online-input").addEventListener("change", function() {
-    if (this.checked) {
-      document.getElementById("street-input").value = "";
-      document.getElementById("city-input").value = "";
-      document.getElementById("zip-input").value = "";
-      document.getElementById("street-input").disabled = true;
-      document.getElementById("city-input").disabled = true;
-      document.getElementById("zip-input").disabled = true;
-    } else {
-      document.getElementById("street-input").disabled = false;
-      document.getElementById("city-input").disabled = false;
-      document.getElementById("zip-input").disabled = false;
-    }
-  });*/
-  //Deleted event handler because online events have a location to be displayed on the map
-
   document.getElementById("age_lim_bool-input").addEventListener("change", function() {
     if (this.checked) {
       document.getElementById("age_lim").disabled = false;
     } else {
       document.getElementById("age_lim").disabled = true;
-    }
   });
 
   document.getElementById("cena_bool-input").addEventListener("change", function() {
@@ -392,7 +371,6 @@ $userId = $_SESSION['id'] ?? null;
       document.getElementById("price").disabled = true;
     } else {
       document.getElementById("price").disabled = false;
-    }
   });
 
   document.getElementById("clearButton").addEventListener("click", function(){
