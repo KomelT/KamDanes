@@ -172,13 +172,13 @@
                     <label class="form-check-label" for="online">Online dogodek</label> <br><br>
 
                     <label for="address">Ulica</label> <br>
-                    <input class="form-control form-control-sm" type="text" name="street" id="street-input" required><br>
+                    <input class="form-control form-control-sm" type="text" name="street" id="street-input"><br>
 
                     <label for="city">Mesto</label> <br>
-                    <input class="form-control form-control-sm" type="text" name="city" id="city-input" required><br>
+                    <input class="form-control form-control-sm" type="text" name="city" id="city-input"><br>
 
                     <label for="zip">Poštna številka</label> <br>
-                    <input class="form-control form-control-sm" type="text" name="zip" id="zip-input" required><br>
+                    <input class="form-control form-control-sm" type="text" name="zip" id="zip-input"><br>
 
                     <label for="time_from">Ura začetka</label><br>
                     <input class="form-control form-control-sm" type="time" name="time_from" id="time_from"><br>
@@ -214,7 +214,6 @@
                     
                     <label for="link">Link do dogodka</label><br>
                     <input class="form-control form-control-sm" type="text" name="link" id="link" required><br>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Update Event</button>
@@ -280,39 +279,47 @@
 
         
         function editEvent(eventId) {
-            const event = events.filter(e => e.id === eventId);
-            $('#name').val(event.name);
-            $('#organisation').val(event.organisation);
-            $('#artist_name').val(event.artist_name);
-            $('#date_from').val(event.date_from);
-            $('#date_to').val(event.date_to);
-            $('#online-input').prop('checked', event.online);
-            $('#street-input').val(event.street);
-            $('#city-input').val(event.city);
-            $('#zip-input').val(event.zip);
-            $('#time_from').val(event.time_from);
-            $('#time_to').val(event.time_to);
-            $('#age_lim_bool-input').prop('checked', event.age_lim_bool);
-            $('#age_lim').val(event.age_lim);
-            $('#description').val(event.description);
-            $('#cena_bool-input').prop('checked', event.cena_bool);
-            $('#price').val(event.price);
-            $('#type').val(event.type);
-            $('#link').val(event.link);
-            $('#age_lim').prop('disabled', !event.age_lim_bool);
-            $('#price').prop('disabled', event.cena_bool);
-            $('#editEventModal').modal('show');
-            $('#editEventModal').submit(function(e){
-                e.preventDefault();
-                $.ajax({
-                    url: 'updateEvent',
-                    type: 'post',
-                    data:$('#editEventModal').serialize(),
-                    success:function(){
-                        loadEvents();
-                        $('#editEventModal').modal('hide');
-                    }
-                });
+            $.ajax({
+                url: 'API/events/eventDetail',
+                data: {id: eventId},
+                method: 'POST',
+                success: function(event) {
+                    console.log(event);
+                    var modal = $('#editEventModal');
+                    modal.find('#name').val(event.name);
+                    modal.find('#organisation').val(event.organisation);
+                    modal.find('#artist_name').val(event.artist_name);
+                    modal.find('#date_from').val(event.date_from);
+                    modal.find('#date_to').val(event.date_to);
+                    modal.find('#online-input').prop('checked', event.online);
+                    modal.find('#time_from').val(event.time_from);
+                    modal.find('#time_to').val(event.time_to);
+                    modal.find('#age_lim_bool-input').prop('checked', event.age_lim_bool);
+                    modal.find('#age_lim').val(event.age_lim);
+                    modal.find('#description').val(event.description);
+                    modal.find('#cena_bool-input').prop('checked', event.cena_bool);
+                    modal.find('#price').val(event.price);
+                    modal.find('#type').val(event.type);
+                    modal.find('#link').val(event.link);
+                    modal.find('#age_lim').prop('disabled', !event.age_lim_bool);
+                    modal.find('#price').prop('disabled', event.cena_bool);
+                    $('#editEventModal').modal('show');
+                    $('#editEventModal').submit(function(e){
+                        e.preventDefault();
+                        $.ajax({
+                            url: 'updateEvent',
+                            type: 'post',
+                            data:$('#editEventModal').serialize(),
+                            success:function(){
+                                loadEvents();
+                                $('#editEventModal').modal('hide');
+                            }
+                        });
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching event details:', error);
+                }
             });
         }
 
@@ -375,24 +382,3 @@
     </script>
 </body>
 </html>
-
-
-<!-- Edit Event Modal 
-<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editEventForm">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editEventModalLabel">Edit Event</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Update Event</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>-->
