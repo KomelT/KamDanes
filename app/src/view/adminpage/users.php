@@ -119,7 +119,7 @@
             try {
                 const response = await fetch("API/users/getUsers");
                 if (!response.ok) {
-                    throw new Error(`Response status: ${response.status}`);
+                    throw new   (`Response status: ${response.status}`);
                 }
 
                 const json = await response.json();

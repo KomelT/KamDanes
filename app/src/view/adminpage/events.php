@@ -154,6 +154,7 @@
                 </div>
                 <div class="modal-body">
                     <label for="name">Ime dogodka</label><br>
+                    <input type="hidden" name="id" id="id">
                     <input class="form-control form-control-sm" type="text" name="name" id="name" required><br>
 
                     <label for="organisation">Organizacija</label> <br>
@@ -203,7 +204,7 @@
 
                     <label for="type">Tip dogodka</label><br>
                     <select class="form-select" name="type" id="type">
-                    <option value="0">UL Dogodek</option>
+                    <option value="0">Univerza v Ljubljani Dogodek</option>
                     <option value="1">Kulturni dogodek</option>
                     <option value="2">Zabava</option>
                     <option value="3">Izobraževanje</option>
@@ -241,7 +242,7 @@
                 }
 
                 const json = await response.json();
-                console.log(json);
+                //console.log(json);
                 json.forEach(event => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -266,26 +267,48 @@
             e.preventDefault();
             $.ajax({
                 url: 'addEventForm',
-                type: 'post',
+                type: 'POST',
                 data:$('#addEventForm').serialize(),
                 success:function(){
                     loadEvents();
                     $('#addEventModal').modal('hide');
                 }
+
             });
         });
 
         
 
-        
+        $("#editEventForm").submit(function(e){
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: 'updateEvents',
+                    type: 'POST',
+                    data: formData,
+                    success: function() {
+                        loadEvents();
+                        
+                        $('#editEventModal').modal('hide');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error updating event:', error);
+                        console.error('Error updating event:', xhr);
+                        
+
+                    }
+                });
+                
+            });
         function editEvent(eventId) {
             $.ajax({
                 url: 'API/events/eventDetail',
                 data: {id: eventId},
                 method: 'POST',
                 success: function(event) {
-                    console.log(event);
+                    //console.log(event);
                     var modal = $('#editEventModal');
+                    modal.find('#id').val(event.id);
                     modal.find('#name').val(event.name);
                     modal.find('#organisation').val(event.organisation);
                     modal.find('#artist_name').val(event.artist_name);
@@ -304,18 +327,8 @@
                     modal.find('#age_lim').prop('disabled', !event.age_lim_bool);
                     modal.find('#price').prop('disabled', event.cena_bool);
                     $('#editEventModal').modal('show');
-                    $('#editEventModal').submit(function(e){
-                        e.preventDefault();
-                        $.ajax({
-                            url: 'updateEvent',
-                            type: 'post',
-                            data:$('#editEventModal').serialize(),
-                            success:function(){
-                                loadEvents();
-                                $('#editEventModal').modal('hide');
-                            }
-                        });
-                    });
+
+                    
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching event details:', error);
@@ -323,9 +336,9 @@
             });
         }
 
-
-
-
+        
+            
+        
         function deleteEvent(eventId) {
             $.ajax({
                 url: 'API/events/delete',

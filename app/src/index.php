@@ -86,7 +86,8 @@ $urls = [
    'API/events/delete' => function () {
       DataController::deleteEvent($_POST["id"],$_SESSION["id"],$_SESSION["role"]);
    },
-   'updateEvent' => function () {
+   'updateEvents' => function () {
+     
       HomeController::addEventForm(true);
    },
    

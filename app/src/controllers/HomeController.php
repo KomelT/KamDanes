@@ -52,6 +52,7 @@ class HomeController
     }
 
     public static function addEventForm($update){
+        
         $name = NULL;
         if(isset($_POST["name"])){
             $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -127,9 +128,11 @@ class HomeController
         if(isset($_POST["online"])){
             $online = filter_input(INPUT_POST, "online", FILTER_SANITIZE_SPECIAL_CHARS);
         }
-
+        
         $coordinates = HomeController::getCoordinates($address);
-        $originalID = $_POST["id_user"];
+        
+        
+      
         $data = [
             "id_user" => $_SESSION['id'],
             "name" => $name,
@@ -148,10 +151,18 @@ class HomeController
             "link" => $link,
             "online" => $online,
         ];
-
+        
+        
         if($update){
-            DataController::updateEvent($_POST["id"],$originalID,$_SESSION["role"],$data);
+           ob_start();
+            DataController::updateEvent($_POST["id"],$data);
+            
+            ob_flush();
+
+            //ViewHelper::returnJson(json_encode($data));
+            exit();
         }else{
+            
             DataController::pushEventForm($data);
             ViewHelper::redirect("index.php");
         }

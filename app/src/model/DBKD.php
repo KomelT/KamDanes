@@ -228,7 +228,7 @@ class DBKD
         $db = DBInit::getInstance();  
         $statement = $db->prepare("UPDATE event
             SET 
-            id_user = :id_user, 
+             
             name = :name, 
             organisation = :organisation, 
             artist_name = :artist_name, 
@@ -249,7 +249,7 @@ class DBKD
 
         $hashed_url = hash('sha512', $data["link"]);
 
-        $statement->bindParam(":id_user", $data["id_user"], PDO::PARAM_INT);
+        //$statement->bindParam(":id_user", $data["id_user"], PDO::PARAM_INT);
         $statement->bindParam(":name", $data["name"], PDO::PARAM_STR);
         $statement->bindParam(":organisation", $data["organisation"], PDO::PARAM_STR);
         $statement->bindParam(":artist_name", $data["artist_name"], PDO::PARAM_STR);
@@ -269,7 +269,11 @@ class DBKD
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
 
         $statement->execute(); 
-        return $statement;
+        $row_affected = $statement->rowCount();
+        if ($row_affected > 0) {
+            return true;
+        }
+        return false;
 
     }
 
