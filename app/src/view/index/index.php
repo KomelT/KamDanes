@@ -45,7 +45,22 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?php echo ASSETS_URL ?>index.css">
+  <style>
+    #eventsTable td {
+      word-wrap: break-word;
+      max-width: 150px; 
+      overflow: hidden;
+      text-overflow: ellipsis; 
+      white-space: normal;  
+    }
 
+
+    textarea {
+      max-height: 150px;  
+      overflow-y: auto;   
+    }
+
+  </style>
 </head>
 
 
@@ -306,11 +321,11 @@ function toggleSidebar() {
       eventsTable.innerHTML = '';
       try {
         const response = await fetch('API/events/user', {
-            method: 'POST', // Correct method name
+            method: 'POST', 
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded', // Proper header for form data
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `id=${userId}`, // Pass userId in the body
+            body: `id=${userId}`,
         });
 
         console.log("Response received:", response);
