@@ -35,10 +35,8 @@ class DataController
 
         ViewHelper::returnJson(DBKD::getEventsUser($id));
     }
-    public static function updateEvent($id,$role){
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        if($_SESSION["id"] != $data["id_user"] || $role != 0){
+    public static function updateEvent($id,$uid,$role,$data){
+        if($_SESSION["id"] != $uid || $role != 0){
             header("HTTP/1.1 403 Forbidden");
             exit();
             
@@ -48,11 +46,12 @@ class DataController
             exit();
         }
         header("HTTP/1.1 500 Internal Server Error");
-        exit();
     }
-    public static function deleteEvent($id,$uid){
-        if(!DBKD::isEventUser($id,$uid)){
-            header("HTTP/1.1 404 Not Found");
+    public static function deleteEvent($id,$uid,$role){
+        if(DBKD::isEventUser($id,$uid) || $role != 0){
+
+            header("HTTP/1.1 404 Not found");
+
             exit();
         }
         

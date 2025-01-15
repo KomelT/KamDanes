@@ -51,7 +51,7 @@ class HomeController
         return false;
     }
 
-    public static function addEventForm(){
+    public static function addEventForm($update){
         $name = NULL;
         if(isset($_POST["name"])){
             $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -129,7 +129,7 @@ class HomeController
         }
 
         $coordinates = HomeController::getCoordinates($address);
-
+        $originalID = $_POST["id_user"];
         $data = [
             "id_user" => $_SESSION['id'],
             "name" => $name,
@@ -149,8 +149,13 @@ class HomeController
             "online" => $online,
         ];
 
-        DataController::pushEventForm($data);
-        ViewHelper::redirect("index.php");
+        if($update){
+            DataController::updateEvent($_POST["id"],$originalID,$_SESSION["role"],$data);
+        }else{
+            DataController::pushEventForm($data);
+            ViewHelper::redirect("index.php");
+        }
+        
     }
 
     private static function getCoordinates($address){

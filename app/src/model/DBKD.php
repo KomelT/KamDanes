@@ -266,6 +266,7 @@ class DBKD
         $statement->bindParam(":link", $data["link"], PDO::PARAM_STR);
         $statement->bindParam(":online", $data["online"], PDO::PARAM_INT);
         $statement->bindParam(":url_hash", $hashed_url, PDO::PARAM_STR);
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
 
         $statement->execute(); 
         return $statement;

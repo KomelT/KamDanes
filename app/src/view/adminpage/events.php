@@ -223,8 +223,21 @@
 
 
         function deleteEvent(eventId) {
-            events = events.filter(e => e.id !== eventId);
-            loadEvents();
+            $.ajax({
+                url: 'API/events/delete',
+                method: 'POST',
+                data: {
+                    id: eventId,
+                },
+                success: function(response) {
+                    console.log('Event deleted successfully');
+                    loadEvents();
+                                    },
+                error: function(xhr, status, error) {
+                    console.error('Error deleting event:', error);
+                    
+                }
+            })
         }
 
         loadEvents();

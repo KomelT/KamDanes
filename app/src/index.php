@@ -74,9 +74,8 @@ $urls = [
    'adminusers' => function () {
       HomeController::adminUsers();
 
-   },
-   'addEventForm' => function () {
-      HomeController::addEventForm();
+   }, 'addEventForm' => function () {
+      HomeController::addEventForm(false);
    },
     'API/users/getUsers' => function () {
       UserController::getUsers();
@@ -85,11 +84,12 @@ $urls = [
       DataController::getEventDetail($_POST["id"]);
    },
    'API/events/delete' => function () {
-      DataController::deleteEvent($_POST["id"],$_SESSION["id"]);
+      DataController::deleteEvent($_POST["id"],$_SESSION["id"],$_SESSION["role"]);
    },
    'updateEvent' => function () {
-      DataController::updateEvent($_POST["id"],$_SESSION["role"]);
+      HomeController::addEventForm(true);
    },
+   
 ];
 
 try {
