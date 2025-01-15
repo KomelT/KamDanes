@@ -377,7 +377,7 @@
 </html>
 
 
-<!-- Edit Event Modal -->
+<!-- Edit Event Modal 
 <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -387,8 +387,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Edit Event Form Fields -->
-                    <!-- (Same as Add Event Form Fields) -->
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Update Event</button>
@@ -396,4 +395,4 @@
             </form>
         </div>
     </div>
-</div>
+</div>-->
