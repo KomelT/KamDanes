@@ -192,12 +192,34 @@
                     loadEvents();
                     $('#addEventModal').modal('hide');
                 }
+            });
         });
-});
 
         function editEvent(eventId) {
-            window.location.href = `fullevent.php?id=${eventId}`;
+            const event = events.find(e => e.id === eventId);
+            $('#name').val(event.name);
+            $('#organisation').val(event.organisation);
+            $('#artist_name').val(event.artist_name);
+            $('#date_from').val(event.date_from);
+            $('#date_to').val(event.date_to);
+            $('#online-input').prop('checked', event.online);
+            $('#street-input').val(event.street);
+            $('#city-input').val(event.city);
+            $('#zip-input').val(event.zip);
+            $('#time_from').val(event.time_from);
+            $('#time_to').val(event.time_to);
+            $('#age_lim_bool-input').prop('checked', event.age_lim_bool);
+            $('#age_lim').val(event.age_lim);
+            $('#description').val(event.description);
+            $('#cena_bool-input').prop('checked', event.cena_bool);
+            $('#price').val(event.price);
+            $('#type').val(event.type);
+            $('#link').val(event.link);
+            $('#age_lim').prop('disabled', !event.age_lim_bool);
+            $('#price').prop('disabled', event.cena_bool);
+            $('#addEventModal').modal('show');
         }
+
 
 
         function deleteEvent(eventId) {
