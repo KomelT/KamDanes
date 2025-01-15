@@ -196,7 +196,7 @@
         });
 
         function editEvent(eventId) {
-            const event = events.find(e => e.id === eventId);
+            const event = events.filter(e => e.id === eventId);
             $('#name').val(event.name);
             $('#organisation').val(event.organisation);
             $('#artist_name').val(event.artist_name);
