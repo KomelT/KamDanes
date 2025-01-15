@@ -214,8 +214,8 @@
                     
                     <label for="link">Link do dogodka</label><br>
                     <input class="form-control form-control-sm" type="text" name="link" id="link" required><br>
-                    </div>
                 </div>
+                
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Update Event</button>
                 </div>
