@@ -86,6 +86,9 @@ $urls = [
    'API/events/delete' => function () {
       DataController::deleteEvent($_POST["id"],$_SESSION["id"]);
    },
+   'updateEvent' => function () {
+      DataController::deleteEvent($_SESSION["id"],$_SESSION[2],$_SESSION["id"]);
+   },
 ];
 
 try {

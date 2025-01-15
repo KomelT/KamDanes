@@ -224,5 +224,52 @@ class DBKD
             return false;
         }
     }
+    public static function updateEvent($id,$data){
+        $db = DBInit::getInstance();  
+        $statement = $db->prepare("UPDATE event
+            SET 
+            id_user = :id_user, 
+            name = :name, 
+            organisation = :organisation, 
+            artist_name = :artist_name, 
+            date_from = :date_from, 
+            date_to = :date_to, 
+            loc_x = :loc_x, 
+            loc_y = :loc_y, 
+            time_from = :time_from, 
+            time_to = :time_to, 
+            age_lim = :age_lim, 
+            description = :description, 
+            price = :price, 
+            type = :type, 
+            link = :link, 
+            online = :online, 
+            url_hash = :url_hash
+            WHERE id = :id;");
+
+        $hashed_url = hash('sha512', $data["link"]);
+
+        $statement->bindParam(":id_user", $data["id_user"], PDO::PARAM_INT);
+        $statement->bindParam(":name", $data["name"], PDO::PARAM_STR);
+        $statement->bindParam(":organisation", $data["organisation"], PDO::PARAM_STR);
+        $statement->bindParam(":artist_name", $data["artist_name"], PDO::PARAM_STR);
+        $statement->bindParam(":date_from", $data["date_from"], PDO::PARAM_STR);
+        $statement->bindParam(":date_to", $data["date_to"], PDO::PARAM_STR);
+        $statement->bindParam(":loc_x", $data["loc_x"], PDO::PARAM_STR);
+        $statement->bindParam(":loc_y", $data["loc_y"], PDO::PARAM_STR);
+        $statement->bindParam(":time_from", $data["time_from"], PDO::PARAM_STR);
+        $statement->bindParam(":time_to", $data["time_to"], PDO::PARAM_STR);
+        $statement->bindParam(":age_lim", $data["age_lim"], PDO::PARAM_INT);
+        $statement->bindParam(":description", $data["description"], PDO::PARAM_STR);
+        $statement->bindParam(":price", $data["price"], PDO::PARAM_INT);
+        $statement->bindParam(":type", $data["type"], PDO::PARAM_INT);
+        $statement->bindParam(":link", $data["link"], PDO::PARAM_STR);
+        $statement->bindParam(":online", $data["online"], PDO::PARAM_INT);
+        $statement->bindParam(":url_hash", $hashed_url, PDO::PARAM_STR);
+
+        $statement->execute(); 
+        return $statement;
+
+    }
 
 }
