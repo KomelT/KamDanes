@@ -143,6 +143,87 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editEventForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEventModalLabel">Edit Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="name">Ime dogodka</label><br>
+                    <input class="form-control form-control-sm" type="text" name="name" id="name" required><br>
+
+                    <label for="organisation">Organizacija</label> <br>
+                    <input class="form-control form-control-sm" type="text" name="organisation" id="organisation"><br>
+
+                    <label for="artist_name">Ime umetnika</label> <br>
+                    <input class="form-control form-control-sm" type="text" name="artist_name" id="artist_name"><br>
+                    
+                    <label for="date_from">Datum od</label> <br>
+                    <input class="form-control form-control-sm" type="date" name="date_from" id="date_from" required><br>
+
+                    <label for="date_to">Datum do</label> <br>
+                    <input class="form-control form-control-sm" type="date" name="date_to" id="date_to" required><br>
+
+                    <input class="form-check-input" type="checkbox" name="online" id="online-input">
+                    <label class="form-check-label" for="online">Online dogodek</label> <br><br>
+
+                    <label for="address">Ulica</label> <br>
+                    <input class="form-control form-control-sm" type="text" name="street" id="street-input" required><br>
+
+                    <label for="city">Mesto</label> <br>
+                    <input class="form-control form-control-sm" type="text" name="city" id="city-input" required><br>
+
+                    <label for="zip">Poštna številka</label> <br>
+                    <input class="form-control form-control-sm" type="text" name="zip" id="zip-input" required><br>
+
+                    <label for="time_from">Ura začetka</label><br>
+                    <input class="form-control form-control-sm" type="time" name="time_from" id="time_from"><br>
+
+                    <label for="time_to">Ura konca</label><br>
+                    <input class="form-control form-control-sm" type="time" name="time_to" id="time_to"><br>
+
+                    <input class="form-check-input" type="checkbox" name="age_lim_bool" id="age_lim_bool-input">
+                    <label class="form-check-label" for="age_lim_bool">Starostna omejitev</label> <br><br>
+
+                    <label for="age_lim">Minimalna starost v letih</label><br>
+                    <input class="form-control form-control-sm" type="number" name="age_lim" id="age_lim" disabled><br>
+
+                    <label for="description">Opis</label><br>
+                    <textarea class="form-control" name="description" id=""description></textarea><br>
+
+                    <input class="form-check-input" type="checkbox" name="cena_bool" id="cena_bool-input" checked>
+                    <label class="form-check-label" for="cena_bool">Brezplačen dogodek</label> <br><br>
+
+                    <label for="price">Cena</label><br>
+                    <input class="form-control form-control-sm" type="number" name="price" id="price" disabled><br>
+
+                    <label for="type">Tip dogodka</label><br>
+                    <select class="form-select" name="type" id="type">
+                    <option value="0">UL Dogodek</option>
+                    <option value="1">Kulturni dogodek</option>
+                    <option value="2">Zabava</option>
+                    <option value="3">Izobraževanje</option>
+                    <option value="4">Dobrodelnost</option>
+                    <option value="5">Šport</option>
+                    <option value="6" selected>Ostalo</option>
+                    </select><br>
+                    
+                    <label for="link">Link do dogodka</label><br>
+                    <input class="form-control form-control-sm" type="text" name="link" id="link" required><br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
@@ -195,6 +276,9 @@
             });
         });
 
+        
+
+        
         function editEvent(eventId) {
             const event = events.filter(e => e.id === eventId);
             $('#name').val(event.name);
@@ -217,8 +301,21 @@
             $('#link').val(event.link);
             $('#age_lim').prop('disabled', !event.age_lim_bool);
             $('#price').prop('disabled', event.cena_bool);
-            $('#addEventModal').modal('show');
+            $('#editEventModal').modal('show');
+            $('#editEventModal').submit(function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: 'updateEvent',
+                    type: 'post',
+                    data:$('#editEventModal').serialize(),
+                    success:function(){
+                        loadEvents();
+                        $('#editEventModal').modal('hide');
+                    }
+                });
+            });
         }
+
 
 
 
@@ -265,3 +362,25 @@
     </script>
 </body>
 </html>
+
+
+<!-- Edit Event Modal -->
+<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editEventForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEventModalLabel">Edit Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Edit Event Form Fields -->
+                    <!-- (Same as Add Event Form Fields) -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
